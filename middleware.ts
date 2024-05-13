@@ -13,6 +13,7 @@ export default withAuthMiddleware((req) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(routes.apiAuthPrefix)
   const isAuthRoute = routes.auth.includes(nextUrl.pathname)
   const isPublicRoute = routes.public.includes(nextUrl.pathname)
+  const defaultUrl = new URL(routes.defaultLoginRedirect, nextUrl)
 
   if (isApiAuthRoute) {
     return undefined
@@ -20,7 +21,6 @@ export default withAuthMiddleware((req) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      const defaultUrl = new URL(routes.defaultLoginRedirect, nextUrl)
       return Response.redirect(defaultUrl)
     }
     return undefined
@@ -32,9 +32,13 @@ export default withAuthMiddleware((req) => {
     return Response.redirect(signInUrl)
   }
 
+  if (nextUrl.pathname === "/" && isLoggedIn) {
+    return Response.redirect(defaultUrl)
+  }
+
   return undefined
 })
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
+  matcher: ['/((?!api|_next/static|_next/image|images|favicon.ico).*)']
 }
