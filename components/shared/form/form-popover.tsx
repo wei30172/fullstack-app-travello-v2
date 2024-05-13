@@ -3,7 +3,7 @@
 import { ElementRef, useRef } from "react"
 import { IoMdClose } from "react-icons/io"
 
-// import { BoardForm } from "@/components/shared/board-form"
+import { BoardForm } from "@/components/shared/board-form"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
@@ -52,11 +52,10 @@ export const FormPopover = ({
             <IoMdClose className="h-4 w-4" />
           </Button>
         </PopoverClose>
-        BoardForm
-        {/* <BoardForm
+        <BoardForm
           type="Create"
           onClose={handleClosePopover}
-        /> */}
+        />
       </PopoverContent>
     </Popover>
   )
