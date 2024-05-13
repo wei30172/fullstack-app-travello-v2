@@ -8,7 +8,7 @@ import { mainNavLinks } from "@/constants"
 
 import { AiOutlineMenu } from "react-icons/ai"
 
-export const MainNav = () => {
+export const Navlinks = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const pathName = usePathname()
 

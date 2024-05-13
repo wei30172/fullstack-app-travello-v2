@@ -19,8 +19,8 @@ import {
   AvatarImage,
   AvatarFallback,
 } from "@/components/ui/avatar"
-import { SignInButton } from "@/components/shared/signin-button"
-import { SignOutButton } from "@/components/shared/signout-button"
+import { SignInButton } from "@/components/shared/button/signin-button"
+import { SignOutButton } from "@/components/shared/button/signout-button"
 
 interface NavLink {
   title: string
