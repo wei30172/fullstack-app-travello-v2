@@ -1,12 +1,10 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import { SessionProvider } from 'next-auth/react'
-import { auth } from '@/auth'
+import { SessionProvider } from "next-auth/react"
+import { auth } from "@/auth"
 import "./globals.css"
 
 import ThemeProvider from "@/providers/theme-provider"
-import { Navbar } from "@/components/shared/navbar"
-import { Footer } from "@/components/shared/footer"
 import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -25,7 +23,7 @@ export const metadata: Metadata = {
   ]
 }
 
-export default async function RootLayout({
+export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode
@@ -42,12 +40,8 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar />
-            <main className="flex h-full flex-col items-center justify-center">
-              {children}
-            </main>
-            <Footer />
             <Toaster />
+            {children}
           </ThemeProvider>
         </body>
       </html>
