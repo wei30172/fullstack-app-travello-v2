@@ -6,9 +6,9 @@ import {
   CardFooter,
   CardHeader
 } from "@/components/ui/card"
-import { Header } from "@/components/shared/header"
-import { SocialButton } from "@/components/shared/social-button"
-import { BackButton } from "@/components/shared/back-button"
+import { FormHeader } from "@/components/shared/form/form-header"
+import { SocialButton } from "@/components/shared/button/social-button"
+import { BackButton } from "@/components/shared/button/back-button"
 
 interface FormWrapperProps {
   children: React.ReactNode
@@ -28,7 +28,7 @@ export const FormWrapper = ({
   return (
     <Card className="w-[360px] shadow-md">
       <CardHeader>
-        <Header label={headerLabel} />
+        <FormHeader label={headerLabel} />
       </CardHeader>
       <CardContent>
         {children}

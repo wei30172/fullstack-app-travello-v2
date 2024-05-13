@@ -2,7 +2,7 @@ import { NewVerificationForm } from "../_components/new-verification-form"
 
 const NewVerificationPage = () => {
   return (
-    <section className="w-full">
+    <section>
       <NewVerificationForm />
     </section>
    )

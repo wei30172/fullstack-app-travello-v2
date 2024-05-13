@@ -2,7 +2,7 @@ import { ResetForm } from "../_components/reset-form"
 
 const ResetPage = () => {
   return (
-    <section className="w-full">
+    <section>
       <ResetForm />
     </section>
   )
