@@ -8,7 +8,7 @@ import { updateList } from "@/lib/actions/list/update-list"
 
 import { useToast } from "@/components/ui/use-toast"
 import { FormInput } from "@/components/shared/form/form-input"
-// import { ListOptions } from "./list-options"
+import { ListOptions } from "./list-options"
 
 interface ListHeaderProps {
   listData: ListWithCards
@@ -105,10 +105,10 @@ export const ListHeader = ({
           {title}
         </div>
       )}
-      {/* <ListOptions
+      <ListOptions
         onAddCard={onAddCard}
         listData={listData}
-      /> */}
+      />
     </div>
   )
 }
