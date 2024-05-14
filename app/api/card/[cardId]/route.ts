@@ -6,6 +6,7 @@ import Card from '@/lib/models/card.model'
 import List from '@/lib/models/list.model'
 import Board from '@/lib/models/board.model'
 
+// api/card/[cardId]
 export async function GET(
   req: Request,
   { params }: { params: { cardId: string } }

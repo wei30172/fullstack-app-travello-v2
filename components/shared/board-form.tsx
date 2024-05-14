@@ -10,7 +10,7 @@ import { CreateBoardValidation } from "@/lib/validations/board"
 import { IBoard } from "@/lib/models/types"
 import { createBoard } from "@/lib/actions/board/create-board"
 import { updateBoard } from "@/lib/actions/board/update-board"
-// import { createList } from "@/lib/actions/list/create-list"
+import { createList } from "@/lib/actions/list/create-list"
 import { calculateDays } from "@/lib/utils"
 
 import "react-datepicker/dist/react-datepicker.css"
@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
-// import AIResponse from "./AI-response"
+import AIResponse from "./AI-response"
 
 interface BoardFormProps {
   type: "Create" | "Update",
@@ -46,6 +46,7 @@ export const BoardForm = ({
   const router = useRouter()
   const { toast } = useToast()
 
+  const [language, setLanguage] = useState("English")
   const [isPending, startTransition] = useTransition()
   const [tripItinerary, setTripItinerary] = useState<TripItinerary | null>(null)
   const [openAIResponse, setOpenAIResponse] = useState<string>("")
@@ -156,14 +157,15 @@ export const BoardForm = ({
     try {
       abortControllerRef.current = new AbortController()
       
-      const res: any = await fetch("/api/boards/plan", {
+      const res: any = await fetch("/api/board/ask-ai", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
           location: values.location,
-          days
+          days,
+          language
         }),
         signal: abortControllerRef.current.signal
       })
@@ -213,48 +215,48 @@ export const BoardForm = ({
     abortControllerRef.current = null
   }
 
-  // async function applySuggestions() {
-  //   if (!boardData?._id) {
-  //     toast({
-  //       status: "error",
-  //       description: "Board data is not available."
-  //     })
-  //     return
-  //   }
+  async function applySuggestions() {
+    if (!boardData?._id) {
+      toast({
+        status: "error",
+        description: "Board data is not available."
+      })
+      return
+    }
 
-  //   if (!tripItinerary) {
-  //     toast({
-  //       status: "warning",
-  //       description: "No AI-generated itinerary to apply."
-  //     })
-  //     return
-  //   }
+    if (!tripItinerary) {
+      toast({
+        status: "warning",
+        description: "No AI-generated itinerary to apply."
+      })
+      return
+    }
 
-  //   try {
-  //     const boardId = boardData._id
-  //     for (const [title, cardTitles] of Object.entries(tripItinerary)) {
-  //       startTransition(() => {
-  //         createList({ title, boardId, cardTitles })
-  //         .then((res) => {
-  //           if (res?.data) {
-  //             toast({ status: "success", title: `Itinerary "${res?.data.title}" created` })
-  //             router.refresh()
-  //             onClose()
-  //           } else if (res?.error) {
-  //             toast({ status: "error", description: res?.error })
-  //           }
-  //         })
-  //         .catch(() => toast({ status: "error", description: "Something went wrong" }))
-  //       })
-  //     }
-  //   } catch (error) {
-  //     console.error(error)
-  //     toast({
-  //       status: "error",
-  //       description: "Failed to apply suggestions."
-  //     })
-  //   }
-  // }
+    try {
+      const boardId = boardData._id
+      for (const [title, cardTitles] of Object.entries(tripItinerary)) {
+        startTransition(() => {
+          createList({ title, boardId, cardTitles })
+          .then((res) => {
+            if (res?.data) {
+              toast({ status: "success", title: `Itinerary "${res?.data.title}" created` })
+              router.refresh()
+              onClose()
+            } else if (res?.error) {
+              toast({ status: "error", description: res?.error })
+            }
+          })
+          .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      toast({
+        status: "error",
+        description: "Failed to apply suggestions."
+      })
+    }
+  }
   
   return (
     <Form {...form}>
@@ -370,19 +372,23 @@ export const BoardForm = ({
         >
           {isPending ? "Submitting..." : type}
         </Button>
-        {/* {
+        {
           type === "Update" && (
-            <AIResponse
-              isStreaming={isStreaming}
-              openAIResponse={openAIResponse}
-              tripItinerary={tripItinerary}
-              askAI={askAI}
-              handleStop={handleStop}
-              applySuggestions={applySuggestions}
-              pending={isPending}
-            />
+            <>
+              <AIResponse
+                language={language}
+                setLanguage={setLanguage}
+                isStreaming={isStreaming}
+                openAIResponse={openAIResponse}
+                tripItinerary={tripItinerary}
+                askAI={askAI}
+                handleStop={handleStop}
+                applySuggestions={applySuggestions}
+                pending={isPending}
+              />
+            </>
           )
-        } */}
+        }
       </form>
     </Form>
   )
