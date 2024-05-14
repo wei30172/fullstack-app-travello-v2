@@ -5,6 +5,8 @@ import { auth } from "@/auth"
 import "./globals.css"
 
 import ThemeProvider from "@/providers/theme-provider"
+import { QueryProvider } from "@/providers/query-provider"
+import { ModalProvider } from "@/providers/modal-provider"
 import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -40,8 +42,11 @@ export default async function AppLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Toaster />
-            {children}
+            <QueryProvider>
+              <Toaster />
+              <ModalProvider />
+              {children}
+            </QueryProvider>
           </ThemeProvider>
         </body>
       </html>
