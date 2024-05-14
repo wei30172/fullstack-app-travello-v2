@@ -41,6 +41,7 @@ export const createBoard = async (
     await board.save()
 
     const days = calculateDays(values.startDate, values.endDate)
+    
     for (let i = 0; i < days; i++) {
       const currentDate = new Date(values.startDate.getTime() + i * (1000 * 60 * 60 * 24))
       const { dateOnly } = formatDateTime(currentDate)
