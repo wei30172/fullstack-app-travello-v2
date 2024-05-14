@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker"
 import { CreateBoardValidation } from "@/lib/validations/board"
 import { IBoard } from "@/lib/models/types"
 import { createBoard } from "@/lib/actions/board/create-board"
-// import { updateBoard } from "@/lib/actions/board/update-board"
+import { updateBoard } from "@/lib/actions/board/update-board"
 // import { createList } from "@/lib/actions/list/create-list"
 import { calculateDays } from "@/lib/utils"
 
@@ -74,7 +74,7 @@ export const BoardForm = ({
   })
 
   async function onSubmit(values: z.infer<typeof CreateBoardValidation>) {
-    console.log({values})
+    // console.log({values})
     if (type === "Create") {
       startTransition(() => {
         createBoard({
@@ -98,33 +98,33 @@ export const BoardForm = ({
       })
     }
 
-    // if (type === "Update") {
-    //   if (!boardData?._id) {
-    //     router.back()
-    //     return
-    //   }
-    //   onClose()
-    //   startTransition(() => {
-    //     updateBoard({
-    //       title: values.title,
-    //       location: values.location,
-    //       startDate: values.startDate,
-    //       endDate: values.endDate,
-    //       imageUrl: values.imageUrl,
-    //       id: boardData._id
-    //     })
-    //     .then((res) => {
-    //       if (res?.data) {
-    //         toast({ status: "success", title: `Trip "${res?.data.title}" updated` })
-    //         form.reset()
-    //         onClose()
-    //       } else if (res?.error) {
-    //         toast({ status: "error", description: res?.error })
-    //       }
-    //     })
-    //     .catch(() => toast({ status: "error", description: "Something went wrong" }))
-    //   })
-    // }
+    if (type === "Update") {
+      if (!boardData?._id) {
+        router.back()
+        return
+      }
+      onClose()
+      startTransition(() => {
+        updateBoard({
+          title: values.title,
+          location: values.location,
+          startDate: values.startDate,
+          endDate: values.endDate,
+          imageUrl: values.imageUrl,
+          id: boardData._id
+        })
+        .then((res) => {
+          if (res?.data) {
+            toast({ status: "success", title: `Trip "${res?.data.title}" updated` })
+            form.reset()
+            onClose()
+          } else if (res?.error) {
+            toast({ status: "error", description: res?.error })
+          }
+        })
+        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+      })
+    }
   }
 
   async function askAI () {

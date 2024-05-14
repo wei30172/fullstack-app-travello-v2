@@ -49,11 +49,11 @@ export const deleteBoard = async (
 
     // Delete the Board itself
     await Board.findByIdAndDelete(boardId)
-
-    revalidatePath("/boards")
-    redirect("/boards")
-
+    
   } catch (error) {
     return { error: "Failed to delete" }
   }
+
+  revalidatePath("/boards")
+  redirect("/boards")
 }
