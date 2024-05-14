@@ -11,6 +11,6 @@ export const routes = {
     "/error"
   ],
   apiAuthPrefix: "/api/auth",
-  defaultLoginRedirect: "/settings",
+  defaultLoginRedirect: "/boards",
   defaultLogoutRedirect: "/signin"
 }
