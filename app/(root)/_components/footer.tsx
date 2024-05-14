@@ -5,7 +5,7 @@ import { Logo } from "@/components/shared/logo"
 
 export const RootFooter = () => {
   return (
-    <footer className="flex flex-col text-gray-500 text-sm mt-5 border-t border-gray-100">
+    <footer className="flex flex-col text-gray-500 text-sm border-t border-gray-100">
       {/* <Footerlinks /> */}
       <div className="flex flex-wrap items-center justify-between border-t border-gray-100 gap-8 px-6 py-2 sm:px-20">
         <div className="flex items-center gap-2">
