@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
-import { calculateDays, formatDateTime } from "@/lib/utils"
+import { calculateDays, formatDateTime } from "@/lib/date"
 
 import Board from "@/lib/models/board.model"
 import { CreateBoardValidation } from "@/lib/validations/board"
