@@ -11,7 +11,8 @@ import { IBoard } from "@/lib/models/types"
 import { createBoard } from "@/lib/actions/board/create-board"
 import { updateBoard } from "@/lib/actions/board/update-board"
 import { createList } from "@/lib/actions/list/create-list"
-import { calculateDays, fetcher } from "@/lib/utils"
+import { calculateDays } from "@/lib/date"
+import { fetcher } from "@/lib/fetcher"
 
 import "react-datepicker/dist/react-datepicker.css"
 import { LuGoal, LuMapPin } from "react-icons/lu"
@@ -27,6 +28,35 @@ import {
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
 import AIResponse from "./AI-response"
+
+interface DatePickerFieldProps {
+  label: string
+  value: Date
+  onChange: (date: Date) => void
+}
+
+const DatePickerField = ({
+  label,
+  value,
+  onChange
+}: DatePickerFieldProps) => (
+  <FormItem>
+    <div className="flex items-center justify-center gap-1">
+      <FormLabel className="flex items-center gap-1 text-sm">
+        <p className="text-muted-foreground whitespace-nowrap w-20">{label}</p>
+      </FormLabel>
+      <FormControl className="cursor-pointer text-sm flex">
+        <DatePicker
+          selected={value}
+          onChange={onChange}
+          dateFormat="MM/dd/yyyy"
+          wrapperClassName="datePicker"
+        />
+      </FormControl>
+    </div>
+    <FormMessage />
+  </FormItem>
+)
 
 interface BoardFormProps {
   type: "Create" | "Update",
@@ -190,6 +220,7 @@ export const BoardForm = ({
       }
 
       setTripItinerary(JSON.parse(chunks))
+
     } catch (error: any) {
       console.log({error})
       if (error.name !== "AbortError") {
@@ -316,50 +347,26 @@ export const BoardForm = ({
           control={form.control}
           name="startDate"
           render={({ field }) => (
-            <FormItem>
-              <div className="flex items-center justify-center gap-1">
-                <FormLabel className="flex items-center gap-1 text-sm">
-                  <p className="text-muted-foreground whitespace-nowrap w-20">Start Date</p>
-                </FormLabel>
-                <FormControl className="cursor-pointer text-sm flex">
-                  <DatePicker
-                    selected={field.value} 
-                    onChange={(date: Date) => {
-                      const normalizedDate = new Date(date.setHours(0, 0, 0, 0))
-                      field.onChange(normalizedDate)
-                    }}
-                    dateFormat="MM/dd/yyyy"
-                    wrapperClassName="datePicker"
-                  />
-                </FormControl>
-              </div>
-              <FormMessage />
-            </FormItem>
+            <DatePickerField
+              label="Start Date"
+              value={field.value}
+              onChange={(date: Date) => {
+                field.onChange(new Date(date.setHours(0, 0, 0, 0)))
+              }}
+            />
           )}
         />
         <FormField
           control={form.control}
           name="endDate"
           render={({ field }) => (
-            <FormItem >
-              <div className="flex items-center justify-center gap-1">
-                <FormLabel className="flex items-center gap-1 text-sm">
-                  <p className="text-muted-foreground whitespace-nowrap w-20">End Date</p>
-                </FormLabel>
-                <FormControl className="cursor-pointer text-sm flex">
-                  <DatePicker
-                    selected={field.value} 
-                    onChange={(date: Date) => {
-                      const normalizedDate = new Date(date.setHours(0, 0, 0, 0))
-                      field.onChange(normalizedDate)
-                    }} 
-                    dateFormat="MM/dd/yyyy"
-                    wrapperClassName="datePicker"
-                  />
-                </FormControl>
-              </div>
-              <FormMessage />
-            </FormItem>
+            <DatePickerField
+              label="End Date"
+              value={field.value}
+              onChange={(date: Date) => {
+                field.onChange(new Date(date.setHours(0, 0, 0, 0)))
+              }}
+            />
           )}
         />
         <Button
