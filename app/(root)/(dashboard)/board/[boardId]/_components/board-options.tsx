@@ -1,10 +1,13 @@
 "use client"
 
 import { useState, useTransition } from "react"
+import { useRouter } from "next/navigation"
 import { IBoard } from "@/lib/models/types"
 import { deleteBoard } from "@/lib/actions/board/delete-board"
+import { copyBoard } from "@/lib/actions/board/copy-board"
 
 import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
 import {
   Popover,
   PopoverClose,
@@ -22,6 +25,7 @@ interface BoardOptionsProps {
 }
 
 export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
+  const router = useRouter()
   const { toast } = useToast()
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -32,6 +36,22 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
       deleteBoard({ boardId: boardData._id })
         .then((res) => {
           if (res?.error) {
+            toast({ status: "error", description: res?.error })
+          }
+        })
+        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+    })
+  }
+
+  const handleCopyBoard = () => {
+    startTransition(() => {
+      copyBoard({ boardId: boardData._id })
+        .then((res) => {
+          if (res?.data) {
+            toast({ status: "success", title: "Trip copied!" })
+            setIsPopoverOpen(false)
+            router.push("/boards")
+          } else if (res?.error) {
             toast({ status: "error", description: res?.error })
           }
         })
@@ -82,8 +102,17 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
           onClose={() => setIsPopoverOpen(false)}
           boardData={boardData}
         />
+        <Separator />
+        <Button
+          variant="outline"
+          className="w-full mt-4"
+          onClick={handleCopyBoard}
+          disabled={isPending}
+        >
+          Copy Trip
+        </Button>
         <DeleteAlertDialog
-          title="Delete this trip"
+          title="Delete Trip"
           onConfirm={handleDeleteBoard}
           isPending={isPending}
         />

@@ -34,3 +34,7 @@ export const UpdateBoardValidation = z.object({
 export const DeleteBoardValidation = z.object({
   boardId: z.string()
 })
+
+export const CopyBoardValidation = z.object({
+  boardId: z.string()
+})

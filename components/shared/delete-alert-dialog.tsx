@@ -26,7 +26,7 @@ export const DeleteAlertDialog = ({
     <AlertDialogTrigger asChild>
       <Button
         variant="destructive"
-        className="w-full mt-2"
+        className="w-full my-2"
         disabled={isPending}
       >
         {title}
