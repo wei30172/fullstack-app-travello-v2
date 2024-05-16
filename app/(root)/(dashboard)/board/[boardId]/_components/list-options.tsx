@@ -104,7 +104,7 @@ export const ListOptions = ({
             disabled={isPending}
           >
             <FaRegCopy className="h-4 w-4 mr-2" />
-            Copy Itinerary...
+            Copy itinerary
           </FormSubmit>
         </form>
         <Separator />
@@ -117,7 +117,7 @@ export const ListOptions = ({
             disabled={isPending}
           >
             <MdDelete className="h-4 w-4 mr-2" />
-            Delete this Itinerary
+            Delete itinerary
           </FormSubmit>
         </form>
       </PopoverContent>
