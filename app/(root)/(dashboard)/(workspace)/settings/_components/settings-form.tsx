@@ -24,13 +24,6 @@ import {
   FormDescription,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { FormError } from "@/components/shared/form/form-error"
@@ -165,35 +158,6 @@ export const SettingsForm = () => {
                   />
                 </>
               )}
-              {/* <FormField
-                control={form.control}
-                name="role"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Role</FormLabel>
-                    <Select
-                      disabled={isPending}
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a role" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value={UserRole.ADMIN}>
-                          Admin
-                        </SelectItem>
-                        <SelectItem value={UserRole.USER}>
-                          User
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
               {user?.provider === "credentials" && (
                 <FormField
                 control={form.control}
