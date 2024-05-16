@@ -45,7 +45,7 @@ export const createCard = async (
       .sort({ order: -1 }) // Descending order
       .select({ order: 1 }) // Select the order field
 
-    const newOrder = lastCard ? lastCard.order + 1 : 1
+    const newOrder = lastCard ? lastCard.order + 1 : 0
 
     const card = new Card({ title, listId, order: newOrder })
     // console.log({card})
