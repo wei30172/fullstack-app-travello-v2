@@ -50,7 +50,7 @@ export const createList = async (
     
     const newOrder = lastList ? lastList.order + 1 : 0
 
-    const list: IList = new List({ title, order: newOrder, boardId })
+    const list: IList = new List({ title, boardId, order: newOrder })
     // console.log({list})
 
     await list.save()

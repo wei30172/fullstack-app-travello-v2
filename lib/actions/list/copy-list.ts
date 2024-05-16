@@ -34,6 +34,7 @@ export const copyList = async (
   try {
     await connectDB()
 
+    // Copy the list
     const listToCopy = await List.findOne({ _id: id, boardId })
       .populate({
         path: 'cards',
@@ -56,7 +57,7 @@ export const copyList = async (
       order: newOrder
     })
 
-    // Copy card
+    // If the list contains cards, copy cards
     if (listToCopy.cards && listToCopy.cards.length > 0) {
       const copiedCardsData = listToCopy.cards.map((card: ICard) => ({
         title: card.title,
@@ -74,7 +75,7 @@ export const copyList = async (
 
     await Board.findByIdAndUpdate(
       boardId,
-      { $push: { lists: newList._id }
+      { $push: { lists: list._id }
     })
 
     revalidatePath(`/board/${boardId}`)
