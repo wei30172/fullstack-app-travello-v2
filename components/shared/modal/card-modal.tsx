@@ -18,7 +18,8 @@ export const CardModal = () => {
 
   const { data: cardData, isLoading, error } = useQuery<CardWithList, Error>({
     queryKey: ["card", id],
-    queryFn: () => (id ? fetcher(`/api/card/${id}`) : Promise.reject(new Error("No ID provided"))),
+    queryFn: () => (id ? fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/card/${id}`)
+                       : Promise.reject(new Error("No ID provided"))),
     enabled: !!id
   })
 
