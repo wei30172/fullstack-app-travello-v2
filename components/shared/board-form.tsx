@@ -11,7 +11,7 @@ import { IBoard } from "@/lib/models/types"
 import { createBoard } from "@/lib/actions/board/create-board"
 import { updateBoard } from "@/lib/actions/board/update-board"
 import { createList } from "@/lib/actions/list/create-list"
-import { calculateDays } from "@/lib/utils"
+import { calculateDays, fetcher } from "@/lib/utils"
 
 import "react-datepicker/dist/react-datepicker.css"
 import { LuGoal, LuMapPin } from "react-icons/lu"
@@ -157,11 +157,8 @@ export const BoardForm = ({
     try {
       abortControllerRef.current = new AbortController()
       
-      const res: any = await fetch("/api/board/ask-ai", {
+      const res: any = await fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/board/ask-ai`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
         body: JSON.stringify({
           location: values.location,
           days,
