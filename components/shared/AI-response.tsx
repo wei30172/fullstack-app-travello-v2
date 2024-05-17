@@ -1,7 +1,9 @@
 import { FiPause } from "react-icons/fi"
 import { Button } from "@/components/ui/button"
+
 // import Markdown from "react-markdown"
-import LanguageSelector from "./language-selector"
+import { LanguageSelector } from "@/components/shared/language-selector"
+import { AvailableCount } from "@/components/shared/available-count"
 
 interface AIResponseProps {
   language: string
@@ -10,8 +12,8 @@ interface AIResponseProps {
   openAIResponse: string | ""
   tripItinerary: TripItinerary | null
   applySuggestions: () => void
+  handleAskAI: () => void
   handleStop: () => void
-  askAI: () => void
   pending: boolean
 }
 
@@ -26,8 +28,8 @@ const AIResponse = ({
   openAIResponse,
   tripItinerary,
   applySuggestions,
+  handleAskAI,
   handleStop,
-  askAI,
   pending,
 }: AIResponseProps) => {
   const itineraryElements = tripItinerary && Object.entries(tripItinerary).map(([attraction, activities], index) => (
@@ -56,7 +58,7 @@ const AIResponse = ({
         <Button
           className="w-full my-2"
           type="button"
-          onClick={askAI}
+          onClick={handleAskAI}
           disabled={pending}
           variant="primary"
         >
@@ -64,6 +66,7 @@ const AIResponse = ({
         </Button>
       }
       </div>
+      <AvailableCount />
       {
         isStreaming &&
         <Button
@@ -77,7 +80,7 @@ const AIResponse = ({
       }
       {
         isStreaming && openAIResponse !== null &&
-        <div className="streaming-animation">
+        <div className="streaming-animation mb-4">
           <p className="text-center">Asking AI...</p>
         </div>
       }

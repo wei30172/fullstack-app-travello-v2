@@ -21,7 +21,7 @@ interface LanguageSelectorProps {
   isStreaming: boolean
 }
 
-const LanguageSelector = ({
+export const LanguageSelector = ({
   language,
   setLanguage,
   isStreaming
@@ -49,5 +49,3 @@ const LanguageSelector = ({
     </Select>
   )
 }
-
-export default LanguageSelector

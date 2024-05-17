@@ -3,6 +3,7 @@
 import { useState, useRef, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
+import { useQueryClient } from "@tanstack/react-query"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import DatePicker from "react-datepicker"
@@ -11,8 +12,13 @@ import { IBoard } from "@/lib/models/types"
 import { createBoard } from "@/lib/actions/board/create-board"
 import { updateBoard } from "@/lib/actions/board/update-board"
 import { createList } from "@/lib/actions/list/create-list"
+import { 
+  hasAvailableCount,
+  incrementAvailableCount
+} from "@/lib/actions/user-limit"
+import { useCheckRole } from "@/hooks/use-session"
+import { askAI } from "@/lib/api-handler/board"
 import { calculateDays } from "@/lib/date"
-import { fetcher } from "@/lib/fetcher"
 
 import "react-datepicker/dist/react-datepicker.css"
 import { LuGoal, LuMapPin } from "react-icons/lu"
@@ -74,7 +80,9 @@ export const BoardForm = ({
   boardData
 }: BoardFormProps) => {
   const router = useRouter()
+  const queryClient = useQueryClient()
   const { toast } = useToast()
+  const checkRole = useCheckRole()
 
   const [language, setLanguage] = useState("English")
   const [isPending, startTransition] = useTransition()
@@ -158,7 +166,17 @@ export const BoardForm = ({
     }
   }
 
-  async function askAI () {
+  const handleAskAI = async () => {
+    const canUse = await hasAvailableCount()
+
+    if (!canUse && !checkRole) {
+      toast({
+        status: "warning",
+        description: "You have reached your limit of free AI uses."
+      })
+      return
+    }
+
     setIsStreaming(true)
     setTripItinerary(null)
     setOpenAIResponse("")
@@ -186,49 +204,40 @@ export const BoardForm = ({
 
     try {
       abortControllerRef.current = new AbortController()
-      
-      const res: any = await fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/board/ask-ai`, {
-        method: "POST",
-        body: JSON.stringify({
-          location: values.location,
-          days,
-          language
-        }),
-        signal: abortControllerRef.current.signal
-      })
-      
-      if (!res.ok || !res.body) {
+      const params = { location: values.location, days, language }
+      const res: any = await askAI(params, abortControllerRef.current.signal)
+
+      if (res.ok && res.body) {
+        const reader = res.body.getReader()
+        const decoder = new TextDecoder()
+        let chunks = ""
+        
+        while (true) {
+          const { value, done } = await reader?.read()
+    
+          setOpenAIResponse((prev) => prev + decoder.decode(value))
+    
+          if (done) break
+          chunks += decoder.decode(value, { stream: !done })
+        }
+  
+        setTripItinerary(JSON.parse(chunks))
+
+        if (!checkRole) {
+          await incrementAvailableCount()
+          queryClient.invalidateQueries({
+            queryKey: ["availableCount"]
+          })
+        }
+        
+      } else if (!res.aborted) {
         toast({
           status: "error",
-          title: "Error sending message!",
-          description: "The OpenAI API key is currently not available for use."
-        })
-        return
-      }
-  
-      const reader = res.body?.getReader()
-      const decoder = new TextDecoder()
-      let chunks = ""
-      
-      while (true) {
-        const { value, done } = await reader?.read()
-  
-        setOpenAIResponse((prev) => prev + decoder.decode(value))
-  
-        if (done) break
-        chunks += decoder.decode(value, { stream: !done })
-      }
-
-      setTripItinerary(JSON.parse(chunks))
-
-    } catch (error: any) {
-      console.log({error})
-      if (error.name !== "AbortError") {
-        toast({
-          status: "error",
-          description: "Error sending message!"
+          description: `Error: ${res.error}`
         })
       }
+    } catch (error) {
+      console.error((error as Error).message)
     } finally {
       abortControllerRef.current = null
       setIsStreaming(false)
@@ -378,19 +387,17 @@ export const BoardForm = ({
         </Button>
         {
           type === "Update" && (
-            <>
-              <AIResponse
-                language={language}
-                setLanguage={setLanguage}
-                isStreaming={isStreaming}
-                openAIResponse={openAIResponse}
-                tripItinerary={tripItinerary}
-                askAI={askAI}
-                handleStop={handleStop}
-                applySuggestions={applySuggestions}
-                pending={isPending}
-              />
-            </>
+            <AIResponse
+              language={language}
+              setLanguage={setLanguage}
+              isStreaming={isStreaming}
+              openAIResponse={openAIResponse}
+              tripItinerary={tripItinerary}
+              handleAskAI={handleAskAI}
+              handleStop={handleStop}
+              applySuggestions={applySuggestions}
+              pending={isPending}
+            />
           )
         }
       </form>

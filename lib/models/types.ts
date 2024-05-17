@@ -2,7 +2,8 @@ import { Document } from "mongoose"
 
 export enum UserRole {
   ADMIN = "admin",
-  USER = "user"
+  USER = "user",
+  MEMBER = "member"
 }
 
 export enum UserProvider {
