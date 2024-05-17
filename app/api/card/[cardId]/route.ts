@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server"
 
-import connectDB from '@/lib/db'
-import { CardWithList } from '@/lib/models/types'
-import Card from '@/lib/models/card.model'
-import List from '@/lib/models/list.model'
-import Board from '@/lib/models/board.model'
+import connectDB from "@/lib/db"
+import { CardWithList } from "@/lib/models/types"
+import Card from "@/lib/models/card.model"
+import List from "@/lib/models/list.model"
+import Board from "@/lib/models/board.model"
 
 // api/card/[cardId]
 export async function GET(
@@ -15,18 +15,18 @@ export async function GET(
     await connectDB()
 
     const card = await Card.findById(params.cardId).populate({
-      path: 'listId',
+      path: "listId",
       model: List,
-      select: 'title boardId',
+      select: "title boardId",
       populate: {
-        path: 'boardId',
+        path: "boardId",
         model: Board,
-        select: 'userId'
+        select: "userId"
       }
     })
   
     if (!card) {
-      new NextResponse('Card not found', { status: 404 })
+      new NextResponse("Card not found", { status: 404 })
     }
 
     const cardObject: CardWithList = {
@@ -43,7 +43,7 @@ export async function GET(
 
     return NextResponse.json(cardObject)
   } catch (error) {
-    console.error('[ERROR]', error)
-    return new NextResponse('Internal Error', { status: 500 })
+    console.error("[ERROR]", error)
+    return new NextResponse("Internal Error", { status: 500 })
   }
 }

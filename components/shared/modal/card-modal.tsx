@@ -1,10 +1,10 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-
-import { CardWithList } from "@/lib/models/types"
-import { fetcher } from "@/lib/fetcher"
+import { getCard } from "@/lib/actions/card/get-card"
 import { useCardModal } from "@/hooks/use-card-modal"
+// import { CardWithList } from "@/lib/models/types"
+// import { fetcher } from "@/lib/fetcher"
 
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Header } from "./header"
@@ -16,21 +16,21 @@ export const CardModal = () => {
   const isOpen = useCardModal((state) => state.isOpen)
   const onClose = useCardModal((state) => state.onClose)
 
-  const { data: cardData, isLoading, error } = useQuery<CardWithList, Error>({
+  const { data: cardData, isLoading, isError } = useQuery({
     queryKey: ["card", id],
-    queryFn: () => (id ? fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/card/${id}`)
+    queryFn: () => (id ? getCard(id) // fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/card/${id}`)
                        : Promise.reject(new Error("No ID provided"))),
     enabled: !!id
   })
 
-  if (error) {
+  if (isError) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent>
-          <div>Error loading card: {error.message}</div>
+          <div>Error loading card.</div>
         </DialogContent>
       </Dialog>
-    );
+    )
   }
 
   return (
