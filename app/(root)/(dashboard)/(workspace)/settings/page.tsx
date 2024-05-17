@@ -1,6 +1,6 @@
 import { SettingsForm } from "./_components/settings-form"
 
-const SettingsPage = async() => {
+const SettingsPage = () => {
   return (
     <section>
       <SettingsForm />

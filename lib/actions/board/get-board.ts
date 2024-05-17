@@ -3,7 +3,6 @@
 import mongoose from "mongoose"
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
-
 import Board from "@/lib/models/board.model"
 import { IBoard } from "@/lib/models/types"
 

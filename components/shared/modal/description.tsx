@@ -63,7 +63,7 @@ export const Description = ({
           setFieldErrors({})
           if (res?.data) {
             queryClient.invalidateQueries({
-              queryKey: ["card", res?.data._id],
+              queryKey: ["card", res?.data._id]
             }),
             toast({
               status: "success",

@@ -7,7 +7,7 @@ interface BoardNavbarProps {
   boardData: IBoard
 }
 
-export const BoardNavbar = async ({ boardData }: BoardNavbarProps) => {
+export const BoardNavbar = ({ boardData }: BoardNavbarProps) => {
   return (
     <div className="w-full h-14 z-[50] bg-teal-700 fixed top-14 flex items-center px-6 gap-x-4 text-white">
       <BoardTitleForm boardData={boardData} />
