@@ -60,7 +60,7 @@ export const ResetPasswordValidation = z
     email: z.optional(z.string().email("Invalid email")),
     password: z.optional(validatePassword),
     newPassword: z.optional(validatePassword),
-    role: z.enum([UserRole.ADMIN, UserRole.USER]),
+    role: z.enum([UserRole.ADMIN, UserRole.USER, UserRole.MEMBER]),
     isTwoFactorEnabled: z.optional(z.boolean())
   })
   .refine((data) => {
