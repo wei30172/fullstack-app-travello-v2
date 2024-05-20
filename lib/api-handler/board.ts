@@ -17,7 +17,7 @@ export const askAI = async (params: AskAIParams, signal: AbortSignal) => {
     // console.log(res)
 
     if (!res.ok) {
-      throw new Error("Failed to connect to AI service")
+      throw new Error("The OpenAI API key is currently not available for use.")
     }
 
     return { ok: true, body: res.body }
