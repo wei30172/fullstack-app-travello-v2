@@ -77,10 +77,10 @@ export const UserButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar>
+        <Avatar className="h-8 w-8">
           <AvatarImage src={user?.image || ""} />
           <AvatarFallback className="bg-primary-500">
-            <FaRegUserCircle className="h-6 w-6"/>
+            <FaRegUserCircle className="h-full w-full"/>
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
