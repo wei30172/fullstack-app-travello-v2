@@ -28,6 +28,7 @@ import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { FormError } from "@/components/shared/form/form-error"
 import { FormSuccess } from "@/components/shared/form/form-success"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export const SettingsForm = () => {
   const { data: session, status, update } = useSession({ required: true })
@@ -70,7 +71,7 @@ export const SettingsForm = () => {
   }
 
   if (status === "loading") {
-    return <div>Loading...</div>
+    return <SettingsForm.Skeleton />
   }
 
   return (
@@ -194,6 +195,24 @@ export const SettingsForm = () => {
             </Button>
           </form>
         </Form>
+      </CardContent>
+    </Card>
+  )
+}
+
+SettingsForm.Skeleton = function SkeletonSettingsForm() {
+  return (
+    <Card className="w-[350px]">
+      <CardHeader>
+        <Skeleton className="h-10 w-1/2 mx-auto my-2" />
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-6 my-6">
+          <Skeleton className="h-8 w-full" />
+          <Skeleton className="h-8 w-full" />
+          <Skeleton className="h-8 w-full" />
+          <Skeleton className="h-8 w-full" />
+        </div>
       </CardContent>
     </Card>
   )
