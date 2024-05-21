@@ -25,7 +25,7 @@ export const AvailableCount = () => {
     )
   }
 
-  if (isLoading || !availableCount) {
+  if (isLoading || availableCount == null) {
     return (
       <div className="flex justify-between items-center p-2 pt-0">
         <Skeleton className="h-4 w-1/3 bg-gray-200" />
