@@ -299,7 +299,7 @@ export const BoardForm = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-2">
         {type === "Create" &&
-          <div className="text-sm font-medium text-center text-teal-900 pb-2">
+          <div className="text-md font-medium text-center text-teal-600 pb-2">
             Create Trip
           </div>
         }
