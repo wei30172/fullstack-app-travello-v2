@@ -30,7 +30,7 @@ export const SidebarLinks = ({ routes }: NavItemsProps) => {
           size="sm"
           onClick={() => onClick(route.href)}
           className={cn(
-            "w-full font-normal justify-start pl-10 mb-1",
+            "w-full font-normal justify-start pl-10 mb-1 text-sm",
             pathname === route.href && "bg-teal-500/10 text-teal-700"
           )}
           variant="ghost"

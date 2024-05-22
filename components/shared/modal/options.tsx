@@ -61,7 +61,7 @@ export const Options = ({
   }
   
   return (
-    <div className="space-y-3 mt-2">
+    <div className="space-y-3 mt-3">
       <div className="mb-3" />
       <Button
         onClick={onCopy}

@@ -93,6 +93,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
           ref={ref}
           placeholder="Enter a title for this attractions..."
           errors={fieldErrors}
+          className="text-teal-900"
         />
         <input
           hidden

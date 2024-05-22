@@ -83,7 +83,7 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
         side="bottom" 
         align="start"
       >
-        <div className="text-sm font-medium text-center text-teal-900 pb-2">
+        <div className="text-md font-medium text-center text-teal-600 pb-2">
           Manage Trip
         </div>
         

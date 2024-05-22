@@ -82,7 +82,7 @@ export const ListForm = () => {
             ref={inputRef}
             errors={fieldErrors}
             id="title"
-            className="text-sm px-2 py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition"
+            className="text-sm text-teal-900 px-2 py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition"
             placeholder="Enter itinerary title..."
           />
           <input

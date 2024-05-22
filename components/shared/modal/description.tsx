@@ -96,7 +96,7 @@ export const Description = ({
           >
             <FormTextarea
               id="description"
-              className="w-full mt-2"
+              className="w-full mt-2 min-h-[80px]"
               placeholder="Add a more detailed description"
               defaultValue={data.description || undefined}
               errors={fieldErrors}
@@ -121,7 +121,7 @@ export const Description = ({
           <div
             onClick={enableEditing}
             role="button"
-            className="min-h-[78px] text-sm font-medium py-3 px-3.5 rounded-md"
+            className="min-h-[80px] text-sm font-medium py-3 px-3.5 rounded-md"
           >
             {data.description || "Add a more detailed description..."}
           </div>
