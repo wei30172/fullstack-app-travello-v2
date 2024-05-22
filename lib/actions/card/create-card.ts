@@ -30,7 +30,7 @@ export const createCard = async (
     }
   }
 
-  const { title, boardId, listId } = validatedFields.data
+  const { title, boardId, listId, order } = validatedFields.data
 
   try {
     await connectDB()
@@ -41,11 +41,13 @@ export const createCard = async (
       return { error: "List not found" }
     }
     
-    const lastCard = await Card.findOne({ listId })
+    let newOrder = order
+    if (newOrder === undefined) {
+      const lastCard = await Card.findOne({ listId })
       .sort({ order: -1 }) // Descending order
       .select({ order: 1 }) // Select the order field
-
-    const newOrder = lastCard ? lastCard.order + 1 : 0
+      newOrder = lastCard ? lastCard.order + 1 : 0
+    }
 
     const card = new Card({ title, listId, order: newOrder })
     // console.log({card})

@@ -61,16 +61,19 @@ export const createList = async (
     })
 
     if (cardTitles && cardTitles?.length > 0) {
-      const cardPromises = cardTitles.map(title => createCard({
+      // console.log({cardTitles})
+      const cardPromises = cardTitles.map((title, index) => createCard({
         title,
         boardId,
-        listId: list._id.toString()
+        listId: list._id.toString(),
+        order: index
       }))
 
       // Executes multiple promises in parallel,
       // returning a single promise that resolves after all of the input promises have either resolved or rejected,
       // with an array of objects describing the outcome of each promise.
       const cardResults = await Promise.allSettled(cardPromises)
+      
       const failedCards = cardResults.filter(result => result.status === 'rejected')
       
       if (failedCards.length > 0) {
