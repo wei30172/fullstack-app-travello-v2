@@ -2,10 +2,10 @@ import * as z from "zod"
 
 export const CreateBoardValidation = z.object({
   title: z.string()
-    .min(3, "Title must be 3+ characters")
+    .min(2, "Title must be 2+ characters")
     .max(100, "Title must be less than 100 characters"),
   location: z.string()
-    .min(3, "Description must be 3+ characters")
+    .min(2, "Description must be 2+ characters")
     .max(100, "Description must be less than 100 characters"),
   startDate: z.date(),
   endDate: z.date(),
@@ -17,10 +17,10 @@ export const CreateBoardValidation = z.object({
 
 export const UpdateBoardValidation = z.object({
   title:  z.optional(z.string()
-    .min(3, "Title must be 3+ characters")
+    .min(2, "Title must be 2+ characters")
     .max(100, "Title must be less than 100 characters")),
   location:  z.optional(z.string()
-    .min(3, "Description must be 3+ characters")
+    .min(2, "Description must be 2+ characters")
     .max(100, "Description must be less than 100 characters")),
   startDate:  z.optional(z.date()),
   endDate:  z.optional(z.date()),

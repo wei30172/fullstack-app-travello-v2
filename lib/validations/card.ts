@@ -3,10 +3,11 @@ import * as z from "zod"
 export const CreateCardValidation = z.object({
   title: z.string()
     .min(1, "Title is required")
-    .min(3, "Title must be 3+ characters")
+    .min(2, "Title must be 2+ characters")
     .max(100, "Title must be less than 100 characters"),
   boardId: z.string(),
-  listId: z.string()
+  listId: z.string(),
+  order: z.optional(z.number())
 })
 
 export const DeleteCardValidation = z.object({
@@ -19,13 +20,13 @@ export const UpdateCardValidation = z.object({
   description: z.optional(
     z.string()
     .min(1, "Description is required")
-    .min(3, "Description must be 3+ characters")
+    .min(2, "Description must be 2+ characters")
     .max(300, "Description must be less than 300 characters"),
   ),
   title: z.optional(
     z.string()
     .min(1, "Title is required")
-    .min(3, "Title must be 3+ characters")
+    .min(2, "Title must be 2+ characters")
     .max(100, "Title must be less than 100 characters"),
   ),
   id: z.string()
