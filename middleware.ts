@@ -1,5 +1,4 @@
 import NextAuth from "next-auth"
-
 import { routes } from "@/routes"
 import authConfig from "@/auth.config"
 
@@ -26,10 +25,15 @@ export default withAuthMiddleware((req) => {
     return undefined
   }
 
-  if (!isPublicRoute && !isLoggedIn) {
-    const signInUrl = new URL('signin', nextUrl)
-    signInUrl.searchParams.set('callbackUrl', nextUrl.pathname)
-    return Response.redirect(signInUrl)
+  if (!isLoggedIn && !isPublicRoute) {
+    let callbackUrl = nextUrl.pathname
+    if (nextUrl.search) callbackUrl += nextUrl.search
+    
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl)
+    return Response.redirect(new URL(
+      `/signin?callbackUrl=${encodedCallbackUrl}`,
+      nextUrl
+    ))
   }
 
   if (nextUrl.pathname === "/" && isLoggedIn) {
