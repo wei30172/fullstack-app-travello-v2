@@ -94,7 +94,7 @@ export const signInWithCredentials = async (
       password,
       redirect:false
     })
-    return { url: routes.defaultLoginRedirect }
+    return { url: callbackUrl || routes.defaultLoginRedirect }
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
