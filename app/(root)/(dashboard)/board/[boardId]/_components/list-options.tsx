@@ -75,7 +75,7 @@ export const ListOptions = ({
     <Popover>
       <PopoverTrigger asChild>
         <Button className="h-auto w-auto p-2" variant="ghost">
-          <FiMoreHorizontal className="h-4 w-4" />
+          <FiMoreHorizontal className="h-4 w-4 text-teal-900" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="px-0 pt-3 pb-3" side="bottom" align="start">
@@ -107,7 +107,7 @@ export const ListOptions = ({
             Copy itinerary
           </FormSubmit>
         </form>
-        <Separator />
+        <Separator className="mt-6"/>
         <form action={onDelete}>
           <input hidden name="id" id="id" defaultValue={listData._id} />
           <input hidden name="boardId" id="boardId" defaultValue={listData.boardId.toString()} />
