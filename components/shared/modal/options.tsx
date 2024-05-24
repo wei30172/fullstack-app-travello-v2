@@ -10,8 +10,7 @@ import { useCardModal } from "@/hooks/use-card-modal"
 import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { MdDelete } from "react-icons/md"
-import { FaRegCopy } from "react-icons/fa"
+import { DeleteAlertDialog } from "@/components/shared/delete-alert-dialog"
 
 interface ActionsProps {
   data: CardWithList
@@ -61,28 +60,23 @@ export const Options = ({
   }
   
   return (
-    <div className="space-y-3 mt-3">
-      <div className="mb-3" />
-      <Button
-        onClick={onCopy}
-        disabled={isPending}
-        className="w-full justify-start"
-        size="inline"
-        variant="secondary"
-      >
-        <FaRegCopy className="h-4 w-4 mr-2" />
-        Copy
-      </Button>
-      <Button
-        onClick={onDelete}
-        disabled={isPending}
-        className="w-full justify-start"
-        size="inline"
-        variant="destructive"
-      >
-        <MdDelete className="h-4 w-4 mr-2" />
-        Delete
-      </Button>
+    <div className="mt-3">
+      <div className="md:mb-6"/>
+      <div className="space-y-3">
+        <Button
+          onClick={onCopy}
+          disabled={isPending}
+          className="w-full"
+          size="inline"
+          variant="secondary">
+          Copy
+        </Button>
+        <DeleteAlertDialog
+          title="Delete"
+          onConfirm={onDelete}
+          isPending={isPending}
+        />
+      </div>
     </div>
   )
 }

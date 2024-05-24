@@ -74,7 +74,7 @@ export const Header = ({
           />
         </form>
         <p className="text-sm text-muted-foreground">
-          in itinerary <span className="underline">{data.list.title}</span>
+          in itinerary <span className="font-semibold">{data.list.title}</span>
         </p>
       </div>
     </div>
