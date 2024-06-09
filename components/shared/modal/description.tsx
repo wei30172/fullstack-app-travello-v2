@@ -4,7 +4,7 @@ import { useState, useTransition, useRef, ElementRef } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEventListener, useOnClickOutside } from "usehooks-ts"
-import { CardWithList } from '@/lib/models/types'
+import { CardWithList } from "@/lib/models/types"
 import { updateCard } from "@/lib/actions/card/update-card"
 import { FormErrors } from "@/lib/validations/types"
 
@@ -85,7 +85,7 @@ export const Description = ({
     <div className="flex items-start gap-x-4 w-full">
       <LuMapPin className="h-5 w-5 mt-0.5 text-gray-700" />
       <div className="w-full">
-        <p className="font-semibold text-gray-700 mb-2">
+        <p className="font-semibold text-gray-700 mb-6">
           Description(Click to update)
         </p>
         {isEditing ? (

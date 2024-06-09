@@ -105,7 +105,7 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
         <Separator />
         <Button
           variant="outline"
-          className="w-full mt-4"
+          className="w-full mt-4 mb-2"
           onClick={handleCopyBoard}
           disabled={isPending}
         >

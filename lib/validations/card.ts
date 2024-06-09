@@ -16,18 +16,19 @@ export const DeleteCardValidation = z.object({
 })
 
 export const UpdateCardValidation = z.object({
-  boardId: z.string(),
-  description: z.optional(
-    z.string()
-    .max(300, "Description must be less than 300 characters"),
-  ),
   title: z.optional(
     z.string()
     .min(1, "Title is required")
     .min(2, "Title must be 2+ characters")
     .max(100, "Title must be less than 100 characters"),
   ),
-  id: z.string()
+  description: z.optional(
+    z.string()
+    .max(300, "Description must be less than 300 characters"),
+  ),
+  boardId: z.string(),
+  id: z.string(),
+  isCompleted: z.optional(z.boolean())
 })
 
 export const UpdateCardOrderValidation = z.object({

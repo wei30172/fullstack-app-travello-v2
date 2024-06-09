@@ -16,6 +16,10 @@ const cardSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "List",
     required: true
+  },
+  isCompleted: {
+    type: Boolean,
+    default: false
   }
 }, { timestamps: true })
 

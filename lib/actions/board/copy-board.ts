@@ -76,7 +76,8 @@ export const copyBoard = async (
           title: card.title,
           order: card.order,
           description: card.description,
-          listId: newList._id
+          listId: newList._id,
+          isCompleted: false
         }))
 
         const copiedCards = await Card.insertMany(copiedCardsData)

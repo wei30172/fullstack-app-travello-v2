@@ -50,6 +50,7 @@ export interface ICard extends Document {
   order: number
   description?: string
   listId: string
+  isCompleted: boolean
   createdAt: Date
   updatedAt: Date
 }
@@ -68,6 +69,7 @@ export interface CardWithList extends Document {
   order: number
   description?: string
   listId: string
+  isCompleted: boolean
   createdAt: Date
   updatedAt: Date
   list: { title: string }

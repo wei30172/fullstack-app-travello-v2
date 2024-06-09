@@ -3,7 +3,7 @@
 import { useState, useTransition, useRef, ElementRef } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
-import { CardWithList } from '@/lib/models/types'
+import { CardWithList } from "@/lib/models/types"
 import { updateCard } from "@/lib/actions/card/update-card"
 
 import { useToast } from "@/components/ui/use-toast"
