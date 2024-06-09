@@ -62,7 +62,7 @@ export const Options = ({
   return (
     <div className="mt-3">
       <div className="md:mb-6"/>
-      <div className="mx-2 space-y-3">
+      <div className="mx-2 space-y-2">
         <Button
           onClick={onCopy}
           disabled={isPending}
