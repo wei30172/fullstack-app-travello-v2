@@ -58,7 +58,7 @@ export const Description = ({
     const boardId = params.boardId as string
 
     startTransition(() => {
-      updateCard({ id: data._id, description, boardId })
+      updateCard({ description, boardId, id: data._id })
         .then((res) => {
           setFieldErrors({})
           if (res?.data) {
@@ -97,7 +97,7 @@ export const Description = ({
             <FormTextarea
               id="description"
               className="w-full mt-2 min-h-[80px]"
-              placeholder="Add a more detailed description"
+              placeholder="Add more detailed description"
               defaultValue={data.description || undefined}
               errors={fieldErrors}
               ref={textareaRef}
@@ -122,8 +122,9 @@ export const Description = ({
             onClick={enableEditing}
             role="button"
             className="min-h-[80px] text-sm font-medium py-3 px-3.5 rounded-md break-words"
+            style={{ whiteSpace: "pre-wrap" }}
           >
-            {data.description || "Add a more detailed description..."}
+            {data.description || "Add more detailed description..."}
           </div>
         )}
       </div>

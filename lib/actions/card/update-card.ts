@@ -36,7 +36,7 @@ export const updateCard = async (
     await connectDB()
 
     const card = await Card.findByIdAndUpdate(
-      { _id: id },
+      id,
       updateData,
       { new: true } // Return updated document
     )
