@@ -40,7 +40,6 @@ export const CardModal = () => {
           <>
             <Header.Skeleton />
             <Description.Skeleton />
-            <Options.Skeleton />
           </>
         ) : (
           <>

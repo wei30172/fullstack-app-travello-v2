@@ -62,7 +62,7 @@ export const Options = ({
   return (
     <div className="mt-3">
       <div className="md:mb-6"/>
-      <div className="space-y-3">
+      <div className="mx-2 space-y-3">
         <Button
           onClick={onCopy}
           disabled={isPending}
@@ -77,15 +77,6 @@ export const Options = ({
           isPending={isPending}
         />
       </div>
-    </div>
-  )
-}
-
-Options.Skeleton = function ActionsSkeleton() {
-  return (
-    <div className="space-y-3 mt-8">
-      <Skeleton className="w-full h-8 bg-gray-200" />
-      <Skeleton className="w-full h-8 bg-gray-200" />
     </div>
   )
 }

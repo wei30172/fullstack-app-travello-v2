@@ -86,7 +86,7 @@ export const Description = ({
       <LuMapPin className="h-5 w-5 mt-0.5 text-gray-700" />
       <div className="w-full">
         <p className="font-semibold text-gray-700 mb-2">
-          Description
+          Description(Click to update)
         </p>
         {isEditing ? (
           <form
@@ -121,7 +121,8 @@ export const Description = ({
           <div
             onClick={enableEditing}
             role="button"
-            className="min-h-[80px] text-sm font-medium py-3 px-3.5 rounded-md break-words"
+            className="max-w-[285px] md:max-w-[345px] min-h-[80px] text-sm font-medium py-3 px-3.5 break-words
+              border-transparent border border-gray-700 rounded-md"
             style={{ whiteSpace: "pre-wrap" }}
           >
             {data.description || "Add more detailed description..."}
@@ -135,9 +136,9 @@ export const Description = ({
 Description.Skeleton = function DescriptionSkeleton() {
   return (
     <div className="flex items-start gap-x-4 w-full">
-      <Skeleton className="h-6 w-6 bg-gray-200" />
+      <Skeleton className="h-5 w-5 bg-gray-200" />
       <div className="w-full">
-        <Skeleton className="w-24 h-6 mb-2 bg-gray-200" />
+        <Skeleton className="w-24 h-6 mb-4 bg-gray-200" />
         <Skeleton className="w-full h-[78px] bg-gray-200" />
       </div>
     </div>

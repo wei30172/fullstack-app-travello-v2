@@ -70,7 +70,9 @@ export const Header = ({
             onBlur={onBlur}
             id="title"
             defaultValue={title}
-            className="font-semibold text-md px-1 text-gray-500 bg-transparent border-transparent relative -left-1.5 w-[95%] focus-visible:bg-white focus-visible:border-input mb-0.5 truncate"
+            className="font-semibold text-md px-1 text-gray-500 bg-transparent
+              border-transparent border border-gray-700 rrounded-md
+              relative -left-1.5 w-[95%] focus-visible:bg-white focus-visible:border-input mb-2 truncate"
           />
         </form>
         <p className="text-sm text-muted-foreground">
@@ -83,11 +85,11 @@ export const Header = ({
 
 Header.Skeleton = function HeaderSkeleton() {
   return (
-    <div className="flex items-start gap-x-4 mb-6">
-      <Skeleton className="h-6 w-6 mt-2 bg-gray-200" />
+    <div className="flex items-start gap-x-4 mb-2">
+      <Skeleton className="h-5 w-5 bg-gray-200" />
       <div>
-        <Skeleton className="w-24 h-6 mb-1 bg-gray-200" />
-        <Skeleton className="w-12 h-4 bg-gray-200" />
+        <Skeleton className="w-24 h-6 mb-2 bg-gray-200" />
+        <Skeleton className="w-48 h-4 bg-gray-200" />
       </div>
     </div>
   )
