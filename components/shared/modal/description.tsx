@@ -86,7 +86,7 @@ export const Description = ({
       <LuMapPin className="h-5 w-5 mt-0.5 text-gray-700" />
       <div className="w-full">
         <p className="font-semibold text-gray-700 mb-6">
-          Description(Click to update)
+          Description(Click to edit)
         </p>
         {isEditing ? (
           <form
