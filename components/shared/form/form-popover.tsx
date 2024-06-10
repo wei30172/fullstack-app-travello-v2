@@ -1,6 +1,6 @@
 "use client"
 
-import { ElementRef, useRef } from "react"
+import { useState } from "react"
 import { IoMdClose } from "react-icons/io"
 
 import { BoardForm } from "@/components/shared/board-form"
@@ -27,14 +27,17 @@ export const FormPopover = ({
   sideOffset = 0,
   className
 }: FormPopoverProps) => {
-  const closeRef = useRef<ElementRef<"button">>(null)
-  
-  const handleClosePopover = () => {
-    closeRef.current?.click()
-  }
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
 
   return (
-    <Popover>
+    <Popover open={isPopoverOpen} onOpenChange={
+      // Only changes state when open, closing is controlled by the close button
+      (open) => {
+        if (open) {
+          setIsPopoverOpen(true)
+        }
+      }
+    }>
       <PopoverTrigger asChild>
         {children}
       </PopoverTrigger>
@@ -44,17 +47,19 @@ export const FormPopover = ({
         side={side}
         sideOffset={sideOffset}
       >
-        <PopoverClose ref={closeRef} asChild>
+        <PopoverClose asChild>
           <Button
             className="h-auto w-auto p-2 absolute top-2 right-2 text-teal-900"
             variant="ghost"
+            aria-label="Close popover"
+            onClick={() => setIsPopoverOpen(false)}
           >
             <IoMdClose className="h-4 w-4" />
           </Button>
         </PopoverClose>
         <BoardForm
           type="Create"
-          onClose={handleClosePopover}
+          onClose={() => setIsPopoverOpen(false)}
         />
       </PopoverContent>
     </Popover>
