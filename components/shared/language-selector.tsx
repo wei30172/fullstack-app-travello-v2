@@ -30,9 +30,9 @@ export const LanguageSelector = ({
     <Select
       disabled={isStreaming}
       onValueChange={setLanguage}
-      defaultValue={language}
+      value={language}
     >
-      <SelectTrigger>
+      <SelectTrigger className="w-[500px]">
         <SelectValue placeholder="Select Language" />
       </SelectTrigger>
       <SelectContent>
