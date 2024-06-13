@@ -1,16 +1,16 @@
 import { SidebarLinks } from "./sidebar-links"
-import { MdOutlineDashboardCustomize, MdCreditCard } from "react-icons/md"
+import { FiMap } from "react-icons/fi"
 
 export const Sidebar = () => {
   const routes = [
     {
       label: "Trips",
-      icon: <MdOutlineDashboardCustomize className="h-4 w-4 mr-2" />,
+      icon: <FiMap className="h-4 w-4 mr-2" />,
       href: "/boards",
     },
     // {
     //   label: "Billing",
-    //   icon: <MdCreditCard className="h-4 w-4 mr-2" />,
+    //   icon: <FiCreditCard className="h-4 w-4 mr-2" />,
     //   href: "/billing",
     // },
   ]
