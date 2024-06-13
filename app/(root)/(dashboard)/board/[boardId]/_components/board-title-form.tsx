@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition, useEffect, useRef, ElementRef  } from "react"
+import { useState, useTransition, useEffect, useRef  } from "react"
 import { IBoard } from "@/lib/models/types"
 import { updateBoard } from "@/lib/actions/board/update-board"
 
@@ -16,8 +16,8 @@ export const BoardTitleForm = ({ boardData }: BoardTitleFormProps) => {
   const { toast } = useToast()
   const [isPending, startTransition] = useTransition()
 
-  const formRef = useRef<ElementRef<"form">>(null)
-  const inputRef = useRef<ElementRef<"input">>(null)
+  const formRef = useRef<HTMLFormElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const [title, setTitle] = useState(boardData.title)
   const [isEditing, setIsEditing] = useState(false)

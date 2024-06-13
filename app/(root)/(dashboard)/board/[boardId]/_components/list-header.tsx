@@ -1,7 +1,7 @@
 "use client"
 
 
-import { useState, useTransition, useRef, ElementRef } from "react"
+import { useState, useTransition, useRef } from "react"
 import { useEventListener } from "usehooks-ts"
 import { ListWithCards } from "@/lib/models/types"
 import { updateList } from "@/lib/actions/list/update-list"
@@ -25,8 +25,8 @@ export const ListHeader = ({
   const [isEditing, setIsEditing] = useState(false)
   const [isPending, startTransition] = useTransition()
 
-  const formRef = useRef<ElementRef<"form">>(null)
-  const inputRef = useRef<ElementRef<"input">>(null)
+  const formRef = useRef<HTMLFormElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const enableEditing = () => {
     setIsEditing(true)

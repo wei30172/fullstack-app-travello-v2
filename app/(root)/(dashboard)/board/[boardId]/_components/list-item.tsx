@@ -1,6 +1,6 @@
 "use client"
 
-import { ElementRef, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { ListWithCards } from "@/lib/models/types"
 import { cn } from "@/lib/utils"
@@ -18,7 +18,7 @@ export const ListItem = ({
   listData,
   index,
 }: ListItemProps) => {
-  const textareaRef = useRef<ElementRef<"textarea">>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const [isEditing, setIsEditing] = useState(false)
 

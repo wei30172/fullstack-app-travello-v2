@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition, useRef, ElementRef } from "react"
+import { useState, useTransition, useRef } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { useEventListener, useOnClickOutside } from "usehooks-ts"
 import { createList } from "@/lib/actions/list/create-list"
@@ -23,8 +23,8 @@ export const ListForm = () => {
   const [isEditing, setIsEditing] = useState(false)
   const [isPending, startTransition] = useTransition()
 
-  const formRef = useRef<ElementRef<"form">>(null)
-  const inputRef = useRef<ElementRef<"input">>(null)
+  const formRef = useRef<HTMLFormElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const enableEditing = () => {
     setIsEditing(true)

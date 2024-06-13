@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition, useRef, ElementRef } from "react"
+import { useState, useTransition, useRef } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEventListener, useOnClickOutside } from "usehooks-ts"
@@ -30,8 +30,8 @@ export const Description = ({
   const [isEditing, setIsEditing] = useState(false)
   const [isPending, startTransition] = useTransition()
 
-  const formRef = useRef<ElementRef<"form">>(null)
-  const textareaRef = useRef<ElementRef<"textarea">>(null)
+  const formRef = useRef<HTMLFormElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const enableEditing = () => {
     setIsEditing(true)

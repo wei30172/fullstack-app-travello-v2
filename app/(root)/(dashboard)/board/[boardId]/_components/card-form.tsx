@@ -5,7 +5,6 @@ import {
   useRef,
   forwardRef,
   useTransition,
-  ElementRef, 
   KeyboardEventHandler,
 } from "react"
 import { useParams } from "next/navigation"
@@ -39,7 +38,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
   const [fieldErrors, setFieldErrors] = useState<FormErrors>({})
   const [isPending, startTransition] = useTransition()
 
-  const formRef = useRef<ElementRef<"form">>(null)
+  const formRef = useRef<HTMLFormElement>(null)
 
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {

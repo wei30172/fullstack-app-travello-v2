@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition, useRef, ElementRef } from "react"
+import { useState, useTransition, useRef } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 import { CardWithList } from "@/lib/models/types"
@@ -25,7 +25,7 @@ export const Header = ({
   const [title, setTitle] = useState(data?.title)
   const [isPending, startTransition] = useTransition()
 
-  const inputRef = useRef<ElementRef<"input">>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const onBlur = () => {
     inputRef.current?.form?.requestSubmit()
