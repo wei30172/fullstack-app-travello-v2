@@ -12,7 +12,7 @@ import { useCardModal } from "@/hooks/use-card-modal"
 import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
-import { DeleteAlertDialog } from "@/components/shared/delete-alert-dialog"
+import { DeleteConfirmDialog } from "@/components/shared/delete-alert-dialog"
 
 interface ActionsProps {
   data: CardWithList
@@ -103,17 +103,21 @@ export const Options = ({
         </div>
         <Button
           onClick={onCopy}
-          disabled={isPending}
-          className="w-full mt-6 mb-2"
+          variant="secondary"
           size="inline"
-          variant="secondary">
+          className="w-full mt-6 mb-2"
+          disabled={isPending}>
           Copy
         </Button>
-        <DeleteAlertDialog
-          title="Delete"
-          onConfirm={onDelete}
-          isPending={isPending}
-        />
+        <DeleteConfirmDialog onConfirm={onDelete}>
+          <Button
+            variant="destructive"
+            size="inline"
+            className="w-full"
+            disabled={isPending}>
+            Delete
+          </Button>
+        </DeleteConfirmDialog>
       </div>
     </div>
   )

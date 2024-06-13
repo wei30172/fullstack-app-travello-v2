@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/popover"
 import { useToast } from "@/components/ui/use-toast"
 import { BoardForm } from "@/components/shared/board-form"
-import { DeleteAlertDialog } from "@/components/shared/delete-alert-dialog"
+import { DeleteConfirmDialog } from "@/components/shared/delete-alert-dialog"
 import { FiMoreHorizontal } from "react-icons/fi"
 import { IoMdClose } from "react-icons/io"
 
@@ -104,18 +104,21 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
         />
         <Separator />
         <Button
+          onClick={handleCopyBoard}
           variant="outline"
           className="w-full mt-4 mb-2"
-          onClick={handleCopyBoard}
           disabled={isPending}
         >
           Copy Trip
         </Button>
-        <DeleteAlertDialog
-          title="Delete Trip"
-          onConfirm={handleDeleteBoard}
-          isPending={isPending}
-        />
+        <DeleteConfirmDialog onConfirm={handleDeleteBoard}>
+          <Button
+            variant="destructive"
+            className="w-full"
+            disabled={isPending}>
+            Delete Trip
+          </Button>
+        </DeleteConfirmDialog>
       </PopoverContent>
     </Popover>
   )

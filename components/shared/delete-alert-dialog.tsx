@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,41 +13,43 @@ import {
 import { Button } from "@/components/ui/button"
 
 interface DeleteConfirmDialogProps {
-  title: string
+  actiontitle?: string
+  children: React.ReactNode
   onConfirm: () => void
-  isPending: boolean
 }
 
-export const DeleteAlertDialog = ({
-  title,
-  onConfirm,
-  isPending,
-}: DeleteConfirmDialogProps) => (
-  <AlertDialog>
-    <AlertDialogTrigger asChild>
-      <Button
-        variant="destructive"
-        className="w-full"
-        disabled={isPending}
-      >
-        {title}
-      </Button>
-    </AlertDialogTrigger>
-    <AlertDialogContent>
-      <AlertDialogHeader>
-        <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
-        <AlertDialogDescription>
-          This action cannot be undone.
-        </AlertDialogDescription>
-      </AlertDialogHeader>
-      <AlertDialogFooter>
-        <AlertDialogCancel>Cancel</AlertDialogCancel>
-        <AlertDialogAction
-          className="bg-red-500"
-          onClick={onConfirm}>
-          Delete
-        </AlertDialogAction>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  </AlertDialog>
-)
+export const DeleteConfirmDialog = ({
+  actiontitle = "Delete",
+  children,
+  onConfirm
+}: DeleteConfirmDialogProps) => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <div onClick={() => setIsOpen(true)}>
+          {children}
+        </div>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Confirm</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={() => setIsOpen(false)}>
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            className="bg-red-500"
+            onClick={onConfirm}>
+            {actiontitle}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}

@@ -1,6 +1,6 @@
 "use client"
 
-import { useTransition, useRef, ElementRef } from "react"
+import { useTransition, useRef } from "react"
 import { ListWithCards } from "@/lib/models/types"
 import { copyList } from "@/lib/actions/list/copy-list"
 import { deleteList } from "@/lib/actions/list/delete-list"
@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { useToast } from "@/components/ui/use-toast"
 import { FormSubmit } from "@/components/shared/form/form-submit"
+import { DeleteConfirmDialog } from "@/components/shared/delete-alert-dialog"
 import { FiMoreHorizontal, FiPlus } from "react-icons/fi"
 import { IoMdClose } from "react-icons/io"
 import { FaRegCopy } from "react-icons/fa"
@@ -33,7 +34,8 @@ export const ListOptions = ({
 
   const [isPending, startTransition] = useTransition()
 
-  const closeRef = useRef<ElementRef<"button">>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const deleteFormRef = useRef<HTMLFormElement>(null)
 
   const onDelete = (formData: FormData) => {
     const id = formData.get("id") as string
@@ -69,6 +71,10 @@ export const ListOptions = ({
         })
         .catch(() => toast({ status: "error", description: "Something went wrong" }))
     })
+  }
+
+  const handleConfirmDelete = () => {
+    deleteFormRef.current?.requestSubmit()
   }
 
   return (
@@ -108,17 +114,20 @@ export const ListOptions = ({
           </FormSubmit>
         </form>
         <Separator className="mt-6"/>
-        <form action={onDelete}>
+        <form ref={deleteFormRef} action={onDelete}>
           <input hidden name="id" id="id" defaultValue={listData._id} />
           <input hidden name="boardId" id="boardId" defaultValue={listData.boardId.toString()} />
-          <FormSubmit
-            variant="ghost"
-            className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm"
-            disabled={isPending}
-          >
-            <MdDelete className="h-4 w-4 mr-2" />
-            Delete itinerary
-          </FormSubmit>
+          <DeleteConfirmDialog onConfirm={handleConfirmDelete}>
+            <FormSubmit
+              type="button"
+              variant="ghost"
+              className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm"
+              disabled={isPending}
+            >
+              <MdDelete className="h-4 w-4 mr-2" />
+              Delete itinerary
+            </FormSubmit>
+          </DeleteConfirmDialog>
         </form>
       </PopoverContent>
     </Popover>
