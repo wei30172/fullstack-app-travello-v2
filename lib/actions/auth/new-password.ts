@@ -33,7 +33,7 @@ export const newPassword = async (
 
   await connectDB()
   
-  const existingUser =await User.findOne({email: res.email})
+  const existingUser = await User.findOne({email: res.email})
 
   if (!existingUser) {
     return { error: "Email does not exist!" }
