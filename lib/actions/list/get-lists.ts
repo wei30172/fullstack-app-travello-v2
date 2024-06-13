@@ -1,8 +1,8 @@
 "use server"
 
 import connectDB from "@/lib/db"
-import List from "@/lib/models/list.model"
-import Card from "@/lib/models/card.model"
+import { List } from "@/lib/models/list.model"
+import { Card } from "@/lib/models/card.model"
 import { ICard, ListWithCards } from "@/lib/models/types"
 
 type Result<T> = { data: T } | { error: string }

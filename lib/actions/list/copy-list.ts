@@ -5,9 +5,9 @@ import { revalidatePath } from "next/cache"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
-import Board from "@/lib/models/board.model"
-import List from "@/lib/models/list.model"
-import Card from "@/lib/models/card.model"
+import { Board } from "@/lib/models/board.model"
+import { List } from "@/lib/models/list.model"
+import { Card } from "@/lib/models/card.model"
 import { ICard } from "@/lib/models/types"
 import { CopyListValidation } from "@/lib/validations/list"
 

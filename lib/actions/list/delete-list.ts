@@ -5,9 +5,9 @@ import { revalidatePath } from "next/cache"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
-import Card from "@/lib/models/card.model"
-import List from "@/lib/models/list.model"
-import Board from "@/lib/models/board.model"
+import { Card } from "@/lib/models/card.model"
+import { List } from "@/lib/models/list.model"
+import { Board } from "@/lib/models/board.model"
 import { DeleteListValidation } from "@/lib/validations/list"
 
 type DeleteListInput = z.infer<typeof DeleteListValidation>

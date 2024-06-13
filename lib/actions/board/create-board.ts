@@ -7,7 +7,7 @@ import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { calculateDays, formatDateTime } from "@/lib/date"
 
-import Board from "@/lib/models/board.model"
+import { Board } from "@/lib/models/board.model"
 import { CreateBoardValidation } from "@/lib/validations/board"
 import { createList } from "@/lib/actions/list/create-list"
 

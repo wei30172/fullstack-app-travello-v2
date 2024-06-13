@@ -28,9 +28,17 @@ const boardSchema = new mongoose.Schema({
   lists: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "List"
-  }]
+  }],
+  viewers: {
+    type: [String],
+    default: [],
+  },
+  editors: {
+    type: [String],
+    default: [],
+  },
 }, { timestamps: true })
 
 const Board = mongoose.models.Board || mongoose.model("Board", boardSchema)
 
-export default Board
+export { Board }

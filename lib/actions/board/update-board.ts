@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
-import Board from "@/lib/models/board.model"
+import { Board } from "@/lib/models/board.model"
 import { UpdateBoardValidation } from "@/lib/validations/board"
 
 type UpdateBoardInput = z.infer<typeof UpdateBoardValidation>
@@ -39,7 +39,7 @@ export const updateBoard = async (
     // console.log({id, board})
 
     if (!board) {
-      return { error: "Board not found" }
+      return { error: "Trip not found" }
     }
 
     revalidatePath(`/board/${id}`)

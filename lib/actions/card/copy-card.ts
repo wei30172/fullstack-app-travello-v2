@@ -5,8 +5,8 @@ import { revalidatePath } from "next/cache"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
-import List from "@/lib/models/list.model"
-import Card from "@/lib/models/card.model"
+import { List } from "@/lib/models/list.model"
+import { Card } from "@/lib/models/card.model"
 import { CopyCardValidation } from "@/lib/validations/card"
 
 type CopyCardInput = z.infer<typeof CopyCardValidation>

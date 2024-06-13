@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
-import List from "@/lib/models/list.model"
+import { List } from "@/lib/models/list.model"
 import { UpdateListOrderValidation } from "@/lib/validations/list"
 
 type UpdateListOrderInput = z.infer<typeof UpdateListOrderValidation>

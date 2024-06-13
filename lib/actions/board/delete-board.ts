@@ -7,9 +7,9 @@ import { redirect } from "next/navigation"
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 
-import Card from "@/lib/models/card.model"
-import List from "@/lib/models/list.model"
-import Board from "@/lib/models/board.model"
+import { Card } from "@/lib/models/card.model"
+import { List } from "@/lib/models/list.model"
+import { Board } from "@/lib/models/board.model"
 import { DeleteBoardValidation } from "@/lib/validations/board"
 
 type DeleteBoardInput = z.infer<typeof DeleteBoardValidation>
