@@ -7,6 +7,7 @@ import { useCurrentUser } from "@/hooks/use-session"
 
 import { FaRegUserCircle } from "react-icons/fa"
 import { IoMdLogIn, IoMdLogOut } from "react-icons/io"
+import { FiSettings, FiMap } from "react-icons/fi"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,6 +24,7 @@ import { SignInButton } from "@/components/shared/button/signin-button"
 import { SignOutButton } from "@/components/shared/button/signout-button"
 
 interface NavLink {
+  icon: React.ReactNode,
   title: string
   url: string
 }
@@ -41,10 +43,11 @@ const UserNavLinks = ({
       <Link
         href={link.url}
         className={cn(
-          "py-2 text-sm transition-colors",
+          "py-1 text-sm transition-colors flex items-center",
           pathName === link.url ? "text-black dark:text-white" : "text-muted-foreground"
         )}
       >
+        <span className="mr-2">{link.icon}</span>
         {link.title}
       </Link>
     </DropdownMenuItem>
@@ -71,7 +74,8 @@ export const UserButton = () => {
   // console.log({user})
 
   const userNavLinks = [
-    { title: "Settings", url: "/settings" }
+    { icon: <FiSettings />, title: "Settings", url: "/settings" },
+    { icon: <FiMap /> , title: "Trips", url: "/boards" },
   ]
   
   return (
