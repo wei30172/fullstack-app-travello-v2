@@ -31,12 +31,12 @@ const BoardIdLayout = async ({
 
   return (
     <div
-      className="relative h-full bg-no-repeat bg-cover bg-center"
+      className="relative h-screen bg-no-repeat bg-cover bg-center"
       // style={{ backgroundImage: `url(${board.imageFullUrl})` }}
     >
       <Navbar boardData={board} />
       <div className="absolute inset-0 bg-black/10" />
-      <div className="relative pt-28 h-full">
+      <div className="relative pt-28 pb-16 h-full">
         {children}
       </div>
     </div>

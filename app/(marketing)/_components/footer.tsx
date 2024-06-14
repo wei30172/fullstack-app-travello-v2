@@ -6,7 +6,7 @@ export const MarketingFooter = () => {
     <div className="fixed bottom-0 w-full py-2 px-4 border-t bg-gray-100 dark:bg-gray-900">
       <div className="md:max-w-screen-2xl mx-auto flex items-center w-full justify-between">
         <Logo />
-        <div className="space-x-4 md:block md:w-auto flex items-center justify-end w-full">
+        <div className="w-full flex items-center justify-end space-x-4 md:block md:w-auto">
           <Button size="sm" variant="ghost">
             Privacy Policy
           </Button>

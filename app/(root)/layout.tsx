@@ -7,13 +7,13 @@ const RootLayout = ({
   children: React.ReactNode
 }) => {
   return (
-    <>
+    <div className="min-h-full">
       <Navbar />
-      <main className="h-full">
+      <main>
         {children}
       </main>
       <Footer />
-    </>
+    </div>
   )
 }
 
