@@ -5,9 +5,9 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { useSession } from "next-auth/react"
+import { UserRole, UserProvider } from "@/lib/models/types"
 import { SettingsValidation } from "@/lib/validations/auth"
 import { settings } from "@/lib/actions/auth/settings"
-import { UserRole } from "@/lib/models/types"
 
 import {
   Card,
@@ -102,7 +102,7 @@ export const SettingsForm = () => {
                   </FormItem>
                 )}
               />
-              {user?.provider === "credentials" && (
+              {user?.provider === UserProvider.CREDENTIALS && (
                 <>
                   <FormField
                     control={form.control}
@@ -159,7 +159,7 @@ export const SettingsForm = () => {
                   />
                 </>
               )}
-              {user?.provider === "credentials" && (
+              {user?.provider === UserProvider.CREDENTIALS && (
                 <FormField
                 control={form.control}
                 name="isTwoFactorEnabled"

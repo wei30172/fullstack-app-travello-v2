@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server"
 
 import connectDB from "@/lib/db"
-import { CardWithList } from "@/lib/models/types"
 import { Card } from "@/lib/models/card.model"
 import { List } from "@/lib/models/list.model"
 import { Board } from "@/lib/models/board.model"
+import { CardWithList } from "@/lib/models/types"
 
 // api/card/[cardId]
 export async function GET(
