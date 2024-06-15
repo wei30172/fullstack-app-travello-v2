@@ -49,7 +49,27 @@ export const sendTwoFactorTokenEmail = async (
     from: emailUser,
     to: email,
     subject: "2FA Code",
-    html: `<p>Your 2FA code: ${token}.</p>`
+    html: `<p>Your 2FA code: ${token}</p>`
+  }
+
+  await transporter.sendMail(mailOptions)
+}
+
+export const sendInvitationEmail = async (
+  email: string,
+  user: string,
+  token: string
+) => {
+  const shareLink = `${baseURL}/accept-invitation?token=${token}`
+
+  const mailOptions = {
+    from: emailUser,
+    to: email,
+    subject: "Trip Share Invitation",
+    html: `
+      <p>${user} has invited you to join their trip. Click 
+      <a href="${shareLink}">here</a> to accept the invitation.</p>
+    `
   }
 
   await transporter.sendMail(mailOptions)

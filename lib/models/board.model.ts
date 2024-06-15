@@ -1,9 +1,10 @@
 import mongoose from "mongoose"
+import { BoardRole, TokenStatus } from "@/lib/models/types"
 
 const boardSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true
   },
   title: {
@@ -41,4 +42,37 @@ const boardSchema = new mongoose.Schema({
 
 const Board = mongoose.models.Board || mongoose.model("Board", boardSchema)
 
-export { Board }
+const invitationSchema = new mongoose.Schema({
+  boardId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Board",
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  role: {
+    type: String,
+    enum: [BoardRole.VIEWER, BoardRole.EDITOR],
+    default: BoardRole.VIEWER
+  },
+  token: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  expires: {
+    type: Date,
+    required: true
+  },
+  status: {
+    type: String,
+    enum: [TokenStatus.PENDING, TokenStatus.ACCEPTED, TokenStatus.EXPIRED],
+    default: TokenStatus.PENDING
+  }
+}, { timestamps: true })
+
+const Invitation = mongoose.models.Invitation || mongoose.model("Invitation", invitationSchema)
+
+export { Board, Invitation }

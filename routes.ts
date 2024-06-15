@@ -1,7 +1,8 @@
 export const routes = {
   public: [
     "/",
-    "/new-verification"
+    "/new-verification",
+    "/accept-invitation"
   ],
   auth: [
     "/signin",

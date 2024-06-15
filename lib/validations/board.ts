@@ -1,4 +1,5 @@
 import * as z from "zod"
+import { BoardRole } from "@/lib/models/types"
 
 export const CreateBoardValidation = z.object({
   title: z.string()
@@ -37,4 +38,19 @@ export const DeleteBoardValidation = z.object({
 
 export const CopyBoardValidation = z.object({
   boardId: z.string()
+})
+
+export const ShareBoardValidation = z.object({
+  boardId: z.string(),
+  email: z.string()
+    .min(1, "Email is required")
+    .email("Invalid email"),
+  role: z.enum([BoardRole.VIEWER, BoardRole.EDITOR])
+})
+
+export const UnShareBoardValidation = z.object({
+  boardId: z.string(),
+  email: z.string()
+    .min(1, "Email is required")
+    .email("Invalid email")
 })

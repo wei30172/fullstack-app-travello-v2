@@ -1,15 +1,37 @@
 "use server"
 
 import connectDB from "@/lib/db"
+import { currentUser } from "@/lib/session"
 import { List } from "@/lib/models/list.model"
 import { Card } from "@/lib/models/card.model"
-import { ICard, ListWithCards } from "@/lib/models/types"
+import { Board } from "@/lib/models/board.model"
+import { ICard, ListWithCards, BoardRole } from "@/lib/models/types"
 
-type Result<T> = { data: T } | { error: string }
+type Result<T> = { data: T; role: BoardRole } | { error: string }
 
 export const getLists = async (boardId: string): Promise<Result<ListWithCards[]>> => {
   try {
     await connectDB()
+
+    const user = await currentUser()
+
+    if (!user) {
+      return { error: "Unauthorized" }
+    }
+
+    const board = await Board.findById(boardId)
+
+    if (!board) {
+      return { error: "Board not found" }
+    }
+
+    let role = BoardRole.VIEWER
+
+    if (board.userId.toString() === user._id.toString()) {
+      role = BoardRole.OWNER
+    } else if (board.editors.includes(user.email)) {
+      role = BoardRole.EDITOR
+    }
 
     let lists = await List.find({ boardId })
     .populate({
@@ -36,7 +58,7 @@ export const getLists = async (boardId: string): Promise<Result<ListWithCards[]>
     })
 
     // console.log({lists})
-    return { data: lists as ListWithCards[] }
+    return { data: lists as ListWithCards[], role}
 
   } catch (error) {
     return { error: "Failed to get lists" }

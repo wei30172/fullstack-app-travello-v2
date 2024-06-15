@@ -4,8 +4,7 @@ import mongoose from "mongoose"
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { Board } from "@/lib/models/board.model"
-import { IBoard } from "@/lib/models/types"
-
+import { IBoard, BoardRole } from "@/lib/models/types"
 
 export const getBoard = async (boardId: string): Promise<IBoard | null> => {
   const user = await currentUser()
@@ -46,11 +45,11 @@ export const getBoard = async (boardId: string): Promise<IBoard | null> => {
   }
 
   if (boardObject.userId === user?._id.toString()) {
-    boardObject.role = "owner"
+    boardObject.role = BoardRole.OWNER
   } else if (boardObject.editors.includes(user?.email)) {
-    boardObject.role = "editor"
+    boardObject.role = BoardRole.EDITOR
   } else if (boardObject.viewers.includes(user?.email)) {
-    boardObject.role = "viewer"
+    boardObject.role = BoardRole.VIEWER
   }
   
   // console.log({boardObject})

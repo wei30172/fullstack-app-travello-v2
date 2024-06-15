@@ -3,6 +3,7 @@ import crypto from "crypto"
 
 import connectDB from "@/lib/db"
 import { TwoFactorToken } from "@/lib/models/auth.model"
+import { Invitation } from "@/lib/models/board.model"
 
 export interface IPayload extends JwtPayload {
   email: string
@@ -36,7 +37,7 @@ export const verifyToken = async (token: string): Promise<IPayload | IError> => 
 export const generateCode = async (email: string) => {
   const token = crypto.randomInt(100000, 1000000).toString() // generate a six-digit random number
   // console.log({token})
-  const expires = new Date(new Date().getTime() + 5 * 60 * 1000) // 5 mins
+  const expires = new Date(Date.now() + 5 * 60 * 1000) // 5 mins
 
   await connectDB()
 
@@ -49,6 +50,32 @@ export const generateCode = async (email: string) => {
   })
 
   await twoFactorToken.save()
+
+  return token
+}
+
+export const generateInvitation = async (
+  boardId: string,
+  email: string,
+  role: string
+) => {
+  const token = crypto.randomUUID()
+  // console.log({token})
+  const expires = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000) // 3 day
+
+  await connectDB()
+
+  await Invitation.deleteMany({ boardId, email })
+
+  const invitation= new Invitation({
+    boardId,
+    email,
+    role,
+    token,
+    expires
+  })
+
+  await invitation.save()
 
   return token
 }

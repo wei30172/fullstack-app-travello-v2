@@ -11,6 +11,18 @@ export enum UserProvider {
   CREDENTIALS = "credentials"
 }
 
+export enum BoardRole {
+  VIEWER = "viewer",
+  EDITOR = "editor",
+  OWNER = "owner"
+}
+
+export enum TokenStatus {
+  PENDING = "pending",
+  ACCEPTED = "accepted",
+  EXPIRED = "expired"
+}
+
 export interface IUser extends Document {
   name: string
   email: string
@@ -20,8 +32,8 @@ export interface IUser extends Document {
   provider: UserProvider
   emailVerified: Date
   isTwoFactorEnabled: boolean
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export interface IBoard extends Document {
@@ -32,8 +44,11 @@ export interface IBoard extends Document {
   endDate: Date
   imageUrl?: string
   lists?: string[]
-  createdAt: Date
-  updatedAt: Date
+  viewers: string[]
+  editors: string[]
+  createdAt?: Date
+  updatedAt?: Date
+  role?: BoardRole
 }
 
 export interface IList extends Document {
@@ -41,8 +56,8 @@ export interface IList extends Document {
   order: number
   boardId: string
   cards?: string[]
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export interface ICard extends Document {
@@ -51,8 +66,8 @@ export interface ICard extends Document {
   description?: string
   listId: string
   isCompleted: boolean
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export interface ListWithCards extends Document {
@@ -60,8 +75,8 @@ export interface ListWithCards extends Document {
   order: number
   boardId: string
   cards: ICard[]
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export interface CardWithList extends Document {
@@ -70,7 +85,8 @@ export interface CardWithList extends Document {
   description?: string
   listId: string
   isCompleted: boolean
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
   list: { title: string }
+  role?: BoardRole
 }
