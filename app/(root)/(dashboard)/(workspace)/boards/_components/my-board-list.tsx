@@ -1,19 +1,19 @@
 import Link from "next/link"
-import { getBoards } from "@/lib/actions/board/get-boards"
+import { getMyBoards } from "@/lib/actions/board/get-my-boards"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import { FormPopover } from "@/components/shared/form/form-popover"
 import { GiIsland } from "react-icons/gi"
 
-export const BoardList = async () => {
-  const boards = await getBoards()
+export const MyBoardList = async () => {
+  const boards = await getMyBoards()
   // console.log({boards})
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 mb-10">
       <div className="flex items-center font-semibold text-lg text-gray-700">
         <GiIsland className="h-6 w-6 mr-2" />
-        Your trips
+        My trips
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <FormPopover
@@ -45,7 +45,7 @@ export const BoardList = async () => {
   )
 }
 
-BoardList.Skeleton = function SkeletonBoardList() {
+MyBoardList.Skeleton = function SkeletonBoardList() {
   return (
     <div className="grid gird-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <Skeleton className="aspect-video h-full w-full p-2" />
