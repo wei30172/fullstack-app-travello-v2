@@ -132,7 +132,7 @@ export const sendInvitationEmail = async (
               </td>
             </tr>
           </table>
-          <p style="color: #0f766e; text-align: center; margin-top: 20px;">If you did not request this email, please ignore it.</p>
+          <p style="color: #0f766e; text-align: center; margin-top: 20px;">If you did not expect this invitation, please ignore it.</p>
         </div>
       </body>
     `
