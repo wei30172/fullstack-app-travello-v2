@@ -47,7 +47,7 @@ export const MyBoardList = async () => {
 
 MyBoardList.Skeleton = function SkeletonBoardList() {
   return (
-    <div className="grid gird-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="mb-10 grid gird-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <Skeleton className="aspect-video h-full w-full p-2" />
       <Skeleton className="aspect-video h-full w-full p-2" />
       <Skeleton className="aspect-video h-full w-full p-2" />
