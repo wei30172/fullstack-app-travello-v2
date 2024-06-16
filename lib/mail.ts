@@ -60,7 +60,7 @@ export const sendPasswordResetEmail = async (
           <table style="margin: 20px auto;">
             <tr>
               <td style="background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center;">
-                <a href="${resetLink}" style="font-size: 18px; color: white; text-decoration: none; display: inline-block;">Click here to confirm email</a>
+                <a href="${resetLink}" style="font-size: 18px; color: white; text-decoration: none; display: inline-block;">Click here to reset password</a>
               </td>
             </tr>
           </table>
@@ -128,7 +128,7 @@ export const sendInvitationEmail = async (
           <table style="margin: 20px auto;">
             <tr>
               <td style="background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center;">
-                <a href="${shareLink}" style="font-size: 18px; color: white; text-decoration: none; display: inline-block;">Click here to confirm email</a>
+                <a href="${shareLink}" style="font-size: 18px; color: white; text-decoration: none; display: inline-block;">Click here to accept the invitation</a>
               </td>
             </tr>
           </table>
