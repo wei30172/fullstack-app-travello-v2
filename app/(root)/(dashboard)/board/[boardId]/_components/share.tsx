@@ -40,7 +40,7 @@ export const Share = ({ boardData }: ShareProps) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent 
-        className="w-100 pt-3" 
+        className="w-[350px] pt-6" 
         side="bottom" 
         align="start"
       >
