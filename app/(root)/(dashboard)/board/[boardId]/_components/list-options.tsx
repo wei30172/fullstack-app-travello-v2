@@ -1,7 +1,7 @@
 "use client"
 
 import { useTransition, useRef } from "react"
-import { ListWithCards } from "@/lib/models/types"
+import { ListWithCards, BoardRole } from "@/lib/models/types"
 import { copyList } from "@/lib/actions/list/copy-list"
 import { deleteList } from "@/lib/actions/list/delete-list"
 
@@ -24,11 +24,13 @@ import { MdDelete } from "react-icons/md"
 interface ListOptionsProps {
   listData: ListWithCards
   onAddCard: () => void
+  role: BoardRole
 }
 
 export const ListOptions = ({
   listData,
   onAddCard,
+  role
 }: ListOptionsProps) => {
   const { toast } = useToast()
 
@@ -38,6 +40,11 @@ export const ListOptions = ({
   const deleteFormRef = useRef<HTMLFormElement>(null)
 
   const onDelete = (formData: FormData) => {
+    if (role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Deleting is restricted to authorized users only." })
+      return
+    }
+
     const id = formData.get("id") as string
     const boardId = formData.get("boardId") as string
 
@@ -56,6 +63,11 @@ export const ListOptions = ({
   }
 
   const onCopy = (formData: FormData) => {
+    if (role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      return
+    }
+    
     const id = formData.get("id") as string
     const boardId = formData.get("boardId") as string
 

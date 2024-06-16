@@ -9,8 +9,9 @@ import {
 } from "react"
 import { useParams } from "next/navigation"
 import { useOnClickOutside, useEventListener } from "usehooks-ts"
-import { createCard } from "@/lib/actions/card/create-card"
+import { BoardRole } from "@/lib/models/types"
 import { FormErrors } from "@/lib/validations/types"
+import { createCard } from "@/lib/actions/card/create-card"
 
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
@@ -23,7 +24,8 @@ interface CardFormProps {
   listId: string
   enableEditing: () => void
   disableEditing: () => void
-  isEditing: boolean
+  isEditing: boolean,
+  role: BoardRole
 }
 
 export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
@@ -31,6 +33,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
   enableEditing,
   disableEditing,
   isEditing,
+  role
 }, ref) => {
   const params = useParams()
   const { toast } = useToast()
@@ -57,6 +60,11 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
   }
 
   const onSubmit = (formData: FormData) => {
+    if (role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      return
+    }
+    
     const title = formData.get("title") as string
     const listId = formData.get("listId") as string
     const boardId = params.boardId as string

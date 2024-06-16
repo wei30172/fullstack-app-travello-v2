@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useTransition  } from "react"
 import { DragDropContext, Droppable } from "@hello-pangea/dnd"
-import { ListWithCards } from "@/lib/models/types"
+import { ListWithCards, BoardRole } from "@/lib/models/types"
 import { updateListOrder } from "@/lib/actions/list/update-list-order"
 import { updateCardOrder } from "@/lib/actions/card/update-card-order"
 
@@ -12,7 +12,8 @@ import { ListItem } from "./list-item"
 
 interface ListContainerProps {
   data: ListWithCards[]
-  boardId: string
+  boardId: string,
+  role: BoardRole
 }
 
 function reorder<T>(list: T[], startIndex: number, endIndex: number) {
@@ -25,7 +26,8 @@ function reorder<T>(list: T[], startIndex: number, endIndex: number) {
 
 export const ListContainer = ({
   data,
-  boardId
+  boardId,
+  role
 }: ListContainerProps) => {
   const { toast } = useToast()
 
@@ -37,6 +39,11 @@ export const ListContainer = ({
   }, [data])
 
   const onDragEnd = (result: any) => {
+    if (role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      return
+    }
+
     const { destination, source, type } = result
 
     if (!destination) return
@@ -188,7 +195,8 @@ export const ListContainer = ({
   
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="lists" type="list" direction="horizontal" isDropDisabled={isPending}>
+      <Droppable droppableId="lists" type="list" direction="horizontal"
+        isDropDisabled={isPending || role === BoardRole.VIEWER}>
         {(provided) => (
           <ol 
             {...provided.droppableProps}
@@ -201,11 +209,13 @@ export const ListContainer = ({
                   key={list._id}
                   index={index}
                   listData={list}
+                  role={role}
                 />
               )
             })}
             {provided.placeholder}
-            <ListForm />
+            {(role === BoardRole.EDITOR || role === BoardRole.OWNER) &&
+            <ListForm role={role} />}
             <div className="flex-shrink-0 w-1" />
           </ol>
         )}

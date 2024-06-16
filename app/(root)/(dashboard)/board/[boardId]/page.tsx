@@ -1,5 +1,7 @@
+import { BoardRole } from "@/lib/models/types"
 import { getLists } from "@/lib/actions/list/get-lists"
 
+import { ReadOnlyListContainer } from "./_components/read-only-list-container"
 import { ListContainer } from "./_components/list-container"
 
 interface BoardIdPageProps {
@@ -18,10 +20,18 @@ const BoardIdPage = async ({
       {"error" in res ? (
         <div>Error loading lists: {res.error}</div>
       ) : (
-        <ListContainer
-          boardId={params.boardId}
-          data={res.data}
-        />
+        res.role === BoardRole.VIEWER ? (
+          <ReadOnlyListContainer
+            data={res.data}
+            role={res.role}
+          />
+        ) : (
+          <ListContainer
+            boardId={params.boardId}
+            data={res.data}
+            role={res.role}
+          />
+        )
       )}
     </section>
   )

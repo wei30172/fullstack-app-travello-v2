@@ -3,7 +3,7 @@
 
 import { useState, useTransition, useRef } from "react"
 import { useEventListener } from "usehooks-ts"
-import { ListWithCards } from "@/lib/models/types"
+import { ListWithCards, BoardRole } from "@/lib/models/types"
 import { updateList } from "@/lib/actions/list/update-list"
 
 import { useToast } from "@/components/ui/use-toast"
@@ -12,12 +12,14 @@ import { ListOptions } from "./list-options"
 
 interface ListHeaderProps {
   listData: ListWithCards
-  onAddCard: () => void
+  onAddCard: () => void,
+  role: BoardRole
 }
 
 export const ListHeader = ({
   listData,
   onAddCard,
+  role
 }: ListHeaderProps) => {
   const { toast } = useToast()
 
@@ -29,6 +31,8 @@ export const ListHeader = ({
   const inputRef = useRef<HTMLInputElement>(null)
 
   const enableEditing = () => {
+    if (role === BoardRole.VIEWER) return
+
     setIsEditing(true)
     setTimeout(() => {
       inputRef.current?.focus()
@@ -41,6 +45,11 @@ export const ListHeader = ({
   }
 
   const handleSubmit = (formData: FormData) => {
+    if (role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      return
+    }
+    
     const title = formData.get("title") as string
     const id = formData.get("id") as string
     const boardId = formData.get("boardId") as string
@@ -76,6 +85,16 @@ export const ListHeader = ({
 
   useEventListener("keydown", onKeyDown)
 
+  if (role === BoardRole.VIEWER) {
+    return (
+      <div className="pt-2 px-2 mb-4 text-sm font-semibold flex justify-between items-start gap-x-2">
+        <div className="text-teal-900">
+          {title}
+        </div>
+      </div>
+    )
+  }
+  
   return (
     <div className="pt-2 px-2 mb-4 text-sm font-semibold flex justify-between items-start- gap-x-2">
       {isEditing ? (
@@ -108,6 +127,7 @@ export const ListHeader = ({
       <ListOptions
         onAddCard={onAddCard}
         listData={listData}
+        role={role}
       />
     </div>
   )

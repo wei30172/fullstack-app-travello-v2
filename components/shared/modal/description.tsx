@@ -4,7 +4,7 @@ import { useState, useTransition, useRef } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEventListener, useOnClickOutside } from "usehooks-ts"
-import { CardWithList } from "@/lib/models/types"
+import { CardWithList, BoardRole } from "@/lib/models/types"
 import { updateCard } from "@/lib/actions/card/update-card"
 import { FormErrors } from "@/lib/validations/types"
 
@@ -34,6 +34,8 @@ export const Description = ({
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const enableEditing = () => {
+    if (data.role === BoardRole.VIEWER) return
+
     setIsEditing(true)
     setTimeout(() => {
       textareaRef.current?.focus()
@@ -54,6 +56,11 @@ export const Description = ({
   useOnClickOutside(formRef, disableEditing)
 
   const onSubmit = (formData: FormData) => {
+    if (data.role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      return
+    }
+    
     const description = formData.get("description") as string
     const boardId = params.boardId as string
 
@@ -86,46 +93,55 @@ export const Description = ({
       <LuMapPin className="h-5 w-5 mt-0.5 text-gray-700" />
       <div className="w-full">
         <p className="font-semibold text-gray-700 mb-6">
-          Description(Click to edit)
+          Description{data.role !== BoardRole.VIEWER && "(Click to edit)"}
         </p>
-        {isEditing ? (
-          <form
-            action={onSubmit}
-            ref={formRef}
-            className="space-y-2"
-          >
-            <FormTextarea
-              id="description"
-              className="w-full mt-2 min-h-[80px]"
-              placeholder="Add more detailed description"
-              defaultValue={data.description || undefined}
-              errors={fieldErrors}
-              ref={textareaRef}
-            />
-            <div className="flex items-center gap-x-2">
-              <FormSubmit>
-                Save
-              </FormSubmit>
-              <Button
-                type="button"
-                onClick={disableEditing}
-                size="sm"
-                variant="ghost"
-                disabled={isPending}
-              >
-                Cancel
-              </Button>
+        {(data.role === BoardRole.EDITOR || data.role === BoardRole.OWNER) ? (
+          isEditing ? (
+            <form
+              action={onSubmit}
+              ref={formRef}
+              className="space-y-2"
+            >
+              <FormTextarea
+                id="description"
+                className="w-full mt-2 min-h-[80px]"
+                placeholder="Add more detailed description"
+                defaultValue={data.description || undefined}
+                errors={fieldErrors}
+                ref={textareaRef}
+              />
+              <div className="flex items-center gap-x-2">
+                <FormSubmit>
+                  Save
+                </FormSubmit>
+                <Button
+                  type="button"
+                  onClick={disableEditing}
+                  size="sm"
+                  variant="ghost"
+                  disabled={isPending}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          ) : (
+            <div
+              onClick={enableEditing}
+              role="button"
+              className="max-w-[285px] md:max-w-[345px] min-h-[80px] text-sm font-medium py-3 px-3.5 break-words
+                border-transparent border border-gray-700 rounded-md cursor-pointer"
+              style={{ whiteSpace: "pre-wrap" }}
+            >
+              {data.description || "Add more detailed description..."}
             </div>
-          </form>
+          )
         ) : (
-          <div
-            onClick={enableEditing}
-            role="button"
-            className="max-w-[285px] md:max-w-[345px] min-h-[80px] text-sm font-medium py-3 px-3.5 break-words
+          <div className="w-full min-h-[80px] text-sm font-medium py-3 px-3.5 break-words
               border-transparent border border-gray-700 rounded-md"
             style={{ whiteSpace: "pre-wrap" }}
           >
-            {data.description || "Add more detailed description..."}
+            {data.description || "No detailed description provided."}
           </div>
         )}
       </div>

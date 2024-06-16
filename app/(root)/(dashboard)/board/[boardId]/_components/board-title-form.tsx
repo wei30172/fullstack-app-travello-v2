@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useTransition, useEffect, useRef  } from "react"
-import { IBoard } from "@/lib/models/types"
+import { IBoard, BoardRole } from "@/lib/models/types"
 import { updateBoard } from "@/lib/actions/board/update-board"
 
 import { Button } from "@/components/ui/button"
@@ -27,6 +27,8 @@ export const BoardTitleForm = ({ boardData }: BoardTitleFormProps) => {
   }, [boardData.title])
 
   const enableEditing = () => {
+    if (boardData.role === BoardRole.VIEWER) return
+
     setIsEditing(true)
     setTimeout(() => {
      inputRef.current?.focus()
@@ -39,6 +41,11 @@ export const BoardTitleForm = ({ boardData }: BoardTitleFormProps) => {
   }
 
   const onSubmit = (formData: FormData) => {
+    if (boardData.role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      return
+    }
+
     const title = formData.get("title") as string
     
     if (title === boardData.title) {
@@ -67,6 +74,14 @@ export const BoardTitleForm = ({ boardData }: BoardTitleFormProps) => {
     formRef.current?.requestSubmit()
   }
 
+  if (boardData.role === BoardRole.VIEWER) {
+    return (
+      <div className="font-bold text-lg h-auto w-auto p-1 px-2">
+        {title}
+      </div>
+    )
+  }
+  
   if (isEditing) {
     return (
       <form action={onSubmit} ref={formRef} className="flex items-center gap-x-2">

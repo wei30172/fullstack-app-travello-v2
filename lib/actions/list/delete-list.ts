@@ -33,6 +33,15 @@ export const deleteList = async (
   try {
     await connectDB()
 
+    const board = await Board.findById(boardId)
+    
+    if (
+      board.userId.toString() !== user._id.toString() &&
+      !board.editors.includes(user.email)
+    ) {
+      return { error: "Deleting is restricted to authorized users only." }
+    }
+    
     const list = await List.findById(id)
     
     if (!list) {

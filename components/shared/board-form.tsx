@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import DatePicker from "react-datepicker"
 import { CreateBoardValidation } from "@/lib/validations/board"
-import { IBoard } from "@/lib/models/types"
+import { IBoard, BoardRole } from "@/lib/models/types"
 import { createBoard } from "@/lib/actions/board/create-board"
 import { updateBoard } from "@/lib/actions/board/update-board"
 import { createList } from "@/lib/actions/list/create-list"
@@ -142,6 +142,11 @@ export const BoardForm = ({
         router.back()
         return
       }
+      if (boardData.role === BoardRole.VIEWER) {
+        toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+        return
+      }
+
       onClose()
       startTransition(() => {
         updateBoard({
@@ -167,6 +172,11 @@ export const BoardForm = ({
   }
 
   const handleAskAI = async () => {
+    if (type === "Update" && boardData?.role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      return
+    }
+
     const canUse = await hasAvailableCount()
 
     if (!canUse && !checkRole) {
@@ -258,6 +268,10 @@ export const BoardForm = ({
         status: "error",
         description: "Board data is not available."
       })
+      return
+    }
+    if (type === "Update" && boardData?.role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
       return
     }
 

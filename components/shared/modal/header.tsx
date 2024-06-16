@@ -3,7 +3,7 @@
 import { useState, useTransition, useRef } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
-import { CardWithList } from "@/lib/models/types"
+import { CardWithList, BoardRole } from "@/lib/models/types"
 import { updateCard } from "@/lib/actions/card/update-card"
 
 import { useToast } from "@/components/ui/use-toast"
@@ -28,10 +28,16 @@ export const Header = ({
   const inputRef = useRef<HTMLInputElement>(null)
 
   const onBlur = () => {
+    if (data.role === BoardRole.VIEWER) return
     inputRef.current?.form?.requestSubmit()
   }
 
   const onSubmit = (formData: FormData) => {
+    if (data.role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      return
+    }
+    
     const title = formData.get("title") as string
     const boardId = params.boardId as string
     
@@ -63,18 +69,24 @@ export const Header = ({
     <div className="flex items-start gap-x-4 mb-2 w-full">
       <LuMapPin className="h-5 w-5 mt-2 text-gray-700" />
       <div className="w-full">
-        <form action={onSubmit}>
-          <FormInput
-            disabled={isPending}
-            ref={inputRef}
-            onBlur={onBlur}
-            id="title"
-            defaultValue={title}
-            className="font-semibold text-md px-1 text-gray-500 bg-transparent
-              border-transparent border border-gray-700 rrounded-md
-              relative -left-1.5 w-[95%] focus-visible:bg-white focus-visible:border-input mb-2 truncate"
-          />
-        </form>
+        {(data.role === BoardRole.EDITOR || data.role === BoardRole.OWNER) ? (
+          <form action={onSubmit}>
+            <FormInput
+              disabled={isPending}
+              ref={inputRef}
+              onBlur={onBlur}
+              id="title"
+              defaultValue={title}
+              className="font-semibold text-md px-1 text-gray-500 bg-transparent
+                border-transparent border border-gray-700 rounded-md
+                relative -left-1.5 w-[95%] focus-visible:bg-white focus-visible:border-input mb-2 truncate"
+            />
+          </form>
+        ) : (
+          <div className="font-semibold text-md text-gray-500 mb-2">
+            {title}
+          </div>
+        )}
         <p className="text-sm text-muted-foreground">
           in itinerary <span className="font-semibold">{data.list.title}</span>
         </p>

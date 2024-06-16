@@ -31,19 +31,28 @@ export const updateBoard = async (
   try {
     await connectDB()
 
-    const board = await Board.findByIdAndUpdate(
+    const board = await Board.findById(id)
+
+    if (
+      board.userId.toString() !== user._id.toString() &&
+      !board.editors.includes(user.email)
+    ) {
+      return { error: "Editing is restricted to authorized users only." }
+    }
+
+    const boardToUpdate = await Board.findByIdAndUpdate(
       id,
       { $set: { title, location, startDate, endDate, imageUrl } }, // Only update provided content
       { new: true, omitUndefined: true } // Return updated document, updating only the provided content
     )
     // console.log({id, board})
 
-    if (!board) {
+    if (!boardToUpdate) {
       return { error: "Trip not found" }
     }
 
     revalidatePath(`/board/${id}`)
-    return { data: { title: board.title } }
+    return { data: { title: boardToUpdate.title } }
 
   } catch (error) {
     return { error: "Failed to update" }

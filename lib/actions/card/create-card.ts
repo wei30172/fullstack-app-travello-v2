@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
+import { Board } from "@/lib/models/board.model"
 import { List } from "@/lib/models/list.model"
 import { Card } from "@/lib/models/card.model"
 import { CreateCardValidation } from "@/lib/validations/card"
@@ -35,6 +36,15 @@ export const createCard = async (
   try {
     await connectDB()
 
+    const board = await Board.findById(boardId)
+    
+    if (
+      board.userId.toString() !== user._id.toString() &&
+      !board.editors.includes(user.email)
+    ) {
+      return { error: "Editing is restricted to authorized users only." }
+    }
+    
     const list = await List.findById(listId)
     
     if (!list) {

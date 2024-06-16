@@ -45,6 +45,13 @@ export const copyBoard = async (
       return { error: "Trip not found" }
     }
   
+    if (
+      boardToCopy.userId.toString() !== user._id.toString() &&
+      !boardToCopy.editors.includes(user.email)
+    ) {
+      return { error: "Editing is restricted to authorized users only." }
+    }
+
     const newBoard = new Board({
       title: `${boardToCopy.title} - Copy`,
       location: boardToCopy.location,

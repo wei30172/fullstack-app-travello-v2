@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
-import { CardWithList } from "@/lib/models/types"
+import { CardWithList, BoardRole } from "@/lib/models/types"
 import { updateCard } from "@/lib/actions/card/update-card"
 import { copyCard } from "@/lib/actions/card/copy-card"
 import { deleteCard } from "@/lib/actions/card/delete-card"
@@ -30,6 +30,11 @@ export const Options = ({
   const [completed, setCompleted] = useState(data.isCompleted || false)
 
   const onToggleCompleted = () => {
+    if (data.role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      return
+    }
+
     const boardId = params.boardId as string
     const updatedCompleted = !completed
     setCompleted(updatedCompleted)
@@ -54,6 +59,11 @@ export const Options = ({
   }
 
   const onCopy = () => {
+    if (data.role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      return
+    }
+
     const boardId = params.boardId as string
 
     startTransition(() => {
@@ -71,6 +81,11 @@ export const Options = ({
   }
 
   const onDelete = () => {
+    if (data.role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Deleting is restricted to authorized users only." })
+      return
+    }
+
     const boardId = params.boardId as string
 
     startTransition(() => {

@@ -44,6 +44,13 @@ export const createList = async (
       return { error: "Trip not found" }
     }
 
+    if (
+      board.userId.toString() !== user._id.toString() &&
+      !board.editors.includes(user.email)
+    ) {
+      return { error: "Editing is restricted to authorized users only." }
+    }
+    
     const lastList = await List.findOne({ boardId })
       .sort({ order: -1 }) // Descending order
       .select({ order: 1 }) // Select the order field

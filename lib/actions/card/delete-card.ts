@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
+import { Board } from "@/lib/models/board.model"
 import { Card } from "@/lib/models/card.model"
 import { List } from "@/lib/models/list.model"
 import { DeleteCardValidation } from "@/lib/validations/card"
@@ -32,6 +33,15 @@ export const deleteCard = async (
   try {
     await connectDB()
     
+    const board = await Board.findById(boardId)
+
+    if (
+      board.userId.toString() !== user._id.toString() &&
+      !board.editors.includes(user.email)
+    ) {
+      return { error: "Deleting is restricted to authorized users only." }
+    }
+
     const card = await Card.findById(id)
     
     if (!card) {

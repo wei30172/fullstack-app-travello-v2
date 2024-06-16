@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
-import { IBoard } from "@/lib/models/types"
+import { IBoard, BoardRole } from "@/lib/models/types"
 import { deleteBoard } from "@/lib/actions/board/delete-board"
 import { copyBoard } from "@/lib/actions/board/copy-board"
 
@@ -25,6 +25,7 @@ interface BoardOptionsProps {
 }
 
 export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
+  // console.log({boardData})
   const router = useRouter()
   const { toast } = useToast()
 
@@ -32,6 +33,11 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
   const [isPending, startTransition] = useTransition()
 
   const handleDeleteBoard = () => {
+    if (boardData.role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Deleting is restricted to authorized users only." })
+      return
+    }
+
     startTransition(() => {
       deleteBoard({ boardId: boardData._id })
         .then((res) => {
@@ -44,6 +50,11 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
   }
 
   const handleCopyBoard = () => {
+    if (boardData.role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      return
+    }
+    
     startTransition(() => {
       copyBoard({ boardId: boardData._id })
         .then((res) => {

@@ -1,4 +1,4 @@
-import { BoardRole, IBoard } from "@/lib/models/types"
+import { IBoard, BoardRole } from "@/lib/models/types"
 
 import { BoardTitleForm } from "./board-title-form"
 import { Share } from "./share"
@@ -13,13 +13,10 @@ export const BoardNavbar = ({ boardData }: BoardNavbarProps) => {
     <div className="w-full h-14 z-[50] bg-teal-700 fixed top-14 flex items-center px-6 gap-x-4 text-white">
       <BoardTitleForm boardData={boardData} />
       <div className="ml-auto flex items-center gap-1">
-        {/* {boardData.role === BoardRole.OWNER &&
+        {boardData.role === BoardRole.OWNER &&
         <Share boardData={boardData} />}
         {(boardData.role === BoardRole.EDITOR || boardData.role === BoardRole.OWNER) &&
-        <BoardOptions boardData={boardData} />} */}
-        
-        <Share boardData={boardData} />
-        <BoardOptions boardData={boardData} />
+        <BoardOptions boardData={boardData} />}
       </div>
     </div>
   )

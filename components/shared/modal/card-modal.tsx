@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { getCard } from "@/lib/actions/card/get-card"
 import { useCardModal } from "@/hooks/use-card-modal"
-// import { CardWithList } from "@/lib/models/types"
+import { BoardRole } from "@/lib/models/types"
 // import { fetcher } from "@/lib/fetcher"
 
 import { Dialog, DialogContent } from "@/components/ui/dialog"
@@ -50,7 +50,8 @@ export const CardModal = () => {
                   <Description data={cardData} />
                 </div>
               </div>
-              <Options data={cardData} />
+              {(cardData.role === BoardRole.EDITOR || cardData.role === BoardRole.OWNER) &&
+              <Options data={cardData}/>}
             </div>
           </>
         )}

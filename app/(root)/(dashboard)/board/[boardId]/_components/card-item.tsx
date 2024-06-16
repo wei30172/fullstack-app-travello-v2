@@ -1,7 +1,6 @@
 "use client"
 
 import { Draggable } from "@hello-pangea/dnd"
-
 import { ICard } from "@/lib/models/types"
 import { useCardModal } from "@/hooks/use-card-modal"
 

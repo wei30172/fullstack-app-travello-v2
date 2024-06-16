@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react"
 import { Draggable, Droppable } from "@hello-pangea/dnd";
-import { ListWithCards } from "@/lib/models/types"
+import { ListWithCards, BoardRole } from "@/lib/models/types"
 import { cn } from "@/lib/utils"
 
 import { ListHeader } from "./list-header"
@@ -11,28 +11,32 @@ import { CardForm } from "./card-form"
 
 interface ListItemProps {
   listData: ListWithCards
-  index: number
+  index: number,
+  role: BoardRole
 }
 
 export const ListItem = ({
   listData,
   index,
+  role
 }: ListItemProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const [isEditing, setIsEditing] = useState(false)
 
-  const disableEditing = () => {
-    setIsEditing(false)
-  }
-
   const enableEditing = () => {
+    if (role === BoardRole.VIEWER) return
+
     setIsEditing(true)
     setTimeout(() => {
       textareaRef.current?.focus()
     })
   }
 
+  const disableEditing = () => {
+    setIsEditing(false)
+  }
+  
   return (
     <Draggable draggableId={listData._id} index={index}>
       {(provided) => (
@@ -48,6 +52,7 @@ export const ListItem = ({
             <ListHeader 
               onAddCard={enableEditing}
               listData={listData}
+              role={role}
             />
             <Droppable droppableId={listData._id} type="card">
               {(provided) => (
@@ -71,17 +76,18 @@ export const ListItem = ({
                   {provided.placeholder}
                 </ol>
               )}
-          </Droppable>      
-          <CardForm
-            listId={listData._id}
-            ref={textareaRef}
-            isEditing={isEditing}
-            enableEditing={enableEditing}
-            disableEditing={disableEditing}
-          />
-        </div>
-      </li>
-    )}
+            </Droppable>
+            <CardForm
+              listId={listData._id}
+              ref={textareaRef}
+              isEditing={isEditing}
+              enableEditing={enableEditing}
+              disableEditing={disableEditing}
+              role={role}
+            />
+          </div>
+        </li>
+      )}
     </Draggable>
   )
 }

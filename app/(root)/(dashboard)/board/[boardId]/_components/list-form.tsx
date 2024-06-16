@@ -3,8 +3,9 @@
 import { useState, useTransition, useRef } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { useEventListener, useOnClickOutside } from "usehooks-ts"
-import { createList } from "@/lib/actions/list/create-list"
+import { BoardRole } from "@/lib/models/types"
 import { FormErrors } from "@/lib/validations/types"
+import { createList } from "@/lib/actions/list/create-list"
 
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
@@ -14,7 +15,13 @@ import { ListWrapper } from "./list-wrapper"
 import { FiPlus } from "react-icons/fi"
 import { IoMdClose } from "react-icons/io"
 
-export const ListForm = () => {
+interface ListFormProps {
+  role: BoardRole
+}
+
+export const ListForm = ({
+  role
+}: ListFormProps) => {
   const router = useRouter()
   const params = useParams()
   const { toast } = useToast()
@@ -27,6 +34,8 @@ export const ListForm = () => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const enableEditing = () => {
+    if (role === BoardRole.VIEWER) return
+
     setIsEditing(true)
     setTimeout(() => {
       inputRef.current?.focus()
@@ -47,6 +56,11 @@ export const ListForm = () => {
   useOnClickOutside(formRef, disableEditing)
 
   const onSubmit = (formData: FormData) => {
+    if (role === BoardRole.VIEWER) {
+      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      return
+    }
+    
     const title = formData.get("title") as string
     const boardId = formData.get("boardId") as string
 

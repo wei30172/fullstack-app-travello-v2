@@ -34,6 +34,15 @@ export const copyList = async (
   try {
     await connectDB()
 
+    const board = await Board.findById(boardId)
+    
+    if (
+      board.userId.toString() !== user._id.toString() &&
+      !board.editors.includes(user.email)
+    ) {
+      return { error: "Editing is restricted to authorized users only." }
+    }
+
     // Copy the list
     const listToCopy = await List.findOne({ _id: id, boardId })
       .populate({
