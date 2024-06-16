@@ -22,12 +22,16 @@ export const sendVerificationEmail = async (
     // html: `<p>Click <a href="${confirmLink}">here</a> to confirm email.</p>`
     html: `
       <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0fdfa;">
-        <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
           <h1 style="color: #0d9488; text-align: center;">Email Confirmation</h1>
           <p style="color: #0f766e; font-size: 18px; text-align: center;">Please click the link below to confirm your email address:</p>
-          <div style="display: flex; justify-content: center; align-items: center; margin: 20px 0;">
-            <a href="${confirmLink}" style="font-size: 18px; color: white; background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center; text-decoration: none;">Click here to confirm email</a>
-          </div>
+          <table style="margin: 20px auto;">
+            <tr>
+              <td style="background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center;">
+                <a href="${confirmLink}" style="font-size: 18px; color: white; text-decoration: none; display: inline-block;">Click here to confirm email</a>
+              </td>
+            </tr>
+          </table>
           <p style="color: #0f766e; text-align: center; margin-top: 20px;">If you did not request this email, please ignore it.</p>
         </div>
       </body>
@@ -50,12 +54,16 @@ export const sendPasswordResetEmail = async (
     // html: `<p>Click <a href="${resetLink}">here</a> to reset password.</p>`
     html: `
       <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0fdfa;">
-        <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
           <h1 style="color: #0d9488; text-align: center;">Password Reset</h1>
           <p style="color: #0f766e; font-size: 18px; text-align: center;">Please click the link below to reset your password:</p>
-          <div style="display: flex; justify-content: center; align-items: center; margin: 20px 0;">
-            <a href="${resetLink}" style="font-size: 18px; color: white; background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center; text-decoration: none;">Click here to reset password</a>
-          </div>
+          <table style="margin: 20px auto;">
+            <tr>
+              <td style="background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center;">
+                <a href="${resetLink}" style="font-size: 18px; color: white; text-decoration: none; display: inline-block;">Click here to confirm email</a>
+              </td>
+            </tr>
+          </table>
           <p style="color: #0f766e; text-align: center; margin-top: 20px;">If you did not request this email, please ignore it.</p>
         </div>
       </body>
@@ -76,14 +84,18 @@ export const sendTwoFactorTokenEmail = async (
     // html: `<p>Your 2FA code: ${token}</p>`
     html: `
       <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0fdfa;">
-        <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
           <h1 style="color: #0d9488; text-align: center;">Your Two-Factor Authentication (2FA) Code</h1>
           <p style="color: #0f766e; font-size: 18px; text-align: center;">Your 2FA code is:</p>
-          <div style="display: flex; justify-content: center; align-items: center; margin: 20px 0;">
-            <span style="font-size: 24px; color: white; background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center;">
-              ${token}
-            </span>
-          </div>
+          <table style="margin: 20px auto;">
+            <tr>
+              <td style="background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center;">
+                <span style="font-size: 24px; color: white; background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center;">
+                  ${token}
+                </span>
+              </td>
+            </tr>
+          </table>
           <p style="color: #0f766e; text-align: center; margin-top: 20px;">Please use this code to complete your login.</p>
         </div>
       </body>
@@ -110,12 +122,16 @@ export const sendInvitationEmail = async (
     // `
     html: `
       <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0fdfa;">
-        <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
           <h1 style="color: #0d9488; text-align: center;">Trip Invitation</h1>
           <p style="color: #0f766e; font-size: 18px; text-align: center;">${user} has invited you to join their trip.</p>
-          <div style="display: flex; justify-content: center; align-items: center; margin: 20px 0;">
-            <a href="${shareLink}" style="font-size: 18px; color: white; background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center; text-decoration: none;">Click here to accept the invitation</a>
-          </div>
+          <table style="margin: 20px auto;">
+            <tr>
+              <td style="background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center;">
+                <a href="${shareLink}" style="font-size: 18px; color: white; text-decoration: none; display: inline-block;">Click here to confirm email</a>
+              </td>
+            </tr>
+          </table>
           <p style="color: #0f766e; text-align: center; margin-top: 20px;">If you did not request this email, please ignore it.</p>
         </div>
       </body>
