@@ -6,7 +6,6 @@ import { revalidatePath } from "next/cache"
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { Board, Invitation } from "@/lib/models/board.model"
-import { TokenStatus } from "@/lib/models/types"
 import { UnShareBoardValidation } from "@/lib/validations/board"
 
 type SharedBoardInput = z.infer<typeof UnShareBoardValidation>
