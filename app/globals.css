@@ -65,7 +65,7 @@ body,
 }
 
 /* ====== ANIMATION ====== */
-.laoding-animation svg {
+.animate-spin svg {
   animation: blink-animation 3s infinite both;
 }
 

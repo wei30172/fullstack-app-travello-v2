@@ -7,7 +7,7 @@ import { newVerification } from "@/lib/actions/auth/new-verification"
 import { FormError } from "@/components/shared/form/form-error"
 import { FormSuccess } from "@/components/shared/form/form-success"
 import { FormWrapper } from "@/components/shared/form/form-wrapper"
-import { Loader } from "@/components/shared/loader"
+import { Spinner } from "@/components/shared/spinner"
 
 export const NewVerificationForm = () => {
   const searchParams = useSearchParams()
@@ -48,7 +48,7 @@ export const NewVerificationForm = () => {
     >
       <div className="flex items-center w-full justify-center">
         {!success && !error && (
-          <Loader />
+          <Spinner />
         )}
         <FormSuccess message={success} />
         {!success && (

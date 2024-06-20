@@ -7,7 +7,7 @@ import { acceptInvitation } from "@/lib/actions/board/accept-invitation"
 
 import { FormError } from "@/components/shared/form/form-error"
 import { FormSuccess } from "@/components/shared/form/form-success"
-import { Loader } from "@/components/shared/loader"
+import { Spinner } from "@/components/shared/spinner"
 import { Button } from "@/components/ui/button"
 
 export const AcceptShareForm = () => {
@@ -49,11 +49,11 @@ export const AcceptShareForm = () => {
   }
 
   return (
-    <div className="flex flex-col items-center w-full max-w-sm p-4 bg-teal-100 rounded-lg shadow-md">
+    <div className="flex flex-col items-center w-[360px] p-4 bg-teal-100 rounded-lg shadow-md">
       <h1 className="text-xl font-semibold text-gray-900 mb-4">Accept Trip Share</h1>
       {isPending && (
         <>
-          <Loader className="text-gray-500" />
+          <Spinner className="text-gray-500" />
           <p className="mt-2 text-gray-600">Processing ...</p>
         </>
       )}
