@@ -20,6 +20,10 @@ const cardSchema = new mongoose.Schema({
   isCompleted: {
     type: Boolean,
     default: false
+  },
+  color: {
+    type: String,
+    default: ""
   }
 }, { timestamps: true })
 

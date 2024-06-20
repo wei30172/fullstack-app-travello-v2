@@ -28,7 +28,8 @@ export const UpdateCardValidation = z.object({
   ),
   boardId: z.string(),
   id: z.string(),
-  isCompleted: z.optional(z.boolean())
+  isCompleted: z.optional(z.boolean()),
+  color: z.optional(z.string())
 })
 
 export const UpdateCardOrderValidation = z.object({

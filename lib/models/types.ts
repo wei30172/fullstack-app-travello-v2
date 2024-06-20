@@ -66,6 +66,7 @@ export interface ICard extends Document {
   description?: string
   listId: string
   isCompleted: boolean
+  color: string
   createdAt?: Date
   updatedAt?: Date
 }

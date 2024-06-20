@@ -10,6 +10,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Header } from "./header"
 import { Description } from "./description"
 import { Options } from "./options"
+import { ColorPicker } from "./color-picker"
 
 export const CardModal = () => {
   const id = useCardModal((state) => state.id)
@@ -40,6 +41,7 @@ export const CardModal = () => {
           <>
             <Header.Skeleton />
             <Description.Skeleton />
+            <ColorPicker.Skeleton />
           </>
         ) : (
           <>
@@ -53,6 +55,7 @@ export const CardModal = () => {
               {(cardData.role === BoardRole.EDITOR || cardData.role === BoardRole.OWNER) &&
               <Options data={cardData}/>}
             </div>
+            <ColorPicker data={cardData}/>
           </>
         )}
       </DialogContent>
