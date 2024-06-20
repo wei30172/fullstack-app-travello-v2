@@ -27,7 +27,7 @@ export const SidebarLinks = ({ routes }: NavItemsProps) => {
       {routes.map((route) => (
         <Button
           key={route.href}
-          size="sm"
+          size="lg"
           onClick={() => onClick(route.href)}
           className={cn(
             "w-full font-normal justify-start pl-10 mb-1 text-sm",
