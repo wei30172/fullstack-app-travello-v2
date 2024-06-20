@@ -311,7 +311,7 @@ export const BoardForm = ({
   
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-2">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-3">
         {type === "Create" &&
           <div className="text-md font-medium text-center text-teal-600 pb-2">
             Create Trip
@@ -393,7 +393,7 @@ export const BoardForm = ({
           )}
         />
         <Button
-          className="w-full mt-4"
+          className="w-full mt-6"
           type="submit"
           disabled={isPending}
         >
