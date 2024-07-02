@@ -13,6 +13,7 @@ import {
 import { BoardOwner } from "./board-owner"
 import { ShareForm } from "./share-form"
 import { UnshareSelf } from "./unshare-self"
+import { FiShare2 } from "react-icons/fi"
 import { IoMdClose } from "react-icons/io"
 
 interface ShareProps {
@@ -38,7 +39,7 @@ export const Share = ({ boardData }: ShareProps) => {
           aria-label="Share board"
           onClick={() => setIsPopoverOpen(true)}
         >
-          Share
+          <FiShare2 className="h-4 w-4" />
         </Button>
       </PopoverTrigger>
       <PopoverContent 
