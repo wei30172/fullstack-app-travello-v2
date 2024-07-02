@@ -22,6 +22,7 @@ interface ShareProps {
 
 export const Share = ({ boardData }: ShareProps) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
+  const roleLabel = boardData.role === BoardRole.OWNER ? "Owner" : BoardRole.EDITOR ? "Editor" : "Viewer"
 
   return (
     <Popover open={isPopoverOpen} onOpenChange={
@@ -43,12 +44,15 @@ export const Share = ({ boardData }: ShareProps) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent 
-        className="w-[350px] pt-6" 
+        className="w-[350px] relative pt-6" 
         side="bottom" 
         align="start"
       >
         <div className="text-md font-medium text-center text-teal-600 pb-2">
           Share {boardData.title || "Trip"}
+        </div>
+        <div className="absolute top-2 left-2 bg-black/50 text-white border dark:border-white text-xs px-2 py-1 rounded">
+          {roleLabel}
         </div>
         <BoardOwner userId={boardData.userId} />
         <PopoverClose asChild>
