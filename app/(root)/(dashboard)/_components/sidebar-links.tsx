@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 interface RouteItem {
   label: string
   icon: React.ReactNode
-  href: string
+  url: string
 }
 
 interface NavItemsProps {
@@ -19,19 +19,19 @@ export const SidebarLinks = ({ routes }: NavItemsProps) => {
   const router = useRouter()
   const pathname = usePathname()
 
-  const onClick = (href: string) => {
-    router.push(href)
+  const onClick = (url: string) => {
+    router.push(url)
   }
   return (
     <div className="pt-1 text-gray-900 dark:text-gray-200">
       {routes.map((route) => (
         <Button
-          key={route.href}
+          key={route.url}
           size="lg"
-          onClick={() => onClick(route.href)}
+          onClick={() => onClick(route.url)}
           className={cn(
             "w-full font-normal justify-start pl-10 mb-1 text-sm",
-            pathname === route.href && "bg-teal-500/10 text-teal-700"
+            pathname === route.url && "bg-teal-500/10 text-teal-700"
           )}
           variant="ghost"
         >

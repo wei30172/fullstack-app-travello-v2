@@ -25,7 +25,7 @@ import { SignOutButton } from "@/components/shared/button/signout-button"
 
 interface NavLink {
   icon: React.ReactNode,
-  title: string
+  label: string
   url: string
 }
 
@@ -39,7 +39,7 @@ const UserNavLinks = ({
   pathName
 }:  UserNavLinksProps) => (
   userNavLinks.map((link) => (
-    <DropdownMenuItem key={link.title}>
+    <DropdownMenuItem key={link.label}>
       <Link
         href={link.url}
         className={cn(
@@ -48,7 +48,7 @@ const UserNavLinks = ({
         )}
       >
         <span className="mr-2">{link.icon}</span>
-        {link.title}
+        {link.label}
       </Link>
     </DropdownMenuItem>
   ))
@@ -74,8 +74,21 @@ export const UserButton = () => {
   // console.log({user})
 
   const userNavLinks = [
-    { icon: <FiSettings />, title: "Settings", url: "/settings" },
-    { icon: <FiMap /> , title: "Trips", url: "/boards" },
+    {
+      icon: <FiSettings />,
+      label: "Settings",
+      url: "/settings"
+    },
+    {
+      icon: <FiMap />,
+      label: "Trips",
+      url: "/boards"
+    }
+    // {
+    //   icon: <FiCreditCard />,
+    //   label: "Billing",
+    //   url: "/billing"
+    // }
   ]
   
   return (
