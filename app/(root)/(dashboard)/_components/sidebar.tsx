@@ -1,18 +1,31 @@
+"use client"
+
+import { useMediaQuery } from "usehooks-ts"
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from "@/components/ui/popover"
+import { Button } from "@/components/ui/button"
 import { SidebarLinks } from "./sidebar-links"
-import { FiMap } from "react-icons/fi"
+import { TrashBox } from "./trash-box"
+import { FiMap, FiTrash } from "react-icons/fi"
 
 export const Sidebar = () => {
+  const isMobile = useMediaQuery("(max-width: 768px)")
+
   const routes = [
     {
       label: "Trips",
       icon: <FiMap className="h-4 w-4 mr-2" />,
       href: "/boards",
-    },
+    }
     // {
     //   label: "Billing",
     //   icon: <FiCreditCard className="h-4 w-4 mr-2" />,
     //   href: "/billing",
-    // },
+    // }
   ]
 
   return (
@@ -23,6 +36,24 @@ export const Sidebar = () => {
         </span>
       </div>
       <SidebarLinks routes={routes}/>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            size="lg"
+            className="w-full font-normal justify-start pl-10 mb-1 text-sm"
+            variant="ghost"
+          >
+            <FiTrash className="h-4 w-4 mr-2"/>
+            Trash
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          className="p-0 w-72"
+          side={isMobile ? "bottom" : "right"}
+        >
+          <TrashBox />
+        </PopoverContent>
+      </Popover>
     </>
   )
 }
