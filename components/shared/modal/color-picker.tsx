@@ -10,6 +10,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from "@/components/ui/button"
 import { LuMapPin } from "react-icons/lu"
+import { GoCircleSlash } from "react-icons/go"
 
 interface ColorPickerProps {
   data: CardWithList
@@ -26,10 +27,10 @@ export const ColorPicker = ({
   const [isPending, startTransition] = useTransition()
 
   const colors = [
-    "#e57373", "#f06292", "#ba68c8", "#9575cd", "#7986cb", "#64b5f6",
-    "#4fc3f7", "#4dd0e1", "#4db6ac", "#81c784", "#aed581", "#dce775",
-    "#fff176", "#ffd54f", "#ffb74d", "#ff8a65", "#a1887f", "#e0e0e0",
-    "#90a4ae", "#f8bbd0", "#d1c4e9", "#b3e5fc", "#b2ebf2", "#b2dfdb"
+    "", "#e57373", "#f06292", "#ba68c8", "#9575cd", "#7986cb",
+    "#64b5f6", "#4fc3f7", "#4dd0e1", "#4db6ac", "#81c784", "#aed581",
+    "#dce775", "#fff176", "#ffd54f", "#ffb74d", "#ff8a65", "#a1887f",
+    "#e0e0e0", "#90a4ae", "#f8bbd0", "#d1c4e9", "#b3e5fc", "#b2dfdb"
   ]
 
   const selectColor = (color: string) => {
@@ -72,10 +73,12 @@ export const ColorPicker = ({
             <Button
               key={color}
               onClick={() => selectColor(color)}
-              style={{ backgroundColor: color }}
-              className={`w-8 h-8 rounded-full m-1 p-0 focus:outline-none ${cardColor === color ? "ring-2 ring-white ring-offset-2 ring-offset-gray-800" : ""}`}
+              style={{ backgroundColor: color || "transparent" }}
+              className={`w-8 h-8 rounded-full m-1 p-0 focus:outline-none ${cardColor === color ? "ring-2 ring-white": ""}`}
               disabled={isPending}
-            />
+            >
+              {color === "" && <GoCircleSlash className="text-gray-400 w-full h-full" />}
+            </Button>
           ))}
         </div>
       </div>
