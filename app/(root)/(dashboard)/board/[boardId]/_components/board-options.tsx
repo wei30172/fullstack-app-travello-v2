@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { IBoard, BoardRole } from "@/lib/models/types"
-import { deleteBoard } from "@/lib/actions/board/delete-board"
+import { updateBoard } from "@/lib/actions/board/update-board"
 import { copyBoard } from "@/lib/actions/board/copy-board"
 
 import { Button } from "@/components/ui/button"
@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/popover"
 import { useToast } from "@/components/ui/use-toast"
 import { BoardForm } from "@/components/shared/board-form"
-import { DeleteConfirmDialog } from "@/components/shared/delete-alert-dialog"
 import { FiMoreHorizontal } from "react-icons/fi"
 import { IoMdClose } from "react-icons/io"
 
@@ -32,20 +31,27 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
 
-  const handleDeleteBoard = () => {
+  const handleArchiveBoard = () => {
     if (boardData.role === BoardRole.VIEWER) {
       toast({ status: "warning", description: "Deleting is restricted to authorized users only." })
       return
     }
 
     startTransition(() => {
-      deleteBoard({ boardId: boardData._id })
-        .then((res) => {
-          if (res?.error) {
-            toast({ status: "error", description: res?.error })
-          }
-        })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+      updateBoard({
+        isArchived: true,
+        boardId: boardData._id
+      })
+      .then((res) => {
+        if (res?.data) {
+          toast({ status: "success", title: "Trip moved to trash!" })
+          setIsPopoverOpen(false)
+          router.push("/boards")
+        } else if (res?.error) {
+          toast({ status: "error", description: "Failed to delete trip" })
+        }
+      })
+      .catch(() => toast({ status: "error", description: "Something went wrong" }))
     })
   }
 
@@ -122,14 +128,14 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
         >
           Copy Trip
         </Button>
-        <DeleteConfirmDialog onConfirm={handleDeleteBoard}>
-          <Button
-            variant="destructive"
-            className="w-full"
-            disabled={isPending}>
-            Delete Trip
-          </Button>
-        </DeleteConfirmDialog>
+        <Button
+          onClick={handleArchiveBoard}
+          variant="destructive"
+          className="w-full"
+          disabled={isPending}
+        >
+          Delete Trip
+        </Button>
       </PopoverContent>
     </Popover>
   )

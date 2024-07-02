@@ -155,7 +155,7 @@ export const BoardForm = ({
           startDate: values.startDate,
           endDate: values.endDate,
           imageUrl: values.imageUrl,
-          id: boardData._id
+          boardId: boardData._id
         })
         .then((res) => {
           if (res?.data) {

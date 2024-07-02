@@ -55,7 +55,7 @@ export const BoardTitleForm = ({ boardData }: BoardTitleFormProps) => {
     startTransition(() => {
       updateBoard({
         title,
-        id: boardData._id
+        boardId: boardData._id
       })
       .then((res) => {
         if (res?.data) {

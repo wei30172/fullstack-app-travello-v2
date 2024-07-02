@@ -38,6 +38,10 @@ const boardSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  isArchived: {
+    type: Boolean,
+    default: false
+  }
 }, { timestamps: true })
 
 const Board = mongoose.models.Board || mongoose.model("Board", boardSchema)

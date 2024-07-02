@@ -26,7 +26,8 @@ export const UpdateBoardValidation = z.object({
   startDate:  z.optional(z.date()),
   endDate:  z.optional(z.date()),
   imageUrl: z.optional(z.string()),
-  id: z.string()
+  isArchived: z.optional(z.boolean()),
+  boardId: z.string()
 }).refine((data) => data.endDate == null || data.startDate == null || data.endDate >= data.startDate, {
   message: "End date must be after start date",
   path: ["endDate"]

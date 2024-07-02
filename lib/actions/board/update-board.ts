@@ -26,23 +26,23 @@ export const updateBoard = async (
     return { error: "Invalid fields!" }
   }
 
-  const { id, title, location, startDate, endDate, imageUrl } = validatedFields.data
+  const { boardId, title, location, startDate, endDate, imageUrl, isArchived } = validatedFields.data
 
   try {
     await connectDB()
 
-    const board = await Board.findById(id)
+    const board = await Board.findById(boardId)
 
     if (
       board.userId.toString() !== user._id.toString() &&
       !board.editors.includes(user.email)
     ) {
-      return { error: "Editing is restricted to authorized users only." }
+      return { error: "This function is restricted to authorized users only." }
     }
 
     const boardToUpdate = await Board.findByIdAndUpdate(
-      id,
-      { $set: { title, location, startDate, endDate, imageUrl } }, // Only update provided content
+      boardId,
+      { $set: { title, location, startDate, endDate, imageUrl, isArchived } }, // Only update provided content
       { new: true, omitUndefined: true } // Return updated document, updating only the provided content
     )
     // console.log({id, board})
@@ -51,7 +51,7 @@ export const updateBoard = async (
       return { error: "Trip not found" }
     }
 
-    revalidatePath(`/board/${id}`)
+    revalidatePath(`/board/${boardId}`)
     return { data: { title: boardToUpdate.title } }
 
   } catch (error) {
