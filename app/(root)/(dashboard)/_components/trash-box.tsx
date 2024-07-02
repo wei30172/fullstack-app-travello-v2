@@ -10,7 +10,7 @@ import { deleteBoard } from "@/lib/actions/board/delete-board"
 
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/shared/spinner"
-import { DeleteConfirmDialog } from "@/components/shared/delete-alert-dialog"
+import { ConfirmDialog } from "@/components/shared/confirm-dialog"
 import { useToast } from "@/components/ui/use-toast"
 import { FaSearch, FaTrash, FaUndo } from "react-icons/fa"
 
@@ -122,11 +122,11 @@ export const TrashBox = () => {
               >
                 <FaUndo className="h-4 w-4 text-muted-foreground" />
               </div>
-              <DeleteConfirmDialog onConfirm={() => handleRemove(board._id)}>
+              <ConfirmDialog onConfirm={() => handleRemove(board._id)}>
                 <div className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600">
                   <FaTrash className="h-4 w-4 text-muted-foreground cursor-pointer" />
                 </div>
-              </DeleteConfirmDialog>
+              </ConfirmDialog>
             </div>
           </div>
         )))}

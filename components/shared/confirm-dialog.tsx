@@ -17,7 +17,7 @@ interface DeleteConfirmDialogProps {
   onConfirm: () => void
 }
 
-export const DeleteConfirmDialog = ({
+export const ConfirmDialog = ({
   actiontitle = "Delete",
   children,
   onConfirm

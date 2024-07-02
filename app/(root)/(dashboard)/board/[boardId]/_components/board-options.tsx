@@ -46,7 +46,6 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
         if (res?.data) {
           toast({ status: "success", title: "Trip moved to trash!" })
           setIsPopoverOpen(false)
-          router.push("/boards")
         } else if (res?.error) {
           toast({ status: "error", description: "Failed to delete trip" })
         }

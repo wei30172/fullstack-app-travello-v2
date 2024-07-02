@@ -6,7 +6,7 @@ import { unshareSelf } from "@/lib/actions/board/unshare-self-board"
 
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
-import { DeleteConfirmDialog } from "@/components/shared/delete-alert-dialog"
+import { ConfirmDialog } from "@/components/shared/confirm-dialog"
 
 interface UnshareSelfProps {
   boardId: string
@@ -36,13 +36,13 @@ export const UnshareSelf = ({
   }
 
   return (
-    <DeleteConfirmDialog onConfirm={onClick} actiontitle="Leave">
+    <ConfirmDialog onConfirm={onClick} actiontitle="Leave">
       <Button
         variant="secondary"
         className="w-full"
         disabled={isPending}>
         Leave Trip
       </Button>
-    </DeleteConfirmDialog>
+    </ConfirmDialog>
   )
 }

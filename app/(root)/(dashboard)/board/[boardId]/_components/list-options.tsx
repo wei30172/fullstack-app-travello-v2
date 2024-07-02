@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { useToast } from "@/components/ui/use-toast"
 import { FormSubmit } from "@/components/shared/form/form-submit"
-import { DeleteConfirmDialog } from "@/components/shared/delete-alert-dialog"
+import { ConfirmDialog } from "@/components/shared/confirm-dialog"
 import { FiMoreHorizontal, FiPlus } from "react-icons/fi"
 import { IoMdClose } from "react-icons/io"
 import { FaRegCopy } from "react-icons/fa"
@@ -129,7 +129,7 @@ export const ListOptions = ({
         <form ref={deleteFormRef} action={onDelete}>
           <input hidden name="id" id="id" defaultValue={listData._id} />
           <input hidden name="boardId" id="boardId" defaultValue={listData.boardId.toString()} />
-          <DeleteConfirmDialog onConfirm={handleConfirmDelete}>
+          <ConfirmDialog onConfirm={handleConfirmDelete}>
             <FormSubmit
               type="button"
               variant="ghost"
@@ -139,7 +139,7 @@ export const ListOptions = ({
               <MdDelete className="h-4 w-4 mr-2" />
               Delete itinerary
             </FormSubmit>
-          </DeleteConfirmDialog>
+          </ConfirmDialog>
         </form>
       </PopoverContent>
     </Popover>

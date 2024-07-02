@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation"
 import { getBoard } from "@/lib/actions/board/get-board"
 
-import { BoardNavbar as Navbar } from "./_components/board-navbar"
+import { cn } from "@/lib/utils"
+import { BoardNavbar } from "./_components/board-navbar"
 
 export async function generateMetadata({ 
   params
@@ -34,9 +35,9 @@ const BoardIdLayout = async ({
       className="relative h-screen bg-no-repeat bg-cover bg-center"
       // style={{ backgroundImage: `url(${board.imageFullUrl})` }}
     >
-      <Navbar boardData={board} />
+      <BoardNavbar boardData={board} />
       <div className="absolute inset-0 bg-black/10" />
-      <div className="relative pt-28 pb-16 h-full">
+      <div className={cn("relative pb-16 h-full", board.isArchived ? "pt-40" : "pt-28")}>
         {children}
       </div>
     </div>
