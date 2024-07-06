@@ -40,7 +40,7 @@ export const Share = ({ boardData }: ShareProps) => {
           aria-label="Share board"
           onClick={() => setIsPopoverOpen(true)}
         >
-          <FiShare2 className="h-4 w-4" />
+          <FiShare2 className="h-6 w-6" />
         </Button>
       </PopoverTrigger>
       <PopoverContent 

@@ -91,7 +91,7 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
           aria-label="More options"
           onClick={() => setIsPopoverOpen(true)}
         >
-          <FiMoreHorizontal className="h-4 w-4" />
+          <FiMoreHorizontal className="h-6 w-6" />
         </Button>
       </PopoverTrigger>
       <PopoverContent 
