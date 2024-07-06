@@ -16,9 +16,7 @@ interface ColorPickerProps {
   data: CardWithList
 }
 
-export const ColorPicker = ({
-  data,
-}: ColorPickerProps) => {
+export const ColorPicker = ({ data }: ColorPickerProps) => {
   const params = useParams()
   const queryClient = useQueryClient()
   const { toast } = useToast()
