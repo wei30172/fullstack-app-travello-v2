@@ -5,6 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { handleSelectContentRef } from "@/lib/utils"
 
 const languages = [
   { label: "English", value: "English" },
@@ -35,7 +36,7 @@ export const LanguageSelector = ({
       <SelectTrigger className="w-[500px]">
         <SelectValue placeholder="Select Language" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent ref={handleSelectContentRef} >
         {languages.map((lang) => (
           <SelectItem
             key={lang.value}

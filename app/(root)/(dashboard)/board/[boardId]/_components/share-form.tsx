@@ -9,6 +9,7 @@ import { ShareBoardValidation } from "@/lib/validations/board"
 import { shareBoard } from "@/lib/actions/board/share-board"
 import { unshareBoard } from "@/lib/actions/board/unshare-board"
 import { updateShareRole } from "@/lib/actions/board/update-share-role"
+import { handleSelectContentRef } from "@/lib/utils"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -63,7 +64,7 @@ const SharedUsers = ({
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent ref={handleSelectContentRef} >
               <SelectItem value={BoardRole.VIEWER}>Viewer</SelectItem>
               <SelectItem value={BoardRole.EDITOR}>Editor</SelectItem>
             </SelectContent>
@@ -216,7 +217,7 @@ export const ShareForm = ({ boardData }: ShareFormProps) => {
                       <SelectTrigger className="w-full">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent ref={handleSelectContentRef} >
                         <SelectItem value={BoardRole.VIEWER}>Viewer</SelectItem>
                         <SelectItem value={BoardRole.EDITOR}>Editor</SelectItem>
                       </SelectContent>
