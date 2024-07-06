@@ -7,7 +7,7 @@ type CardModalStore = {
   onClose: () => void
 }
 
-export  const useCardModal = create<CardModalStore>((set) => ({
+export const useCardModal = create<CardModalStore>((set) => ({
   id: undefined,
   isOpen: false,
   onOpen: (id: string) => set({ isOpen: true, id }),
