@@ -91,10 +91,10 @@ const AIResponse = ({
             <h2 className="text-lg font-bold mb-2">AI suggestions</h2>
             <Button
               className="w-1/2 my-2"
+              variant="primary"
               type="button"
               onClick={applySuggestions}
               disabled={pending}
-              variant="primary"
             >
               {pending ? "Updating..." : "Add to Cards"}
             </Button>

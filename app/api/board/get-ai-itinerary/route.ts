@@ -33,7 +33,7 @@ const generateInstructionMessage = (
     `
 }
 
-// api/board/ask-ai
+// api/board/get-ai-itinerary
 export async function POST(
   req: Request
 ) {

@@ -17,7 +17,7 @@ import {
   incrementAvailableCount
 } from "@/lib/actions/user-limit"
 import { useCheckRole } from "@/hooks/use-session"
-import { askAI } from "@/lib/api-handler/board"
+import { getAIItinerary } from "@/lib/api-handler/board"
 import { calculateDays } from "@/lib/date"
 
 import "react-datepicker/dist/react-datepicker.css"
@@ -215,7 +215,7 @@ export const BoardForm = ({
     try {
       abortControllerRef.current = new AbortController()
       const params = { location: values.location, days, language }
-      const res: any = await askAI(params, abortControllerRef.current.signal)
+      const res: any = await getAIItinerary(params, abortControllerRef.current.signal)
 
       if (res.ok && res.body) {
         const reader = res.body.getReader()

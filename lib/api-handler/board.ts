@@ -4,15 +4,15 @@ interface AskAIParams {
   language: string
 }
 
-export const askAI = async (params: AskAIParams, signal: AbortSignal) => {
+export const getAIItinerary = async (params: AskAIParams, signal: AbortSignal) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/board/ask-ai`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/board/get-ai-itinerary`, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(params),
-      signal: signal
+      signal
     })
     // console.log(res)
 
