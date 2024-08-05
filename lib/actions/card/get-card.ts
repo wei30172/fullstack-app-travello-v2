@@ -13,7 +13,7 @@ export const getCard = async (cardId: string): Promise<CardWithList | null> => {
 
   // console.log({cardId})
   if (!cardId || !mongoose.Types.ObjectId.isValid(cardId)) {
-    console.error('Invalid cardId:', cardId)
+    console.error("Invalid cardId:", cardId)
     return null
   }
 

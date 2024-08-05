@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import { getBoard } from "@/lib/actions/board/get-board"
+import { BoardRole } from "@/lib/models/types"
 
 import { cn } from "@/lib/utils"
 import { BoardNavbar } from "./_components/board-navbar"
@@ -30,14 +31,16 @@ const BoardIdLayout = async ({
     notFound()
   }
 
+  const isEditorOrOwner = board.role === BoardRole.EDITOR || board.role === BoardRole.OWNER
+
   return (
     <div
       className="relative h-screen bg-no-repeat bg-cover bg-center"
-      // style={{ backgroundImage: `url(${board.imageFullUrl})` }}
+      style={{ backgroundImage: board.imageUrl ? `url(${board.imageUrl})` : "none" }}
     >
       <BoardNavbar boardData={board} />
       <div className="absolute inset-0 bg-black/10" />
-      <div className={cn("relative pb-16 h-full", board.isArchived ? "pt-40" : "pt-28")}>
+      <div className={cn("relative pb-16 h-full", board.isArchived && isEditorOrOwner ? "pt-40" : "pt-28")}>
         {children}
       </div>
     </div>

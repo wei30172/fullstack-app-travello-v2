@@ -29,6 +29,8 @@ export const ListContainer = ({
   boardId,
   role
 }: ListContainerProps) => {
+  const isEditorOrOwner = role === BoardRole.EDITOR || role === BoardRole.OWNER
+
   const { toast } = useToast()
 
   const [orderedData, setOrderedData] = useState(data)
@@ -214,8 +216,7 @@ export const ListContainer = ({
               )
             })}
             {provided.placeholder}
-            {(role === BoardRole.EDITOR || role === BoardRole.OWNER) &&
-            <ListForm role={role} />}
+            {isEditorOrOwner && <ListForm role={role} />}
             <div className="flex-shrink-0 w-1" />
           </ol>
         )}

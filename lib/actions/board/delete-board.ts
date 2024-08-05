@@ -2,7 +2,6 @@
 
 import { z } from "zod"
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"

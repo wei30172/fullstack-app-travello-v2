@@ -22,6 +22,8 @@ interface DescriptionProps {
 export const Description = ({
   data
 }: DescriptionProps) => {
+  const isEditorOrOwner = data.role === BoardRole.EDITOR || data.role === BoardRole.OWNER
+
   const { toast } = useToast()
   const params = useParams()
   const queryClient = useQueryClient()
@@ -95,7 +97,7 @@ export const Description = ({
         <p className="font-semibold text-gray-700 mb-6">
           Description{data.role !== BoardRole.VIEWER && "(Click to edit)"}
         </p>
-        {(data.role === BoardRole.EDITOR || data.role === BoardRole.OWNER) ? (
+        {isEditorOrOwner ? (
           isEditing ? (
             <form
               action={onSubmit}

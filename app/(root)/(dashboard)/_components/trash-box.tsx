@@ -14,7 +14,6 @@ import { ConfirmDialog } from "@/components/shared/confirm-dialog"
 import { useToast } from "@/components/ui/use-toast"
 import { FaSearch, FaTrash, FaUndo } from "react-icons/fa"
 
-
 export const TrashBox = () => {
   const router = useRouter()
   const { toast } = useToast()

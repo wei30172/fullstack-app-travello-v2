@@ -18,6 +18,8 @@ interface HeaderProps {
 export const Header = ({
   data,
 }: HeaderProps) => {
+  const isEditorOrOwner = data.role === BoardRole.EDITOR || data.role === BoardRole.OWNER
+
   const params = useParams()
   const queryClient = useQueryClient()
   const { toast } = useToast()
@@ -69,7 +71,7 @@ export const Header = ({
     <div className="flex items-start gap-x-4 mb-2 w-full">
       <LuMapPin className="h-5 w-5 mt-2 text-gray-700" />
       <div className="w-full">
-        {(data.role === BoardRole.EDITOR || data.role === BoardRole.OWNER) ? (
+        {isEditorOrOwner ? (
           <form action={onSubmit}>
             <FormInput
               disabled={isPending}

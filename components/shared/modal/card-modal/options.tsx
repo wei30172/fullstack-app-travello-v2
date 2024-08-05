@@ -29,7 +29,7 @@ export const Options = ({
   const [isPending, startTransition] = useTransition()
   const [completed, setCompleted] = useState(data.isCompleted || false)
 
-  const onToggleCompleted = () => {
+  const handleSwitchChange = () => {
     if (data.role === BoardRole.VIEWER) {
       toast({ status: "warning", description: "Editing is restricted to authorized users only." })
       return
@@ -113,7 +113,7 @@ export const Options = ({
             id="isCompleted"
             disabled={isPending}
             checked={completed}
-            onCheckedChange={onToggleCompleted}
+            onCheckedChange={handleSwitchChange}
           />
         </div>
         <Button
