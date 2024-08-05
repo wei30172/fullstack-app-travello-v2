@@ -55,3 +55,13 @@ export const UnShareBoardValidation = z.object({
     .min(1, "Email is required")
     .email("Invalid email")
 })
+
+export const AddMediaValidation = z.object({
+  userId: z.string(),
+  type: z.string(),
+  url: z.string()
+})
+
+export const RemoveMediaValidation = z.object({
+  url: z.string()
+})

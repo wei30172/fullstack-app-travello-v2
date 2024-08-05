@@ -79,4 +79,22 @@ const invitationSchema = new mongoose.Schema({
 
 const Invitation = mongoose.models.Invitation || mongoose.model("Invitation", invitationSchema)
 
-export { Board, Invitation }
+const mediaSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  type: {
+    type: String,
+    required: true
+  },
+  url: {
+    type: String,
+    required: true
+  }
+}, { timestamps: true })
+
+const Media = mongoose.models.Media || mongoose.model("Media", mediaSchema)
+
+export { Board, Invitation, Media }
