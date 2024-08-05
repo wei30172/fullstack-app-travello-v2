@@ -24,6 +24,8 @@ export const CardModal = () => {
     enabled: !!id
   })
 
+  const isEditorOrOwner = cardData?.role === BoardRole.EDITOR || cardData?.role === BoardRole.OWNER
+
   if (isError) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
@@ -52,8 +54,7 @@ export const CardModal = () => {
                   <Description data={cardData} />
                 </div>
               </div>
-              {(cardData.role === BoardRole.EDITOR || cardData.role === BoardRole.OWNER) &&
-              <Options data={cardData}/>}
+              {isEditorOrOwner && <Options data={cardData} />}
             </div>
             <ColorPicker data={cardData}/>
           </>
