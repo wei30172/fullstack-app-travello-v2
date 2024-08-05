@@ -1,5 +1,6 @@
 import { IBoard, BoardRole } from "@/lib/models/types"
 
+import { BoardCoverButton } from "./board-cover-button"
 import { BoardTitleForm } from "./board-title-form"
 import { Share } from "./share"
 import { BoardOptions } from "./board-options"
@@ -17,6 +18,7 @@ export const BoardNavbar = ({ boardData }: BoardNavbarProps) => {
       <div className="h-14 bg-teal-700 flex items-center px-6 gap-x-4 text-white">
         <BoardTitleForm boardData={boardData} />
         <div className="ml-auto flex items-center gap-1">
+          <BoardCoverButton />
           <Share boardData={boardData} /> 
           {isEditorOrOwner && <BoardOptions boardData={boardData} />}
         </div>

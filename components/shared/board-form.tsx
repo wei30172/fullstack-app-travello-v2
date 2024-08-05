@@ -34,6 +34,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
 import AIResponse from "./AI-response"
+import BoardImage from "./board-image"
 
 interface DatePickerFieldProps {
   label: string
@@ -311,6 +312,8 @@ export const BoardForm = ({
   
   return (
     <Form {...form}>
+      <BoardImage url={form.watch("imageUrl")} onClose={onClose}/>
+
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-3">
         {type === "Create" &&
           <div className="text-md font-medium text-center text-teal-600 pb-2">
@@ -334,21 +337,6 @@ export const BoardForm = ({
             </FormItem>
           )}
         />
-        {/* <FormField
-          control={form.control}
-          name="imageUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                <FileImage className="h-4 w-4 m-1" />
-              </FormLabel>
-              <FormControl className="h-36">
-                <Input placeholder="todo: Image" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
         <FormField
           control={form.control}
           name="location"
