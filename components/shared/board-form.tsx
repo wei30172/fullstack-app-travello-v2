@@ -13,9 +13,10 @@ import { createBoard } from "@/lib/actions/board/create-board"
 import { updateBoard } from "@/lib/actions/board/update-board"
 import { createList } from "@/lib/actions/list/create-list"
 import { 
-  hasAvailableCount,
-  incrementAvailableCount
+  hasAvailableAskAiCount,
+  incrementAskAiCount
 } from "@/lib/actions/user-limit"
+import { CountType } from "@/lib/models/types"
 import { useCheckRole } from "@/hooks/use-session"
 import { getAIItinerary } from "@/lib/api-handler/board"
 import { calculateDays } from "@/lib/date"
@@ -178,7 +179,7 @@ export const BoardForm = ({
       return
     }
 
-    const canUse = await hasAvailableCount()
+    const canUse = await hasAvailableAskAiCount()
 
     if (!canUse && !checkRole) {
       toast({
@@ -235,9 +236,9 @@ export const BoardForm = ({
         setTripItinerary(JSON.parse(chunks))
 
         if (!checkRole) {
-          await incrementAvailableCount()
+          await incrementAskAiCount()
           queryClient.invalidateQueries({
-            queryKey: ["availableCount"]
+            queryKey: [CountType.ASK_AI_COUNT]
           })
         }
         

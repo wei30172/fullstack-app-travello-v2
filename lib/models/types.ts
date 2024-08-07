@@ -23,6 +23,11 @@ export enum TokenStatus {
   EXPIRED = "expired"
 }
 
+export enum CountType {
+  ASK_AI_COUNT = "askAiCount",
+  BOARD_COVER_COUNT = "boardCoverCount"
+}
+
 export interface IUser extends Document {
   name: string
   email: string
@@ -91,4 +96,10 @@ export interface CardWithList extends Document {
   updatedAt?: Date
   list: { title: string }
   role?: BoardRole
+}
+
+export interface IUserLimit extends Document {
+  userId: string
+  askAiCount: number
+  boardCoverCount: number
 }

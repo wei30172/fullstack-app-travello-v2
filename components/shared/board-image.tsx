@@ -9,10 +9,10 @@ import { updateBoard } from "@/lib/actions/board/update-board"
 import { useToast } from "@/components/ui/use-toast"
 import { cn } from "@/lib/utils"
 
+import { IoImage, IoTrashBin } from "react-icons/io5"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from "@/components/ui/button"
 import { ConfirmDialog } from "@/components/shared/confirm-dialog"
-import { IoImage, IoTrashBin } from "react-icons/io5"
 
 interface BoardImageProps {
   url?: string

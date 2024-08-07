@@ -5,7 +5,11 @@ export const userLimitSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true
   },
-  count: {
+  askAiCount: {
+    type: Number,
+    default: 0
+  },
+  boardCoverCount: {
     type: Number,
     default: 0
   }

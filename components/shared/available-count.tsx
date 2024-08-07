@@ -1,18 +1,30 @@
 import { useQuery } from "@tanstack/react-query"
-import { MAX_FREE_ASKAI } from "@/constants/board"
-import { getAvailableCount} from "@/lib/actions/user-limit"
 import { useCheckRole } from "@/hooks/use-session"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import { Hint } from "@/components/shared/hint"
 import { IoIosHelpCircleOutline } from "react-icons/io"
 
-export const AvailableCount = () => {
+interface AvailableCountProps {
+  queryKey: string
+  queryFn: () => Promise<number>
+  maxCount: number
+  description: string
+  label: string
+}
+
+export const AvailableCount = ({
+  queryKey,
+  queryFn,
+  maxCount,
+  description,
+  label
+}: AvailableCountProps) => {
   const checkRole = useCheckRole()
 
-  const { data: availableCount, isLoading, isError } = useQuery<number>({
-    queryKey: ["availableCount"],
-    queryFn: () => getAvailableCount()
+  const { data: count, isLoading, isError } = useQuery<number>({
+    queryKey: [queryKey],
+    queryFn: () => queryFn()
   })
 
   if (isError) {
@@ -25,7 +37,7 @@ export const AvailableCount = () => {
     )
   }
 
-  if (isLoading || availableCount == null) {
+  if (isLoading || count == null) {
     return (
       <div className="flex justify-between items-center p-2 pt-0">
         <Skeleton className="h-4 w-1/3 bg-gray-200" />
@@ -37,11 +49,11 @@ export const AvailableCount = () => {
   return (
     <div className="flex justify-between items-center p-2 pt-0">
       <span className="text-xs">
-        {checkRole ? "Unlimited" : `${MAX_FREE_ASKAI - availableCount} remaining`}
+        {checkRole ? "Unlimited" : label.replace("{remaining}", `${maxCount - count}`)}
       </span>
       <Hint
         sideOffset={10}
-        description={`You have 5 free AI uses available in Free Workspaces.`}
+        description={description}
       >
         <IoIosHelpCircleOutline
           className="h-[16px] w-[16px]"

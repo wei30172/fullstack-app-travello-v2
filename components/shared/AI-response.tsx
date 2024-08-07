@@ -1,6 +1,9 @@
+import { MAX_FREE_ASKAI } from "@/constants/board"
+import { getAvailableAskAiCount } from "@/lib/actions/user-limit"
+import { CountType } from "@/lib/models/types"
+
 import { FiPause } from "react-icons/fi"
 import { Button } from "@/components/ui/button"
-
 // import Markdown from "react-markdown"
 import { LanguageSelector } from "@/components/shared/language-selector"
 import { AvailableCount } from "@/components/shared/available-count"
@@ -66,7 +69,13 @@ const AIResponse = ({
         </Button>
       }
       </div>
-      <AvailableCount />
+      <AvailableCount
+        queryKey={CountType.ASK_AI_COUNT}
+        queryFn={getAvailableAskAiCount}
+        maxCount={MAX_FREE_ASKAI}
+        label="{remaining} AI uses remaining"
+        description={`You have ${MAX_FREE_ASKAI} free AI uses available in Free Workspaces.`}
+      />
       {
         isStreaming &&
         <Button

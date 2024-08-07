@@ -3,99 +3,79 @@
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { UserLimit } from "@/lib/models/user.model"
-import { MAX_FREE_ASKAI } from "@/constants/board"
+import { MAX_FREE_ASKAI, MAX_FREE_COVER } from "@/constants/board"
+import { IUserLimit, CountType } from "@/lib/models/types"
 
-export const hasAvailableCount = async () => {
-  const user = await currentUser()
-
-  if (!user) {
-    throw new Error("Unauthorized")
-  }
-
+const getUserLimit = async (userId: string): Promise<IUserLimit> => {
   await connectDB()
-
-  const userLimit = await UserLimit.findOne({
-    userId: user._id
-  })
-
-  if (!userLimit || userLimit.count < MAX_FREE_ASKAI) {
-    return true
-  } else {
-    return false
-  }
-}
-
-export const incrementAvailableCount = async () => {
-  const user = await currentUser()
-
-  if (!user) {
-    throw new Error("Unauthorized")
-  }
-
-  await connectDB()
-
-  const userLimit = await UserLimit.findOne({
-    userId: user._id
-  })
-  // console.log({userLimit})
-
-  if (userLimit) {
-    await UserLimit.findOneAndUpdate(
-      { userId: user._id },
-      { count: userLimit.count + 1 }
-    )
-  } else {
-    const userLimit = new UserLimit({
-      userId: user._id,
-      count: 1
-    })
-    await userLimit.save()
-  }
-}
-
-export const decreaseAvailableCount = async () => {
-  const user = await currentUser()
-
-  if (!user) {
-    throw new Error("Unauthorized")
-  }
-
-  await connectDB()
-
-  const userLimit = await UserLimit.findOne({
-    userId: user._id
-  })
-
-  if (userLimit) {
-    await UserLimit.findOneAndUpdate(
-      { userId: user._id },
-      { count: userLimit.count > 0 ? userLimit.count - 1 : 0 }
-    )
-  } else {
-    const userLimit = new UserLimit({
-      userId: user._id,
-      count: 1
-    })
-    await userLimit.save()
-  }
-}
-
-export const getAvailableCount = async () => {
-  const user = await currentUser()
-
-  if (!user) {
-    throw new Error("Unauthorized")
-  }
-
-  await connectDB()
-  
-  const userLimit = await UserLimit.findOne({
-    userId: user._id
-  })
-  
+  let userLimit = await UserLimit.findOne({ userId }) as IUserLimit
   if (!userLimit) {
-    return 0
+    userLimit = new UserLimit({ userId, askAiCount: 0, boardCoverCount: 0 }) as IUserLimit
+    await userLimit.save()
   }
+  return userLimit
+}
 
-  return userLimit.count
+export const getAvailableAskAiCount = async (): Promise<number> => {
+  const user = await currentUser()
+  if (!user) throw new Error("Unauthorized")
+  const userLimit = await getUserLimit(user._id)
+  return userLimit.askAiCount
+}
+
+export const getAvailableBoardCoverCount = async (): Promise<number> => {
+  const user = await currentUser()
+  if (!user) throw new Error("Unauthorized")
+  const userLimit = await getUserLimit(user._id)
+  return userLimit.boardCoverCount
+}
+
+const checkCount = async (
+  userId: string,
+  field: CountType.ASK_AI_COUNT | CountType.BOARD_COVER_COUNT,
+  maxCount: number
+): Promise<boolean> => {
+  const userLimit = await getUserLimit(userId)
+  return userLimit[field] < maxCount
+}
+
+const updateCount = async (
+  userId: string,
+  field: CountType.ASK_AI_COUNT | CountType.BOARD_COVER_COUNT,
+  increment: number
+): Promise<number> => {
+  const userLimit = await getUserLimit(userId)
+  userLimit[field] = Math.max(0, userLimit[field] + increment)
+  await userLimit.save()
+  return userLimit[field]
+}
+
+export const hasAvailableAskAiCount = async (): Promise<boolean> => {
+  const user = await currentUser()
+  if (!user) throw new Error("Unauthorized")
+  return await checkCount(user._id, CountType.ASK_AI_COUNT, MAX_FREE_ASKAI)
+}
+
+export const hasAvailableBoardCoverCount = async (): Promise<boolean> => {
+  const user = await currentUser()
+  if (!user) throw new Error("Unauthorized")
+  return await checkCount(user._id, CountType.BOARD_COVER_COUNT, MAX_FREE_COVER)
+}
+
+export const incrementAskAiCount = async (): Promise<number> => {
+  const user = await currentUser()
+  if (!user) throw new Error("Unauthorized")
+  return await updateCount(user._id, CountType.ASK_AI_COUNT, 1)
+}
+
+export const incrementBoardCoverCount = async (): Promise<number> => {
+  const user = await currentUser()
+  if (!user) throw new Error("Unauthorized")
+  return await updateCount(user._id, CountType.BOARD_COVER_COUNT, 1)
+}
+
+export const decreaseBoardCoverCount = async (userId: string): Promise<number> => {
+  const user = await currentUser()
+  if (!user) throw new Error("Unauthorized")
+  return await updateCount(userId, CountType.BOARD_COVER_COUNT, -1)
 }
