@@ -26,7 +26,7 @@ Facilitated an easy-to-use drag and drop itinerary planner, allowing users to vi
 Create a .env file in the root directory and add the following variables:
 
 ```env
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
+NEXT_PUBLIC_APP_URL="http://localhost:3000" or "YOUR_NEXT_PUBLIC_APP_URL"
 
 AUTH_SECRET="YOUR_AUTH_SECRET"
 
@@ -35,7 +35,7 @@ MONGODB_URI="YOUR_MONGODB_URI"
 GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
 GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
 
-OPENAI_API_KEY=="OPENAI_API_KEY"
+OPENAI_API_KEY=="YOUR_OPENAI_API_KEY"
 
 TOKEN_SECRET="YOUR_TOKEN_SECRET"
 
