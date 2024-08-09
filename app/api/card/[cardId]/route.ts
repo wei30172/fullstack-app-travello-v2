@@ -26,7 +26,7 @@ export async function GET(
     })
   
     if (!card) {
-      new NextResponse("Card not found", { status: 404 })
+      return new NextResponse("Card not found", { status: 404 })
     }
 
     const cardObject: CardWithList = {
