@@ -4,13 +4,13 @@ import { useState, useTransition } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 import { MAX_FREE_COVER } from "@/constants/board"
+import { CountType, BoardRole, IBoard } from "@/lib/models/types"
+import { useCurrentUser, useCheckRole } from "@/hooks/use-session"
 import { 
   getAvailableBoardCoverCount,
   hasAvailableBoardCoverCount,
   incrementBoardCoverCount
 } from "@/lib/actions/user-limit"
-import { CountType, IBoard } from "@/lib/models/types"
-import { useCurrentUser, useCheckRole } from "@/hooks/use-session"
 import { getBoard } from "@/lib/actions/board/get-board"
 import { addMedia } from "@/lib/actions/board/add-media"
 import { removeMedia } from "@/lib/actions/board/remove-media"
@@ -95,6 +95,11 @@ export const CoverImageModal = () => {
           return
         }
         
+        if (board.role === BoardRole.VIEWER) {
+          toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+          return
+        }
+
         const checksum = await computeSHA256(file)
         const params = { fileType: file.type, fileSize: file.size, checksum }
         const res: any = await uploadFileToS3(params)
