@@ -17,11 +17,13 @@ import { Button } from "@/components/ui/button"
 interface BoardImageProps {
   url?: string
   onClose: () => void
+  isUpdating: boolean
 }
 
 const BoardImage = ({
   url,
-  onClose
+  onClose,
+  isUpdating
 }: BoardImageProps) => {
   const params = useParams()
   const { toast } = useToast()
@@ -78,7 +80,7 @@ const BoardImage = ({
             className="text-muted-foreground p-2 rounded-full shadow-md"
             variant="outline"
             size="sm"
-            disabled={isPending}
+            disabled={isUpdating && isPending}
           >
             <IoImage className="h-4 w-4" />
           </Button>
@@ -87,7 +89,7 @@ const BoardImage = ({
               className="text-muted-foreground p-2 rounded-full shadow-md"
               variant="outline"
               size="sm"
-              disabled={isPending}
+              disabled={isUpdating && isPending}
             >
               <IoTrashBin className="h-4 w-4" />
             </Button>
@@ -95,44 +97,6 @@ const BoardImage = ({
         </div>
       )}
     </div>
-    // <div className={cn(
-    //   "relative aspect-video h-full w-full group rounded-lg overflow-hidden mb-4",
-    //   !url && "h-[0px]",
-    //   url && "bg-muted"
-    // )}>
-    // {!!url && (
-    //   <Image
-    //     src={url}
-    //     fill
-    //     alt="BoardImage"
-    //     className="object-cover"
-    //     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-    //   />
-    // )}
-    // {url && (
-    //   <div className="opacity-0 group-hover:opacity-100 absolute bottom-2 right-2 flex items-center gap-x-2">
-    //     <Button
-    //       onClick={handleOpen}
-    //       className="text-muted-foreground p-2 rounded-full shadow-md"
-    //       variant="outline"
-    //       size="sm"
-    //       disabled={isPending}
-    //     >
-    //       <IoImage className="h-4 w-4" />
-    //     </Button>
-    //     <ConfirmDialog onConfirm={handleRemove} actiontitle="Remove Cover">
-    //       <Button
-    //         className="text-muted-foreground p-2 rounded-full shadow-md"
-    //         variant="outline"
-    //         size="sm"
-    //         disabled={isPending}
-    //       >
-    //         <IoTrashBin className="h-4 w-4" />
-    //       </Button>
-    //     </ConfirmDialog>
-    //   </div>
-    // )}
-    // </div>
   )
 }
 

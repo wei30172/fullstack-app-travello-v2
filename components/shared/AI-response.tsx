@@ -17,7 +17,7 @@ interface AIResponseProps {
   applySuggestions: () => void
   handleAskAI: () => void
   handleStop: () => void
-  pending: boolean
+  isUpdating: boolean
 }
 
 interface TripItinerary {
@@ -33,7 +33,7 @@ const AIResponse = ({
   applySuggestions,
   handleAskAI,
   handleStop,
-  pending,
+  isUpdating
 }: AIResponseProps) => {
   const itineraryElements = tripItinerary && Object.entries(tripItinerary).map(([attraction, activities], index) => (
     <div key={index}>
@@ -62,10 +62,10 @@ const AIResponse = ({
           className="w-full my-2"
           type="button"
           onClick={handleAskAI}
-          disabled={pending}
+          disabled={isUpdating}
           variant="primary"
         >
-          {pending ? "Updating..." : "Ask AI"}
+          {isUpdating ? "Updating..." : "Ask AI"}
         </Button>
       }
       </div>
@@ -103,9 +103,9 @@ const AIResponse = ({
               variant="primary"
               type="button"
               onClick={applySuggestions}
-              disabled={pending}
+              disabled={isUpdating}
             >
-              {pending ? "Updating..." : "Add to Cards"}
+              {isUpdating ? "Updating..." : "Add to Cards"}
             </Button>
           </div>
           {itineraryElements}

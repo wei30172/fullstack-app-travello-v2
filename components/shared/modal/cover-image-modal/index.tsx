@@ -11,11 +11,11 @@ import {
 } from "@/lib/actions/user-limit"
 import { CountType, IBoard } from "@/lib/models/types"
 import { useCurrentUser, useCheckRole } from "@/hooks/use-session"
-import { getSignedURL } from "@/lib/actions/board/get-signed-url"
 import { getBoard } from "@/lib/actions/board/get-board"
 import { addMedia } from "@/lib/actions/board/add-media"
 import { removeMedia } from "@/lib/actions/board/remove-media"
 import { updateBoard } from "@/lib/actions/board/update-board"
+import { uploadFileToS3 } from "@/lib/api-handler/board"
 import { useCoverModal } from "@/hooks/use-cover-modal"
 
 import {
@@ -95,10 +95,12 @@ export const CoverImageModal = () => {
           return
         }
         
-        const uploadResult = await uploadFileToS3(file)
+        const checksum = await computeSHA256(file)
+        const params = { fileType: file.type, fileSize: file.size, checksum }
+        const res: any = await uploadFileToS3(params)
         
-        if (uploadResult.success) {
-          const uploadResponse = await fetch(uploadResult.success.url, {
+        if (res.ok && res.url) {
+          const uploadResponse = await fetch(res.url, {
             method: "PUT",
             headers: {
               "Content-Type": file.type,
@@ -108,32 +110,21 @@ export const CoverImageModal = () => {
           // console.log({response})
 
           if (uploadResponse.ok) {
-            const mediaUrl = uploadResult.success.url.split("?")[0]
+            const mediaUrl = res.url.split("?")[0]
             const mediaType = file.type.startsWith("image") ? "image" : "video"
             await handleSuccessfulUpload(userId, board, mediaUrl, mediaType)
           }
-        } else if (uploadResult.error) {
-          toast({ status: "error", title: uploadResult.error })
+        } else {
+          toast({
+            status: "error",
+            description: `Error: ${res.error}`
+          })
         }
       } catch (error) {
         console.error("Error during upload process:", error)
         toast({ status: "error", description: "Something went wrong" })
       }
     })
-  }
-  
-  const uploadFileToS3 = async (file: File) => {
-    try {
-      const checksum = await computeSHA256(file)
-      return await getSignedURL({
-        fileType: file.type,
-        fileSize: file.size,
-        checksum
-      })
-    } catch (error) {
-      console.error("Error during S3 upload:", error)
-      return { error: "Failed to upload file to S3" }
-    }
   }
 
   const handleSuccessfulUpload = async (userId: string, board: IBoard, mediaUrl: string, mediaType: string) => {

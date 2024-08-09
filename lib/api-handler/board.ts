@@ -1,3 +1,5 @@
+import { fetcher } from "@/lib/fetcher"
+
 interface AskAIParams {
   location: string
   days: number
@@ -29,5 +31,25 @@ export const getAIItinerary = async (params: AskAIParams, signal: AbortSignal) =
       console.error("Error in askAI:", (error as Error).message)
       return { ok: false, error: (error as Error).message || "Failed to connect to AI service" }
     }
+  }
+}
+
+interface GetSignedURLParams {
+  fileType: string
+  fileSize: number
+  checksum: string
+}
+
+export const uploadFileToS3 = async (params: GetSignedURLParams) => {
+  try {
+    const res = await fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/board/upload-to-s3`, {
+      method: "POST",
+      body: JSON.stringify(params)
+    })
+
+    return { ok: true, url: res.url }
+  } catch (error) {
+    console.error("Error in getSignedURL:", (error as Error).message)
+    return { ok: false, error: (error as Error).message || "Failed to connect to AWS service" }
   }
 }

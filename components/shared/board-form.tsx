@@ -313,8 +313,15 @@ export const BoardForm = ({
   
   return (
     <Form {...form}>
-      <BoardImage url={form.watch("imageUrl")} onClose={onClose}/>
-
+      {
+        type === "Update" && (
+          <BoardImage
+            url={form.watch("imageUrl")}
+            onClose={onClose}
+            isUpdating={isPending}
+          />
+        )
+      }
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-3">
         {type === "Create" &&
           <div className="text-md font-medium text-center text-teal-600 pb-2">
@@ -399,7 +406,7 @@ export const BoardForm = ({
               handleAskAI={handleAskAI}
               handleStop={handleStop}
               applySuggestions={applySuggestions}
-              pending={isPending}
+              isUpdating={isPending}
             />
           )
         }
