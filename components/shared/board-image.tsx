@@ -2,7 +2,6 @@
 
 import { useTransition } from "react"
 import { useParams } from "next/navigation"
-import Image from "next/image"
 import { useCoverModal } from "@/hooks/use-cover-modal"
 import { removeMedia } from "@/lib/actions/board/remove-media"
 import { updateBoard } from "@/lib/actions/board/update-board"
@@ -10,9 +9,10 @@ import { useToast } from "@/components/ui/use-toast"
 import { cn } from "@/lib/utils"
 
 import { IoImage, IoTrashBin } from "react-icons/io5"
+import { ConfirmDialog } from "@/components/shared/confirm-dialog"
+import { Spinner } from "@/components/shared/spinner"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from "@/components/ui/button"
-import { ConfirmDialog } from "@/components/shared/confirm-dialog"
 
 interface BoardImageProps {
   url?: string
@@ -63,10 +63,15 @@ const BoardImage = ({
     <div className={cn(
       "relative aspect-video h-full w-full group rounded-lg overflow-hidden mb-4",
       !url && "h-[0px]",
-      url && "bg-muted",
-      url && "bg-no-repeat bg-center bg-cover"
+      url && "bg-muted bg-no-repeat bg-center bg-cover",
+      isPending && "opacity-50"
     )} style={{ backgroundImage: url ? `url(${url})` : "none" }}>
-      {url && (
+      {isPending && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Spinner size="lg" />
+        </div>
+      )}
+      {url && !isPending && (
         <div className="opacity-0 group-hover:opacity-100 absolute bottom-2 right-2 flex items-center gap-x-2">
           <Button
             onClick={handleOpen}
