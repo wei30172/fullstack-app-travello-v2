@@ -144,6 +144,7 @@ export const BoardForm = ({
         router.back()
         return
       }
+      
       if (boardData.role === BoardRole.VIEWER) {
         toast({ status: "warning", description: "Editing is restricted to authorized users only." })
         return

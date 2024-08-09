@@ -178,7 +178,7 @@ export const ListContainer = ({
             order: card.order,
             listId: destList._id, // Use destination list id
           })),
-        ];
+        ]
       
         startTransition(() => {
           updateCardOrder({ cards: updatedCards, boardId })
