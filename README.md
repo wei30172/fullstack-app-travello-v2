@@ -21,11 +21,11 @@ Facilitated an easy-to-use drag and drop itinerary planner, allowing users to vi
 ![Automatically generated day lists](https://github.com/user-attachments/assets/274c0a45-4cae-456e-bc54-f9887db21aa8)
 *The system automatically generates day lists for the trip after the initial trip creation.*
 
-![Select trip cover](https://github.com/user-attachments/assets/f0b3c146-334f-4b5f-af36-6c6aac3855bf)
-*Users can upload or select a cover image for their trip to personalize it.*
-
 ![Update trip card](https://github.com/user-attachments/assets/13ea3605-d5ae-493e-a9eb-09382bf97e97)
 *The user can update information on individual trip cards such as notes.*
+
+![Select trip cover](https://github.com/user-attachments/assets/f0b3c146-334f-4b5f-af36-6c6aac3855bf)
+*Users can upload or select a cover image for their trip to personalize it.*
 
 ![Mark trip as done or add tags](https://github.com/user-attachments/assets/6355e504-bed1-4597-8f18-0f7fd8ea3001)
 *Allows users to mark a trip as completed or add color tags for better organization.*
