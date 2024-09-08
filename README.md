@@ -9,67 +9,67 @@ Facilitated an easy-to-use drag and drop itinerary planner, allowing users to vi
 3.Share Trips with Other Users: Easily share your trips with friends or family via generated links.
 
 ## Project Screenshots
-![Travel planning platform homepage]("https://github.com/user-attachments/assets/9fac8778-7b18-445d-a17a-3b0e0b9989a9")
+![Travel planning platform homepage](https://github.com/user-attachments/assets/9fac8778-7b18-445d-a17a-3b0e0b9989a9)
 *The homepage of the travel planning platform, providing users with an overview and navigation options.*
 
-![List of trips]("https://github.com/user-attachments/assets/dedd89f4-e404-4bdb-a43d-7849bed26350")
+![List of trips](https://github.com/user-attachments/assets/dedd89f4-e404-4bdb-a43d-7849bed26350)
 *Displays all saved trips, allowing users to view, select their trips.*
 
-![Create a new trip]("https://github.com/user-attachments/assets/8b6ea193-ac20-4cfd-af88-f5a8c3bb8341")
+![Create a new trip](https://github.com/user-attachments/assets/8b6ea193-ac20-4cfd-af88-f5a8c3bb8341)
 *The interface for creating a new trip, allowing users to input basic details and start organizing.*
 
-![Automatically generated day lists]("https://github.com/user-attachments/assets/274c0a45-4cae-456e-bc54-f9887db21aa8")
+![Automatically generated day lists](https://github.com/user-attachments/assets/274c0a45-4cae-456e-bc54-f9887db21aa8)
 *The system automatically generates day lists for the trip after the initial trip creation.*
 
 ![Select trip cover](https://github.com/user-attachments/assets/f0b3c146-334f-4b5f-af36-6c6aac3855bf)
 *Users can upload or select a cover image for their trip to personalize it.*
 
-![Update trip card](https://github.com/user-attachments/assets/13ea3605-d5ae-493e-a9eb-09382bf97e97")
+![Update trip card](https://github.com/user-attachments/assets/13ea3605-d5ae-493e-a9eb-09382bf97e97)
 *The user can update information on individual trip cards such as notes.*
 
 ![Mark trip as done or add tags](https://github.com/user-attachments/assets/6355e504-bed1-4597-8f18-0f7fd8ea3001)
 *Allows users to mark a trip as completed or add color tags for better organization.*
 
-![Update trip information]("https://github.com/user-attachments/assets/32361ec8-a50e-440f-bc42-548dc648604c")
+![Update trip information](https://github.com/user-attachments/assets/32361ec8-a50e-440f-bc42-548dc648604c)
 *Allows users to edit the general information for a trip, including trip title, dates, and details.*
 
-![Ask AI for travel recommendations]("https://github.com/user-attachments/assets/e22b6220-cb0c-475a-83a0-58cd548343d7")
+![Ask AI for travel recommendations](https://github.com/user-attachments/assets/e22b6220-cb0c-475a-83a0-58cd548343d7)
 *Users can ask AI for travel recommendations to assist in planning their trip.*
 
-![Auto-generate trip cards]("https://github.com/user-attachments/assets/e5308584-dbb8-4050-8b0e-4805cd1fa376")
+![Auto-generate trip cards](https://github.com/user-attachments/assets/e5308584-dbb8-4050-8b0e-4805cd1fa376)
 *The platform generates trip cards based on AI-generated suggestions, simplifying the planning process.*
 
-![Share trip link via email]("https://github.com/user-attachments/assets/ecb5c65d-a9a5-4865-a9ea-8c4c42278e9f")
+![Share trip link via email](https://github.com/user-attachments/assets/ecb5c65d-a9a5-4865-a9ea-8c4c42278e9f)
 *Users can share a trip link with others through email for easy collaboration.*
 
-![Drag entire day list]("https://github.com/user-attachments/assets/844af358-1819-4e5e-9694-03942f5039ac")
+![Drag entire day list](https://github.com/user-attachments/assets/844af358-1819-4e5e-9694-03942f5039ac)
 *The drag-and-drop interface allows users to rearrange entire day lists within their trip itinerary.*
 
-![Drag single trip card]("https://github.com/user-attachments/assets/81435a7c-507c-4393-a2d2-bbfbe0decc40")
+![Drag single trip card](https://github.com/user-attachments/assets/81435a7c-507c-4393-a2d2-bbfbe0decc40)
 *Users can drag and rearrange individual trip cards to adjust their travel schedule.*
 
-![Delete trip]("https://github.com/user-attachments/assets/d17eedb7-6f4a-4b06-946f-1b7f49fc0a1e")
+![Delete trip](https://github.com/user-attachments/assets/d17eedb7-6f4a-4b06-946f-1b7f49fc0a1e)
 *Users can delete a trip, removing it from their saved list.*
 
-![Restore deleted trip]("https://github.com/user-attachments/assets/fad68248-5f72-46f7-b5f0-a8c973fb2ec2")
+![Restore deleted trip](https://github.com/user-attachments/assets/fad68248-5f72-46f7-b5f0-a8c973fb2ec2)
 *Users can restore a previously deleted trip from the archive.*
 
-![Create a user account]("https://github.com/user-attachments/assets/65cb0127-dd17-47f2-ac6b-b5be6ed6bb19")
+![Create a user account](https://github.com/user-attachments/assets/65cb0127-dd17-47f2-ac6b-b5be6ed6bb19)
 *The registration page for creating a new account on the platform.*
 
-![2FA email verification]("https://github.com/user-attachments/assets/c59907a6-b99d-4e4c-a9ad-1a2e219a3929")
+![2FA email verification](https://github.com/user-attachments/assets/c59907a6-b99d-4e4c-a9ad-1a2e219a3929)
 *The platform supports two-factor authentication (2FA) via email for added security.*
 
-![Change password via email]("https://github.com/user-attachments/assets/f4c3cf93-4859-481f-8d65-362baa1215e6")
+![Change password via email](https://github.com/user-attachments/assets/f4c3cf93-4859-481f-8d65-362baa1215e6)
 *Users can request a password change through email verification to update their credentials.*
 
-![Reset password via email]("https://github.com/user-attachments/assets/e9f56b81-1ab3-4769-b44c-5977dd408cbb")
+![Reset password via email](https://github.com/user-attachments/assets/e9f56b81-1ab3-4769-b44c-5977dd408cbb)
 *The interface for resetting a forgotten password through email verification.*
 
-![Update user profile]("https://github.com/user-attachments/assets/38771d4d-1253-4734-81b6-1a08d89ed0d5")
+![Update user profile](https://github.com/user-attachments/assets/38771d4d-1253-4734-81b6-1a08d89ed0d5)
 *Users can update their personal information, such as preferences.*
 
-![Toggle dark mode]("https://github.com/user-attachments/assets/8f315d98-91d1-43f9-9b53-c8b0d333c40a")
+![Toggle dark mode](https://github.com/user-attachments/assets/8f315d98-91d1-43f9-9b53-c8b0d333c40a)
 *The platform supports toggling between light and dark modes for user preference.*
 
 ## Environment Setup
