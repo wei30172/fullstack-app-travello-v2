@@ -27,7 +27,6 @@ import { useToast } from "@/components/ui/use-toast"
 import { ImageDropzone } from "@/components/shared/image-dropzone"
 import { AvailableCount } from "@/components/shared/available-count"
 
-// SHA-256 computation
 const computeSHA256 = async (file: File) => {
   if (!window.crypto || !crypto.subtle) {
     throw new Error("Web Crypto API is not supported in this environment")
@@ -35,9 +34,8 @@ const computeSHA256 = async (file: File) => {
 
   const buffer = await file.arrayBuffer()
   const hashBuffer = await crypto.subtle.digest("SHA-256", buffer)
-  return Array.from(new Uint8Array(hashBuffer))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("")
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("")
 }
 
 export const CoverImageModal = () => {
@@ -76,7 +74,7 @@ export const CoverImageModal = () => {
       throw new Error("Failed to upload to S3")
     }
 
-    return res.url.split("?")[0] // Return the clean URL
+    return res.url.split("?")[0]
   }
 
   const handleSuccessfulUpload = async (userId: string, board: IBoard, mediaUrl: string, mediaType: string) => {

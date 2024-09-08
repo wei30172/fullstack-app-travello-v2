@@ -51,7 +51,6 @@ export async function POST(
     )
 
     // console.log("Generated Signed URL:", url)
-    // Return the signed URL as a JSON response
     return NextResponse.json({ url })
     
   } catch (error) {
