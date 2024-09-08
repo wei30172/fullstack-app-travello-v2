@@ -65,7 +65,7 @@ export async function getSignedURL({
       { expiresIn: 60 } // 60s
     )
 
-    console.log("Generated Signed URL:", url)
+    // console.log("Generated Signed URL:", url)
     
     return { success: { url } }
   } catch (error) {

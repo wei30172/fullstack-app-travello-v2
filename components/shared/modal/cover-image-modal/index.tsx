@@ -120,14 +120,11 @@ export const CoverImageModal = () => {
             await handleSuccessfulUpload(userId, board, mediaUrl, mediaType)
           }
         } else {
-          toast({
-            status: "error",
-            description: `Error: ${res.error}`
-          })
+          toast({ status: "error", description: `Error: ${res.error}` })
         }
       } catch (error) {
         console.error("Error during upload process:", error)
-        toast({ status: "error", description: "Something went wrong" })
+        toast({ status: "error", description: "Error during upload process" })
       }
     })
   }
