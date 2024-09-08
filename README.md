@@ -1,26 +1,35 @@
-## Travel Planning Platform with Next.js and OpenAI GPT-4
+<img width="1470" alt="13_drag-card" src="https://github.com/user-attachments/assets/39dccc41-035d-4087-a85c-85705e57330c">## Travel Planning Platform with Next.js and OpenAI GPT-4
 
 Facilitated an easy-to-use drag and drop itinerary planner, allowing users to visually organize their travel schedule.
 
 1.Trello-Inspired Interface: Familiar drag-and-drop functionality for intuitive travel scheduling.
 
-2.Simple Duplication and Editing: Quickly copy and edit itineraries.
+2.AI-Driven Recommendations: Provides AI-generated travel suggestions for travel planning.
 
-3.AI-Driven Recommendations: Provides AI-generated travel suggestions for travel planning.
-
+3.Share Trips with Other Users: Easily share your trips with friends or family via generated links.
 
 ## Project Screenshots
-![fullstack-app-travello](https://github.com/wei30172/fullstack-app-travello/assets/60259324/26893b29-5d67-49ad-aee3-faeb25d782b2)
-![fullstack-app-travello](https://github.com/wei30172/fullstack-app-travello/assets/60259324/46c919a6-de4f-4934-9f3a-4e5fac010b1f)
-![fullstack-app-travello](https://github.com/wei30172/fullstack-app-travello/assets/60259324/d62b8e1b-f622-406e-9269-eecbd040b5df)
-![fullstack-app-travello](https://github.com/wei30172/fullstack-app-travello/assets/60259324/9e6a3afb-1ca2-427f-baab-3b5627dc3d31)
-![fullstack-app-travello](https://github.com/wei30172/fullstack-app-travello/assets/60259324/bf3da0fb-e1c2-4765-9147-da1701aa6525)
-![fullstack-app-travello](https://github.com/wei30172/fullstack-app-travello/assets/60259324/4f45956d-6e3e-41d5-9fd1-3488be36a8d1)
-![fullstack-app-travello](https://github.com/wei30172/fullstack-app-travello/assets/60259324/31309e42-9816-477f-8e6b-31430f10cbd1)
-![fullstack-app-travello](https://github.com/wei30172/fullstack-app-travello/assets/60259324/7cfbc42f-7033-44ba-aff4-82a28e36cac1)
-![fullstack-app-travello](https://github.com/wei30172/fullstack-app-travello/assets/60259324/3932f0b0-a969-4dc0-8394-67fa0db3ffe3)
-![fullstack-app-travello](https://github.com/wei30172/fullstack-app-travello/assets/60259324/9d1cf3c5-d9d5-4ba6-a925-13a1dd8acf01)
-![fullstack-app-travello](https://github.com/wei30172/fullstack-app-travello/assets/60259324/7a10ca3c-588b-49a6-9d0b-c7304cb91c48)
+<img width="1468" alt="1_homepage" src="https://github.com/user-attachments/assets/9fac8778-7b18-445d-a17a-3b0e0b9989a9">
+<img width="1470" alt="2_trip-list" src="https://github.com/user-attachments/assets/dedd89f4-e404-4bdb-a43d-7849bed26350">
+<img width="1470" alt="3_create-trip" src="https://github.com/user-attachments/assets/8b6ea193-ac20-4cfd-af88-f5a8c3bb8341">
+<img width="1470" alt="4_auto-day-list" src="https://github.com/user-attachments/assets/274c0a45-4cae-456e-bc54-f9887db21aa8">
+<img width="1470" alt="5_select-trip-cover" src="https://github.com/user-attachments/assets/f0b3c146-334f-4b5f-af36-6c6aac3855bf">
+<img width="1470" alt="6_update-trip-card" src="https://github.com/user-attachments/assets/13ea3605-d5ae-493e-a9eb-09382bf97e97">
+<img width="1470" alt="7_mark-trip" src="https://github.com/user-attachments/assets/6355e504-bed1-4597-8f18-0f7fd8ea3001">
+<img width="1470" alt="8_update-trip-info" src="https://github.com/user-attachments/assets/32361ec8-a50e-440f-bc42-548dc648604c">
+<img width="736" alt="9_ai-suggestions" src="https://github.com/user-attachments/assets/e22b6220-cb0c-475a-83a0-58cd548343d7">
+<img width="1469" alt="10_auto-trip-cards" src="https://github.com/user-attachments/assets/e5308584-dbb8-4050-8b0e-4805cd1fa376">
+<img width="1470" alt="11_share-trip" src="https://github.com/user-attachments/assets/ecb5c65d-a9a5-4865-a9ea-8c4c42278e9f">
+<img width="1470" alt="12_drag-list" src="https://github.com/user-attachments/assets/844af358-1819-4e5e-9694-03942f5039ac">
+<img width="1470" alt="13_drag-card" src="https://github.com/user-attachments/assets/81435a7c-507c-4393-a2d2-bbfbe0decc40">
+<img width="1470" alt="14_delete-trip" src="https://github.com/user-attachments/assets/d17eedb7-6f4a-4b06-946f-1b7f49fc0a1e">
+<img width="1470" alt="15_restore-trip" src="https://github.com/user-attachments/assets/fad68248-5f72-46f7-b5f0-a8c973fb2ec2">
+<img width="1470" alt="16_create-account" src="https://github.com/user-attachments/assets/65cb0127-dd17-47f2-ac6b-b5be6ed6bb19">
+<img width="1470" alt="17_2fa-verification" src="https://github.com/user-attachments/assets/c59907a6-b99d-4e4c-a9ad-1a2e219a3929">
+<img width="1469" alt="18_change-password" src="https://github.com/user-attachments/assets/f4c3cf93-4859-481f-8d65-362baa1215e6">
+<img width="1470" alt="19_reset-password" src="https://github.com/user-attachments/assets/e9f56b81-1ab3-4769-b44c-5977dd408cbb">
+<img width="1470" alt="20_update-profile" src="https://github.com/user-attachments/assets/38771d4d-1253-4734-81b6-1a08d89ed0d5">
+<img width="1470" alt="21_toggle-dark-mode" src="https://github.com/user-attachments/assets/8f315d98-91d1-43f9-9b53-c8b0d333c40a">
 
 ## Environment Setup
 Create a .env file in the root directory and add the following variables:
