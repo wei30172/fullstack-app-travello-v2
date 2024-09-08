@@ -73,7 +73,11 @@ export const ImageDropzone = ({
     isDragAccept,
     isDragReject,
   } = useDropzone({
-    accept: { "image/*": [] },
+    accept: { 
+      "image/jpeg": [], 
+      "image/png": [], 
+      "image/webp": []
+    },
     multiple: false,
     disabled,
     onDrop,

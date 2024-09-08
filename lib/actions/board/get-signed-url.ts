@@ -15,6 +15,7 @@ type SignedURLResponse =
 const allowedFileTypes = [
   "image/jpeg",
   "image/png",
+  "image/webp",
   // "video/mp4",
   // "video/quicktime"
 ]
