@@ -27,6 +27,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { ImageDropzone } from "@/components/shared/image-dropzone"
 import { AvailableCount } from "@/components/shared/available-count"
 
+// SHA-256 computation
 const computeSHA256 = async (file: File) => {
   if (!window.crypto || !crypto.subtle) {
     throw new Error("Web Crypto API is not supported in this environment")
@@ -34,11 +35,9 @@ const computeSHA256 = async (file: File) => {
 
   const buffer = await file.arrayBuffer()
   const hashBuffer = await crypto.subtle.digest("SHA-256", buffer)
-  const hashArray = Array.from(new Uint8Array(hashBuffer))
-  const hashHex = hashArray
+  return Array.from(new Uint8Array(hashBuffer))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("")
-  return hashHex
 }
 
 export const CoverImageModal = () => {
@@ -47,10 +46,8 @@ export const CoverImageModal = () => {
   const { toast } = useToast()
   const user = useCurrentUser()
   const checkRole = useCheckRole()
-
   const [isPending, startTransition] = useTransition()
   const coverImage =  useCoverModal()
-  
   const [file, setFile] = useState<File | undefined>(undefined)
 
   const onClose = () => {
@@ -58,10 +55,50 @@ export const CoverImageModal = () => {
     coverImage.onClose()
   }
 
-  const onChange = (file?: File) => {
-    setFile(file)
+  const onChange = (file?: File) => setFile(file)
+
+  const handleUploadToS3 = async (file: File) => {
+    const checksum = await computeSHA256(file)
+    const params = { fileType: file.type, fileSize: file.size, checksum }
+    const res: any = await uploadFileToS3(params)
+
+    if (!res.ok) {
+      throw new Error(`Error: ${res.error}`)
+    }
+
+    const uploadResponse = await fetch(res.url, {
+      method: "PUT",
+      headers: { "Content-Type": file.type },
+      body: file,
+    })
+
+    if (!uploadResponse.ok) {
+      throw new Error("Failed to upload to S3")
+    }
+
+    return res.url.split("?")[0] // Return the clean URL
   }
 
+  const handleSuccessfulUpload = async (userId: string, board: IBoard, mediaUrl: string, mediaType: string) => {
+    await updateBoard({ imageUrl: mediaUrl, boardId: board._id.toString() })
+    await addMedia({ userId, type: mediaType, url: mediaUrl })
+  
+    const oldImageUrl = board.imageUrl?.trim()
+    if (oldImageUrl) {
+      await removeMedia(oldImageUrl)
+    }
+  
+    if (!checkRole) {
+      await incrementBoardCoverCount()
+      queryClient.invalidateQueries({
+        queryKey: [CountType.BOARD_COVER_COUNT]
+      })
+    }
+  
+    toast({ status: "success", title: "Image uploaded successfully!" })
+    onClose()
+  }
+  
   const onSubmit = async () => {
     if (!user) {
       toast({ status: "error", title: "Unauthorized!" })
@@ -84,7 +121,6 @@ export const CoverImageModal = () => {
     }
 
     const boardId = params.boardId as string
-    const userId = user._id.toString()
 
     startTransition(async () => {
       try {
@@ -100,59 +136,17 @@ export const CoverImageModal = () => {
           return
         }
 
-        const checksum = await computeSHA256(file)
-        const params = { fileType: file.type, fileSize: file.size, checksum }
-        const res: any = await uploadFileToS3(params)
-        
-        if (res.ok && res.url) {
-          const uploadResponse = await fetch(res.url, {
-            method: "PUT",
-            headers: {
-              "Content-Type": file.type,
-            },
-            body: file
-          })
-          // console.log({response})
-
-          if (uploadResponse.ok) {
-            const mediaUrl = res.url.split("?")[0]
-            const mediaType = file.type.startsWith("image") ? "image" : "video"
-            await handleSuccessfulUpload(userId, board, mediaUrl, mediaType)
-          }
-        } else {
-          toast({ status: "error", description: `Error: ${res.error}` })
-        }
+        const mediaUrl = await handleUploadToS3(file)
+        const mediaType = file.type.startsWith("image") ? "image" : "video"
+        await handleSuccessfulUpload(user._id.toString(), board, mediaUrl, mediaType)
       } catch (error) {
         console.error("Error during upload process:", error)
-        toast({ status: "error", description: "Error during upload process" })
+        toast({ status: "error", description: (error as Error).message || "Unknown error during upload process" })
       }
     })
   }
 
-  const handleSuccessfulUpload = async (userId: string, board: IBoard, mediaUrl: string, mediaType: string) => {
-    try {
-      await updateBoard({ imageUrl: mediaUrl, boardId: board._id.toString() })
-      await addMedia({ userId, type: mediaType, url: mediaUrl })
   
-      const oldImageUrl = board.imageUrl?.trim()
-      if (oldImageUrl) {
-        await removeMedia(oldImageUrl)
-      }
-  
-      if (!checkRole) {
-        await incrementBoardCoverCount()
-        queryClient.invalidateQueries({
-          queryKey: [CountType.BOARD_COVER_COUNT]
-        })
-      }
-  
-      toast({ status: "success", title: "Image uploaded successfully!" })
-      onClose()
-    } catch (error) {
-      console.error("Error handling successful upload:", error)
-      toast({ status: "error", description: "Failed to finalize the upload" })
-    }
-  }
 
   return (
     <Dialog open={coverImage.isOpen} onOpenChange={coverImage.onClose}>

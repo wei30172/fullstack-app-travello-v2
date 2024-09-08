@@ -33,10 +33,8 @@ export async function POST(
       return new NextResponse(`File size too large. Maximum allowed size is ${formatFileSize(MAX_FILE_SIZE)}.`, { status: 400 } )
     }
   
-     // Generate a new file name
+     // Generate a unique file name and create the S3 upload command
     const newFileName = generateFileName()
-
-    // Prepare the S3 put object command
     const putObjectCommand = new PutObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME!,
       Key: newFileName,
@@ -45,11 +43,11 @@ export async function POST(
       ChecksumSHA256: checksum
     })
 
-    // Get signed URL for uploading the file to S3
+    // Generate a signed URL for uploading the file
     const url = await getSignedUrl(
       s3Client,
       putObjectCommand,
-      { expiresIn: 60 } // 60s
+      { expiresIn: 60 } // URL valid for 60s
     )
 
     // console.log("Generated Signed URL:", url)
@@ -57,7 +55,6 @@ export async function POST(
     return NextResponse.json({ url })
     
   } catch (error) {
-    // Log the error and return a generic error message
     console.error("[ERROR]", error)
     return new NextResponse("Internal Error", { status: 500 })
   }
