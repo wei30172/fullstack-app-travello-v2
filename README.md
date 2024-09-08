@@ -42,10 +42,10 @@ Facilitated an easy-to-use drag and drop itinerary planner, allowing users to vi
 ![Share trip link via email](https://github.com/user-attachments/assets/ecb5c65d-a9a5-4865-a9ea-8c4c42278e9f)
 *Users can share a trip link with others through email for easy collaboration.*
 
-![Drag entire day list](https://github.com/user-attachments/assets/844af358-1819-4e5e-9694-03942f5039ac)
+![Drag entire day list](https://github.com/user-attachments/assets/c934c747-c243-474f-a568-aeafbca997db)
 *The drag-and-drop interface allows users to rearrange entire day lists within their trip itinerary.*
 
-![Drag single trip card](https://github.com/user-attachments/assets/81435a7c-507c-4393-a2d2-bbfbe0decc40)
+![Drag single trip card](https://github.com/user-attachments/assets/afc26ff8-fadd-469c-8d24-40a52df119d7)
 *Users can drag and rearrange individual trip cards to adjust their travel schedule.*
 
 ![Delete trip](https://github.com/user-attachments/assets/d17eedb7-6f4a-4b06-946f-1b7f49fc0a1e)
