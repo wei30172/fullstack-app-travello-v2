@@ -51,7 +51,7 @@ export interface IBoard extends Document {
   lists?: string[]
   viewers: string[]
   editors: string[]
-  isArchived: Boolean
+  isArchived: boolean
   createdAt?: Date
   updatedAt?: Date
   role?: BoardRole

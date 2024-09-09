@@ -11,7 +11,7 @@ export const RootFooter = () => {
         <div className="flex items-center gap-2">
           <Logo />
           <p className="text-gray-900 dark:text-gray-200">
-            &copy; Web
+            &copy; 2024 Wei. All rights reserved.
           </p>
         </div>
         <div className="flex max-sm:flex-col gap-1 sm:gap-4 text-xs">

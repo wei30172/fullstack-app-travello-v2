@@ -27,7 +27,7 @@ export default {
         if (validatedFields.success) {
           const { email, password } = validatedFields.data
 
-          let existingUser = await fetchUserByEmail(email)
+          const existingUser = await fetchUserByEmail(email)
           // console.log({existingUser})
 
           if (!existingUser || !existingUser.password) return null

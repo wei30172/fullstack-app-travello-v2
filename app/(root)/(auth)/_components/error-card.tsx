@@ -9,7 +9,7 @@ export const ErrorCard = () => {
       backButtonLabel="Back to login"
     >
       <div className="w-full flex justify-center items-center">
-      <FiAlertTriangle className="text-destructive" />
+        <FiAlertTriangle className="text-destructive" />
       </div>
     </FormWrapper>
   )
