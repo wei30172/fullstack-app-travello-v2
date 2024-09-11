@@ -94,7 +94,24 @@ export const SettingsForm = () => {
                     <FormControl>
                       <Input
                         disabled={isPending}
-                        placeholder="your username"
+                        placeholder="your username on the web"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isPending || user?.provider !== UserProvider.CREDENTIALS}
+                        placeholder="mail@example.com"
                         {...field}
                       />
                     </FormControl>
@@ -104,23 +121,6 @@ export const SettingsForm = () => {
               />
               {user?.provider === UserProvider.CREDENTIALS && (
                 <>
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input
-                            disabled={isPending}
-                            placeholder="mail@example.com"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
                   <FormField
                     control={form.control}
                     name="password"
