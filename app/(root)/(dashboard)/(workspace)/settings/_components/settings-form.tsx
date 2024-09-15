@@ -116,6 +116,11 @@ export const SettingsForm = () => {
                       />
                     </FormControl>
                     <FormMessage />
+                    {field.value !== user?.email && (
+                      <FormDescription className="text-red-500">
+                        Changing your email will cause trips shared with you by others to be lost.
+                      </FormDescription>
+                    )}
                   </FormItem>
                 )}
               />

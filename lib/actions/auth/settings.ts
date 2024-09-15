@@ -55,7 +55,7 @@ export const settings = async (values: SettingsInput) => {
     )
 
     await User.findByIdAndUpdate(user._id, {
-      email: values.email,
+      emailPendingVerification: values.email,
       emailVerified: null
     })
     
