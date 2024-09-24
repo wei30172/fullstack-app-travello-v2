@@ -22,7 +22,8 @@ interface ShareProps {
 
 export const Share = ({ boardData }: ShareProps) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
-  const roleLabel = boardData.role === BoardRole.OWNER ? "Owner" : BoardRole.EDITOR ? "Editor" : "Viewer"
+  const roleLabel = boardData.role === BoardRole.OWNER ? "Owner" 
+                  : boardData.role === BoardRole.EDITOR ? "Editor" : "Viewer"
 
   return (
     <Popover open={isPopoverOpen} onOpenChange={
