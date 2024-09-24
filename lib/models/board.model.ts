@@ -58,7 +58,7 @@ const invitationSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: [BoardRole.VIEWER, BoardRole.EDITOR],
+    enum: Object.values(BoardRole),
     default: BoardRole.VIEWER
   },
   token: {
@@ -72,7 +72,7 @@ const invitationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: [TokenStatus.PENDING, TokenStatus.ACCEPTED, TokenStatus.EXPIRED],
+    enum: Object.values(TokenStatus),
     default: TokenStatus.PENDING
   }
 }, { timestamps: true })
