@@ -2,7 +2,7 @@ import s3Client from "@/lib/s3client"
 import { PutObjectCommand } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import { NextResponse } from "next/server"
-import { formatFileSize, generateFileName } from "@/lib/utils"
+import { formatFileSize, generateFileName } from "@/lib/file"
 
 // Allowed file types for upload
 const ALLOWED_FILE_TYPES = [

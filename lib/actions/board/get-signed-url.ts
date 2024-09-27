@@ -5,7 +5,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 
 import s3Client from "@/lib/s3client"
 import { currentUser } from "@/lib/session"
-import { formatFileSize, generateFileName } from "@/lib/utils"
+import { formatFileSize, generateFileName } from "@/lib/file"
 
 type SignedURLResponse = 
   | { error?: undefined; success: { url: string } }
