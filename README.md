@@ -9,7 +9,7 @@ Facilitated an easy-to-use drag and drop itinerary planner, allowing users to vi
 3.Share Trips with Other Users: Easily share your trips with friends or family via generated links.
 
 ## Project Screenshots
-![Travel planning platform homepage](https://github.com/user-attachments/assets/9fac8778-7b18-445d-a17a-3b0e0b9989a9)
+![Travel planning platform homepage](https://github.com/user-attachments/assets/6e253495-c980-4595-9b70-d01731d0dc89)
 *The homepage of the travel planning platform, providing users with an overview and navigation options.*
 
 ![List of trips](https://github.com/user-attachments/assets/dedd89f4-e404-4bdb-a43d-7849bed26350)
