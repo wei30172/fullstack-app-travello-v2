@@ -18,7 +18,7 @@ const MarketingPage = () => {
       </div>
       <div className="max-w-md md:max-w-lg text-center mb-6">
         <Image
-          src="/images/travel-hero-image.png"
+          src="/images/travello-hero-image.png"
           alt="Travel Image"
           className="rounded-lg shadow-md"
           width={300}
