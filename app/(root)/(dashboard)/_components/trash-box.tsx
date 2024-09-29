@@ -117,12 +117,12 @@ export const TrashBox = () => {
               <div
                 onClick={() => handleRestore(board._id)}
                 role="button"
-                className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"
+                className="rounded-sm p-2 hover:bg-teal-200 dark:hover:bg-teal-600"
               >
                 <FaUndo className="h-4 w-4 text-muted-foreground" />
               </div>
               <ConfirmDialog onConfirm={() => handleRemove(board._id)}>
-                <div className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600">
+                <div className="rounded-sm p-2 hover:bg-teal-200 dark:hover:bg-teal-600">
                   <FaTrash className="h-4 w-4 text-muted-foreground cursor-pointer" />
                 </div>
               </ConfirmDialog>

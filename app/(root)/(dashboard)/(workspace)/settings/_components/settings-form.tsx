@@ -75,7 +75,7 @@ export const SettingsForm = () => {
   }
 
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[350px] mx-auto">
       <CardHeader>
         <p className="text-2xl font-semibold text-center">
           Settings

@@ -4,19 +4,23 @@ import { useState, useTransition } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 import { MAX_FREE_COVER } from "@/constants/board"
-import { CountType, BoardRole, IBoard } from "@/lib/models/types"
-import { useCurrentUser, useCheckRole } from "@/hooks/use-session"
+import { CountType, BoardRole } from "@/lib/models/types"
+import { useCurrentUser } from "@/hooks/use-session"
+import {
+  getSubscriptionStatus
+} from "@/lib/actions/user-limit/get-subscription-status"
 import { 
   getAvailableBoardCoverCount,
   hasAvailableBoardCoverCount,
   incrementBoardCoverCount
-} from "@/lib/actions/user-limit"
+} from "@/lib/actions/user-limit/handle-count"
 import { getBoard } from "@/lib/actions/board/get-board"
 import { addMedia } from "@/lib/actions/board/add-media"
 import { removeMedia } from "@/lib/actions/board/remove-media"
 import { updateBoard } from "@/lib/actions/board/update-board"
 import { uploadFileToS3 } from "@/lib/api-handler/board"
 import { useCoverModal } from "@/hooks/use-cover-modal"
+import { useProModal } from "@/hooks/use-pro-modal"
 
 import {
   Dialog,
@@ -41,9 +45,11 @@ const computeSHA256 = async (file: File) => {
 export const CoverImageModal = () => {
   const params = useParams()
   const queryClient = useQueryClient()
-  const { toast } = useToast()
+  
   const user = useCurrentUser()
-  const checkRole = useCheckRole()
+  const proModal = useProModal()
+  const { toast } = useToast()
+
   const [isPending, startTransition] = useTransition()
   const coverImage =  useCoverModal()
   const [file, setFile] = useState<File | undefined>(undefined)
@@ -76,26 +82,6 @@ export const CoverImageModal = () => {
 
     return res.url.split("?")[0]
   }
-
-  const handleSuccessfulUpload = async (userId: string, board: IBoard, mediaUrl: string, mediaType: string) => {
-    await updateBoard({ imageUrl: mediaUrl, boardId: board._id.toString() })
-    await addMedia({ userId, type: mediaType, url: mediaUrl })
-  
-    const oldImageUrl = board.imageUrl?.trim()
-    if (oldImageUrl) {
-      await removeMedia(oldImageUrl)
-    }
-  
-    if (!checkRole) {
-      await incrementBoardCoverCount()
-      queryClient.invalidateQueries({
-        queryKey: [CountType.BOARD_COVER_COUNT]
-      })
-    }
-  
-    toast({ status: "success", title: "Image uploaded successfully!" })
-    onClose()
-  }
   
   const onSubmit = async () => {
     if (!user) {
@@ -108,13 +94,16 @@ export const CoverImageModal = () => {
       return
     }
 
+    const isPro = await getSubscriptionStatus()
     const canUse = await hasAvailableBoardCoverCount()
 
-    if (!canUse && !checkRole) {
+    if (!isPro && !canUse) {
       toast({
         status: "warning",
         description: "You have reached your limit of free board cover uploads."
       })
+      
+      proModal.onOpen()
       return
     }
 
@@ -136,15 +125,33 @@ export const CoverImageModal = () => {
 
         const mediaUrl = await handleUploadToS3(file)
         const mediaType = file.type.startsWith("image") ? "image" : "video"
-        await handleSuccessfulUpload(user._id.toString(), board, mediaUrl, mediaType)
+
+        const updateRes = await updateBoard({ imageUrl: mediaUrl, boardId: board._id.toString() })
+        if (!updateRes?.data) throw new Error(updateRes?.error || "Update board cover failed")
+        
+        await addMedia({ userId: user._id.toString(), type: mediaType, url: mediaUrl })
+      
+        const oldImageUrl = board.imageUrl?.trim()
+        if (oldImageUrl) {
+          await removeMedia(oldImageUrl)
+        }
+        
+        if (!oldImageUrl && !isPro) {
+          await incrementBoardCoverCount()
+          queryClient.invalidateQueries({
+            queryKey: [CountType.BOARD_COVER_COUNT]
+          })
+        }
+      
+        toast({ status: "success", title: "Image uploaded successfully!" })
+        onClose()
+
       } catch (error) {
         console.error("Error during upload process:", error)
         toast({ status: "error", description: (error as Error).message || "Unknown error during upload process" })
       }
     })
   }
-
-  
 
   return (
     <Dialog open={coverImage.isOpen} onOpenChange={coverImage.onClose}>
@@ -155,8 +162,8 @@ export const CoverImageModal = () => {
           </h2>
         </DialogHeader>
         <AvailableCount
-          queryKey={CountType.BOARD_COVER_COUNT}
-          queryFn={getAvailableBoardCoverCount}
+          availableCount={CountType.BOARD_COVER_COUNT}
+          getAvailableCount={getAvailableBoardCoverCount}
           maxCount={MAX_FREE_COVER}
           label="{remaining} cover uploads remaining"
           description={`You have ${MAX_FREE_COVER} free board cover uploads available in Free Workspaces.`}

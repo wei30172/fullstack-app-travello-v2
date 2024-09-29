@@ -7,7 +7,7 @@ import { useCurrentUser } from "@/hooks/use-session"
 
 import { FaRegUserCircle } from "react-icons/fa"
 import { IoMdLogIn, IoMdLogOut } from "react-icons/io"
-import { FiSettings, FiMap } from "react-icons/fi"
+import { FiSettings, FiMap, FiCreditCard } from "react-icons/fi"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -83,12 +83,12 @@ export const UserButton = () => {
       icon: <FiMap />,
       label: "Trips",
       url: "/boards"
+    },
+    {
+      icon: <FiCreditCard />,
+      label: "Billing",
+      url: "/billing"
     }
-    // {
-    //   icon: <FiCreditCard />,
-    //   label: "Billing",
-    //   url: "/billing"
-    // }
   ]
   
   return (

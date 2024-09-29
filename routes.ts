@@ -1,6 +1,7 @@
 export const routes = {
   public: [
     "/",
+    "/api/webhook/stripe",
     "/new-verification",
     "/accept-invitation"
   ],

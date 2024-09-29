@@ -9,7 +9,10 @@ import { QueryProvider } from "@/providers/query-provider"
 import { ModalProvider } from "@/providers/modal-provider"
 import { Toaster } from "@/components/ui/toaster"
 
-const inter = Inter({ subsets: ["latin"] })
+export const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: {

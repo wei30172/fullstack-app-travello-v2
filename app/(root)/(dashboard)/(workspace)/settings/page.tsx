@@ -1,8 +1,16 @@
-import { SettingsForm } from "./_components/settings-form"
+import { getSubscriptionStatus } from "@/lib/actions/user-limit/get-subscription-status"
 
-const SettingsPage = () => {
+import { Separator } from "@/components/ui/separator"
+import { SettingsForm } from "./_components/settings-form"
+import { Info } from "../boards/_components/info"
+
+const SettingsPage = async () => {
+  const isPro = await getSubscriptionStatus()
+
   return (
-    <section>
+    <section className="w-full">
+      <Info isPro={isPro} />
+      <Separator className="my-2" />
       <SettingsForm />
     </section>
   )

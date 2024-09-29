@@ -12,14 +12,20 @@ import { IBoard, BoardRole } from "@/lib/models/types"
 import { createBoard } from "@/lib/actions/board/create-board"
 import { updateBoard } from "@/lib/actions/board/update-board"
 import { createList } from "@/lib/actions/list/create-list"
+import { removeMedia } from "@/lib/actions/board/remove-media"
+import {
+  getSubscriptionStatus
+} from "@/lib/actions/user-limit/get-subscription-status"
 import { 
   hasAvailableAskAiCount,
-  incrementAskAiCount
-} from "@/lib/actions/user-limit"
+  incrementAskAiCount,
+  decreaseBoardCoverCount
+} from "@/lib/actions/user-limit/handle-count"
+
 import { CountType } from "@/lib/models/types"
-import { useCheckRole } from "@/hooks/use-session"
 import { getAIItinerary } from "@/lib/api-handler/board"
 import { calculateDays } from "@/lib/date"
+import { useProModal } from "@/hooks/use-pro-modal"
 
 import "react-datepicker/dist/react-datepicker.css"
 import { LuGoal, LuMapPin } from "react-icons/lu"
@@ -83,8 +89,9 @@ export const BoardForm = ({
 }: BoardFormProps) => {
   const router = useRouter()
   const queryClient = useQueryClient()
+
+  const proModal = useProModal()
   const { toast } = useToast()
-  const checkRole = useCheckRole()
 
   const [language, setLanguage] = useState("English")
   const [isPending, startTransition] = useTransition()
@@ -114,7 +121,7 @@ export const BoardForm = ({
     defaultValues: initialValues
   })
 
-  async function onSubmit(values: z.infer<typeof CreateBoardValidation>) {
+  const onSubmit = (values: z.infer<typeof CreateBoardValidation>) => {
     // console.log({values})
     if (type === "Create") {
       startTransition(() => {
@@ -146,11 +153,13 @@ export const BoardForm = ({
       }
       
       if (boardData.role === BoardRole.VIEWER) {
-        toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+        toast({
+          status: "warning",
+          description: "Editing is restricted to authorized users only."
+        })
         return
       }
 
-      onClose()
       startTransition(() => {
         updateBoard({
           title: values.title,
@@ -175,18 +184,24 @@ export const BoardForm = ({
   }
 
   const handleAskAI = async () => {
-    if (type === "Update" && boardData?.role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+    if (boardData?.role === BoardRole.VIEWER) {
+      toast({
+        status: "warning",
+        description: "Editing is restricted to authorized users only."
+      })
       return
     }
 
+    const isPro = await getSubscriptionStatus()
     const canUse = await hasAvailableAskAiCount()
-
-    if (!canUse && !checkRole) {
+    
+    if (!isPro && !canUse) {
       toast({
         status: "warning",
         description: "You have reached your limit of free AI uses."
       })
+
+      proModal.onOpen()
       return
     }
 
@@ -236,7 +251,7 @@ export const BoardForm = ({
   
         setTripItinerary(JSON.parse(chunks))
 
-        if (!checkRole) {
+        if (!isPro) {
           await incrementAskAiCount()
           queryClient.invalidateQueries({
             queryKey: [CountType.ASK_AI_COUNT]
@@ -265,16 +280,21 @@ export const BoardForm = ({
     abortControllerRef.current = null
   }
 
-  async function applySuggestions() {
-    if (!boardData?._id) {
+  const applySuggestions = async () => {
+    const boardId = boardData?._id
+    if (!boardId) {
       toast({
         status: "error",
         description: "Board data is not available."
       })
       return
     }
-    if (type === "Update" && boardData?.role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+    
+    if (boardData?.role === BoardRole.VIEWER) {
+      toast({
+        status: "warning",
+        description: "Editing is restricted to authorized users only."
+      })
       return
     }
 
@@ -286,10 +306,9 @@ export const BoardForm = ({
       return
     }
 
-    try {
-      const boardId = boardData._id
-      for (const [title, cardTitles] of Object.entries(tripItinerary)) {
-        startTransition(() => {
+    startTransition(() => {
+      try {
+        for (const [title, cardTitles] of Object.entries(tripItinerary)) {
           createList({ title, boardId, cardTitles })
           .then((res) => {
             if (res?.data) {
@@ -301,15 +320,60 @@ export const BoardForm = ({
             }
           })
           .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        }
+      } catch (error) {
+        console.error(error)
+        toast({
+          status: "error",
+          description: "Failed to apply suggestions."
         })
       }
-    } catch (error) {
-      console.error(error)
+    })
+  }
+
+  const handleRemove = async () => {
+    const boardId = boardData?._id
+    const imageUrl = form.watch("imageUrl")
+    
+    if (!boardId || !imageUrl) {
       toast({
         status: "error",
-        description: "Failed to apply suggestions."
+        title: "There is no image to remove."
       })
+      return
     }
+
+    if (boardData?.role === BoardRole.VIEWER) {
+      toast({
+        status: "warning",
+        description: "Editing is restricted to authorized users only."
+      })
+      return
+    }
+
+    startTransition(async () => {
+      try {
+        await removeMedia(imageUrl)
+
+        const updateRes = await updateBoard({ imageUrl: "", boardId })
+        if (!updateRes?.data) throw new Error(updateRes?.error || "Remove board cover failed")
+
+        const isPro = await getSubscriptionStatus()
+        if (!isPro) {
+          await decreaseBoardCoverCount(boardData.userId)
+          queryClient.invalidateQueries({
+            queryKey: [CountType.BOARD_COVER_COUNT]
+          })
+        }
+
+        toast({ status: "success", title: "Cover removed successfully!" })
+        onClose()
+
+      } catch (error) {
+        console.error("Error during remove process:", error)
+        toast({ status: "error", description: (error as Error).message || "Unknown error during remove process" })
+      }
+    })
   }
   
   return (
@@ -319,6 +383,7 @@ export const BoardForm = ({
           <BoardImage
             url={form.watch("imageUrl")}
             onClose={onClose}
+            handleRemove={handleRemove}
             isUpdating={isPending}
           />
         )

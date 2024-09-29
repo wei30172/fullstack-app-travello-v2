@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 
+import { ProModal } from "@/components/shared/modal/pro-modal"
 import { CardModal } from "@/components/shared/modal/card-modal"
 import { CoverImageModal } from "@/components/shared/modal/cover-image-modal"
 
@@ -18,6 +19,7 @@ export const ModalProvider = () => {
 
   return (
     <>
+      <ProModal />
       <CardModal />
       <CoverImageModal />
     </>

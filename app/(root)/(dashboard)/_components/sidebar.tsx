@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { SidebarLinks } from "./sidebar-links"
 import { TrashBox } from "./trash-box"
-import { FiSettings, FiMap, FiTrash } from "react-icons/fi"
+import { FiSettings, FiMap, FiCreditCard, FiTrash } from "react-icons/fi"
 
 export const Sidebar = () => {
   const isMobile = useMediaQuery("(max-width: 768px)")
@@ -25,12 +25,12 @@ export const Sidebar = () => {
       icon: <FiMap className="h-4 w-4 mr-2" />,
       label: "Trips",
       url: "/boards"
+    },
+    {
+      icon: <FiCreditCard className="h-4 w-4 mr-2" />,
+      label: "Billing",
+      url: "/billing"
     }
-    // {
-    //   icon: <FiCreditCard className="h-4 w-4 mr-2" />,
-    //   label: "Billing",
-    //   url: "/billing"
-    // }
   ]
 
   return (

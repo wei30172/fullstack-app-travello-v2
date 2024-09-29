@@ -1,5 +1,5 @@
 import { MAX_FREE_ASKAI } from "@/constants/board"
-import { getAvailableAskAiCount } from "@/lib/actions/user-limit"
+import { getAvailableAskAiCount } from "@/lib/actions/user-limit/handle-count"
 import { CountType } from "@/lib/models/types"
 
 import { FiPause } from "react-icons/fi"
@@ -14,9 +14,9 @@ interface AIResponseProps {
   isStreaming: boolean
   openAIResponse: string | ""
   tripItinerary: TripItinerary | null
-  applySuggestions: () => void
   handleAskAI: () => void
   handleStop: () => void
+  applySuggestions: () => void
   isUpdating: boolean
 }
 
@@ -30,9 +30,9 @@ const AIResponse = ({
   isStreaming,
   openAIResponse,
   tripItinerary,
-  applySuggestions,
   handleAskAI,
   handleStop,
+  applySuggestions,
   isUpdating
 }: AIResponseProps) => {
   const itineraryElements = tripItinerary && Object.entries(tripItinerary).map(([attraction, activities], index) => (
@@ -70,8 +70,8 @@ const AIResponse = ({
       }
       </div>
       <AvailableCount
-        queryKey={CountType.ASK_AI_COUNT}
-        queryFn={getAvailableAskAiCount}
+        availableCount={CountType.ASK_AI_COUNT}
+        getAvailableCount={getAvailableAskAiCount}
         maxCount={MAX_FREE_ASKAI}
         label="{remaining} AI uses remaining"
         description={`You have ${MAX_FREE_ASKAI} free AI uses available in Free Workspaces.`}
