@@ -149,8 +149,7 @@ export const BoardForm = ({
         toast({ status: "warning", description: "Editing is restricted to authorized users only." })
         return
       }
-
-      onClose()
+      
       startTransition(() => {
         updateBoard({
           title: values.title,
