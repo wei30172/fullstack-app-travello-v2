@@ -14,7 +14,7 @@ export const RootFooter = () => {
             &copy; 2024 Wei. All rights reserved.
           </p>
         </div>
-        <div className="flex max-sm:flex-col gap-1 sm:gap-4 text-xs">
+        <div className="flex gap-1 sm:gap-4 text-xs">
           <Link href="/">
             Privacy Notice
           </Link>
