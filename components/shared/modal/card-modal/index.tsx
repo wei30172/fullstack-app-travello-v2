@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { getCard } from "@/lib/actions/card/get-card"
 import { useCardModal } from "@/hooks/use-card-modal"
@@ -24,8 +25,15 @@ export const CardModal = () => {
     enabled: !!id
   })
 
+  const [tempDescription, setTempDescription] = useState<string>("")
   const isEditorOrOwner = cardData?.role === BoardRole.EDITOR || cardData?.role === BoardRole.OWNER
 
+  useEffect(() => {
+    if (cardData) {
+      setTempDescription(cardData.description || "")
+    }
+  }, [cardData])
+  
   if (isError) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
@@ -51,7 +59,11 @@ export const CardModal = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4">
               <div className="col-span-3">
                 <div className="w-full space-y-6">
-                  <Description data={cardData} />
+                <Description
+                  data={cardData}
+                  tempDescription={tempDescription}
+                  setTempDescription={setTempDescription}
+                />
                 </div>
               </div>
               {isEditorOrOwner && <Options data={cardData} />}

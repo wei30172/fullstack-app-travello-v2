@@ -17,10 +17,14 @@ import { LuMapPin } from "react-icons/lu"
 
 interface DescriptionProps {
   data: CardWithList
+  tempDescription: string
+  setTempDescription: (description: string) => void
 }
 
 export const Description = ({
-  data
+  data,
+  tempDescription,
+  setTempDescription
 }: DescriptionProps) => {
   const isEditorOrOwner = data.role === BoardRole.EDITOR || data.role === BoardRole.OWNER
 
@@ -46,6 +50,7 @@ export const Description = ({
 
   const disableEditing = () => {
     setIsEditing(false)
+    setTempDescription(data.description || "")
   }
 
   const onKeyDown = (e: KeyboardEvent) => {
@@ -106,9 +111,10 @@ export const Description = ({
             >
               <FormTextarea
                 id="description"
+                value={tempDescription}
                 className="w-full mt-2 min-h-[80px]"
                 placeholder="Add more detailed description"
-                defaultValue={data.description || undefined}
+                onChange={(e) => setTempDescription(e.target.value)}
                 errors={fieldErrors}
                 ref={textareaRef}
               />
@@ -131,11 +137,11 @@ export const Description = ({
             <div
               onClick={enableEditing}
               role="button"
-              className="max-w-[285px] md:max-w-[345px] min-h-[80px] text-sm font-medium py-3 px-3.5 break-words
+              className="max-w-[285px] md:max-w-[345px] min-h-[80px] max-h-[200px] overflow-auto text-sm font-medium py-3 px-3.5 break-words
                 border-transparent border border-gray-700 rounded-md cursor-pointer"
               style={{ whiteSpace: "pre-wrap" }}
             >
-              {data.description || "Add more detailed description..."}
+              {tempDescription || "Add more detailed description..."}
             </div>
           )
         ) : (

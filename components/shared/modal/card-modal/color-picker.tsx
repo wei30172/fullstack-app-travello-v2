@@ -66,13 +66,13 @@ export const ColorPicker = ({ data }: ColorPickerProps) => {
         <p className="font-semibold text-gray-700 mb-2">
           Color
         </p>
-        <div className="p-4 bg-gray-800 rounded-lg flex flex-wrap gap-1">
+        <div className="p-4 bg-gray-800 rounded-lg grid grid-cols-6 sm:grid-cols-8 gap-2">
           {colors.map(color => (
             <Button
               key={color}
               onClick={() => selectColor(color)}
               style={{ backgroundColor: color || "transparent" }}
-              className={`w-8 h-8 rounded-full m-1 p-0 focus:outline-none ${cardColor === color ? "ring-2 ring-white": ""}`}
+              className={`w-8 h-8 rounded-full p-0 focus:outline-none ${cardColor === color ? "ring-2 ring-white": ""}`}
               disabled={isPending}
             >
               {color === "" && <GoCircleSlash className="text-gray-400 w-full h-full" />}
@@ -90,9 +90,9 @@ ColorPicker.Skeleton = function ColorPickerSkeleton() {
     <div className="flex items-start gap-x-4 w-full">
       <Skeleton className="h-5 w-5 bg-gray-200" />
       <div className="w-full">
-        <div className="p-4 bg-gray-800 rounded-lg flex flex-wrap gap-1">
+        <div className="p-4 bg-gray-800 rounded-lg grid grid-cols-6 sm:grid-cols-8 gap-2">
           {Array(24).fill(null).map((_, index) => (
-            <Skeleton key={index} className="w-8 h-8 m-1 rounded-full bg-gray-200" />
+            <Skeleton key={index} className="w-8 h-8 rounded-full bg-gray-200" />
           ))}
         </div>
       </div>
