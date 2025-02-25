@@ -197,13 +197,17 @@ export const ListContainer = ({
   
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="lists" type="list" direction="horizontal"
-        isDropDisabled={isPending || role === BoardRole.VIEWER}>
+      <Droppable
+        droppableId={boardId}
+        type="list"
+        direction="horizontal"
+        isDropDisabled={isPending || role === BoardRole.VIEWER}
+      >
         {(provided) => (
           <ol 
             {...provided.droppableProps}
             ref={provided.innerRef}  
-            className="flex gap-x-3 h-full"
+            className="flex gap-x-3 h-full min-w-fit"
           >
             {orderedData.map((list, index) => {
               return (

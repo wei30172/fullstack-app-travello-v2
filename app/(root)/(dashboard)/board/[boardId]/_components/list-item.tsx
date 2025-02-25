@@ -49,7 +49,7 @@ export const ListItem = ({
             {...provided.dragHandleProps}
             className="w-full rounded-md bg-gray-100 shadow-md pb-2"
           >
-            <ListHeader 
+            <ListHeader
               onAddCard={enableEditing}
               listData={listData}
               role={role}
