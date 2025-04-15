@@ -1,0 +1,13 @@
+{
+  "HomePage": {
+    "title": "用 Travello 輕鬆規劃旅程",
+    "subtitle": "拖曳工具與 AI 推薦，打造專屬行程好簡單",
+    "description": "探索世界各地、輕鬆安排每日行程。Travello 結合直覺操作與 AI 協助，讓旅遊規劃變得快速、有趣又充滿靈感。",
+    "link": "立即開始規劃"
+  },
+  "Navbar": {
+    "create": "新增旅程",
+    "signin": "登入",
+    "signup": "免費體驗 Travello"
+  }
+}

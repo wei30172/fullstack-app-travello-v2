@@ -1,6 +1,10 @@
 import type { Metadata } from "next"
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { notFound } from "next/navigation";
 import { Inter } from "next/font/google"
 import { SessionProvider } from "next-auth/react"
+import { Locale, routing } from "@/i18n/routing"
 import { auth } from "@/auth"
 import "./globals.css"
 
@@ -27,15 +31,25 @@ export const metadata: Metadata = {
 
 export default async function AppLayout({
   children,
+  params
 }: {
   children: React.ReactNode
+  params: { locale: Locale }
 }) {
+  const { locale } = await params
+  if (!routing.locales.includes(locale as Locale)) {
+    notFound()
+  }
+  
+  const messages = await getMessages()
   const session = await auth()
 
-  return (
-    <SessionProvider session={session}>
-      <html suppressHydrationWarning lang="en">
-        <body className={inter.className}>
+  // console.log({locale, messages})
+
+  return ( 
+    <html suppressHydrationWarning lang={locale}>
+      <body className={inter.className}>
+        <SessionProvider session={session}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -45,11 +59,13 @@ export default async function AppLayout({
             <QueryProvider>
               <Toaster />
               <ModalProvider />
-              {children}
+              <NextIntlClientProvider messages={messages}>
+                {children}
+              </NextIntlClientProvider>
             </QueryProvider>
           </ThemeProvider>
-        </body>
-      </html>
-    </SessionProvider>
+        </SessionProvider>
+      </body>
+    </html>
   )
 }

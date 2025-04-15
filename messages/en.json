@@ -1,0 +1,13 @@
+{
+  "HomePage": {
+    "title": "Effortless Travel Planning with Travello",
+    "subtitle": "Plan your trip with drag & drop tools and AI-powered suggestions",
+    "description": "Discover new destinations and build your itinerary in minutes. Travello helps you stay organized and inspired with a fun, visual planning experience.",
+    "link": "Start Planning Now"
+  },
+  "Navbar": {
+    "create": "Create",
+    "signin": "Login",
+    "signup": "Try Travello for free"
+  }
+}

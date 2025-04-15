@@ -11,7 +11,6 @@ export const routes = {
     "/new-password",
     "/error"
   ],
-  apiAuthPrefix: "/api/auth",
   defaultLoginRedirect: "/boards",
   defaultLogoutRedirect: "/signin"
 }
