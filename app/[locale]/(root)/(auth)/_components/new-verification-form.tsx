@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { newVerification } from "@/lib/actions/auth/new-verification"
 
 import { FormError } from "@/components/shared/form/form-error"
@@ -13,6 +14,9 @@ export const NewVerificationForm = () => {
   const searchParams = useSearchParams()
   const [error, setError] = useState<string | undefined>("")
   const [success, setSuccess] = useState<string | undefined>("")
+  
+  const t = useTranslations("NewVerificationForm")
+  const serverError = useTranslations("SomeForm.server.error")
 
   const token = searchParams.get("token")
 
@@ -21,7 +25,7 @@ export const NewVerificationForm = () => {
     if (success || error) return
 
     if (!token) {
-      setError("Missing token!")
+      setError(serverError("missing-token"))
       return
     }
 
@@ -33,7 +37,7 @@ export const NewVerificationForm = () => {
           setSuccess(data.success)
         }
       })
-      .catch(() => setError("Something went wrong"))
+      .catch(() => setError(serverError("generic")))
   }, [token, success, error])
 
   useEffect(() => {
@@ -42,8 +46,8 @@ export const NewVerificationForm = () => {
 
   return (
     <FormWrapper
-      headerLabel="Confirming your verification"
-      backButtonLabel="Back to login"
+      headerLabel={t("header")}
+      backButtonLabel={t("back-button")}
       backButtonHref="/signin"
     >
       <div className="flex items-center w-full justify-center">

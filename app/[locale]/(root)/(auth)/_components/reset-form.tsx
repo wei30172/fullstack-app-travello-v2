@@ -2,11 +2,13 @@
 
 import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
-import { useSearchParams } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { NewPasswordValidation } from "@/lib/validations/auth"
-import { newPassword } from "@/lib/actions/auth/new-password"
+import {
+  ResetFormValues,
+  getResetFormSchema
+} from "@/lib/validations/auth"
+import { resetPassword } from "@/lib/actions/auth/reset-password"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -22,29 +24,29 @@ import { FormError } from "@/components/shared/form/form-error"
 import { FormSuccess } from "@/components/shared/form/form-success"
 import { FormWrapper } from "@/components/shared/form/form-wrapper"
 
-export const NewPasswordForm = () => {
-  const searchParams = useSearchParams()
-  const token = searchParams.get("token")
-
+export const ResetForm = () => {
   const [error, setError] = useState<string | undefined>("")
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof NewPasswordValidation>>({
-    resolver: zodResolver(NewPasswordValidation),
+  const t = useTranslations("ResetForm")
+  const validationMessages = useTranslations("ResetForm.validation")
+  const serverError = useTranslations("SomeForm.server.error")
+
+  const form = useForm<ResetFormValues>({
+    resolver: zodResolver(getResetFormSchema(validationMessages)),
     defaultValues: {
-      newPassword: "",
-      confirmPassword: ""
+      email: ""
     }
   })
 
-  async function onSubmit(values: z.infer<typeof NewPasswordValidation>) {
+  async function onSubmit(values: ResetFormValues) {
     // console.log(values)
     setError("")
     setSuccess("")
 
     startTransition(() => {
-      newPassword(values, token)
+      resetPassword(values)
         .then((data) => {
           if (data?.error) {
             setError(data.error)
@@ -52,14 +54,14 @@ export const NewPasswordForm = () => {
             setSuccess(data.success)
           }
         })
-        .catch(() => setError("Something went wrong"))
+        .catch(() => setError(serverError("generic")))
     })
   }
 
   return (
     <FormWrapper
-      headerLabel="Enter a new password"
-      backButtonLabel="Back to sign in"
+      headerLabel={t("header")}
+      backButtonLabel={t("back-button")}
       backButtonHref="/signin"
     >
       <Form {...form}>
@@ -67,33 +69,15 @@ export const NewPasswordForm = () => {
           <div className="space-y-4">
             <FormField
               control={form.control}
-              name="newPassword"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>New password</FormLabel>
+                  <FormLabel>{t("email")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
-                      type="password"
-                      placeholder="new password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirm password</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={isPending}
-                      type="password"
-                      placeholder="confirm password"
+                      placeholder="mail@example.com"
+                      autoComplete="email"
                       {...field}
                     />
                   </FormControl>
@@ -110,7 +94,7 @@ export const NewPasswordForm = () => {
             type="submit"
             disabled={isPending}
           >
-            {isPending ? "Submitting..." : "Reset password"}
+            {isPending ? t("submitting") : t("submit")}
           </Button>
         </form>
       </Form>

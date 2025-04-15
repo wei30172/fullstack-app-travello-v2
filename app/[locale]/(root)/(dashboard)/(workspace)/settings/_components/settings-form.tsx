@@ -2,11 +2,14 @@
 
 import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
+import { useTranslations } from "next-intl"
 import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
 import { useSession } from "next-auth/react"
 import { UserRole, UserProvider } from "@/lib/models/types"
-import { SettingsValidation } from "@/lib/validations/auth"
+import {
+  SettingsFormValues,
+  getSettingsFormSchema
+} from "@/lib/validations/auth"
 import { settings } from "@/lib/actions/auth/settings"
 
 import {
@@ -39,8 +42,12 @@ export const SettingsForm = () => {
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof SettingsValidation>>({
-    resolver: zodResolver(SettingsValidation),
+  const t = useTranslations("SettingsForm")
+  const validationMessages = useTranslations("SettingsForm.validation")
+  const serverError = useTranslations("SomeForm.server.error")
+
+  const form = useForm<SettingsFormValues>({
+    resolver: zodResolver(getSettingsFormSchema(validationMessages)),
     defaultValues: {
       name: user?.name || "",
       email: user?.email || "",
@@ -51,7 +58,7 @@ export const SettingsForm = () => {
     }
   })
 
-  async function onSubmit(values: z.infer<typeof SettingsValidation>) {
+  async function onSubmit(values: SettingsFormValues) {
     // console.log(values)
     setError("")
     setSuccess("")
@@ -66,7 +73,7 @@ export const SettingsForm = () => {
             setSuccess(data.success)
           }
         })
-        .catch(() => setError("Something went wrong"))
+        .catch(() => setError(serverError("generic")))
     })
   }
 
@@ -78,7 +85,7 @@ export const SettingsForm = () => {
     <Card className="w-[350px]">
       <CardHeader>
         <p className="text-2xl font-semibold text-center">
-          Settings
+          {t("header")}
         </p>
       </CardHeader>
       <CardContent>
@@ -90,11 +97,12 @@ export const SettingsForm = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>{t("name")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending}
-                        placeholder="your username on the web"
+                        placeholder={t("name")}
+                        autoComplete="username"
                         {...field}
                       />
                     </FormControl>
@@ -107,11 +115,12 @@ export const SettingsForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t("email")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending || user?.provider !== UserProvider.CREDENTIALS}
                         placeholder="mail@example.com"
+                        autoComplete="email"
                         {...field}
                       />
                     </FormControl>
@@ -131,12 +140,13 @@ export const SettingsForm = () => {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel>{t("password")}</FormLabel>
                         <FormControl>
                           <Input
                             disabled={isPending}
                             type="password"
-                            placeholder="your password"
+                            placeholder={t("password")}
+                            autoComplete="current-password"
                             {...field}
                           />
                         </FormControl>
@@ -149,12 +159,13 @@ export const SettingsForm = () => {
                     name="newPassword"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>New password</FormLabel>
+                        <FormLabel>{t("new-password")}</FormLabel>
                         <FormControl>
                           <Input
                             disabled={isPending}
                             type="password"
-                            placeholder="new password"
+                            placeholder={t("new-password")}
+                            autoComplete="new-password"
                             {...field}
                           />
                         </FormControl>
@@ -171,9 +182,9 @@ export const SettingsForm = () => {
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                     <div className="space-y-0.5">
-                      <FormLabel>Two Factor Authentication</FormLabel>
+                      <FormLabel>{t("isTwoFactorEnabled")}</FormLabel>
                       <FormDescription>
-                        Enable two factor authentication
+                        {t("isTwoFactorEnabled-description")}
                       </FormDescription>
                     </div>
                     <FormControl>
@@ -196,7 +207,7 @@ export const SettingsForm = () => {
               type="submit"
               disabled={isPending}
             >
-              {isPending ? "Saving..." : "Save"}
+              {isPending ? t("submitting") : t("submit")}
             </Button>
           </form>
         </Form>

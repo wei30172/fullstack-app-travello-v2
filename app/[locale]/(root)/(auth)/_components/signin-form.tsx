@@ -3,10 +3,13 @@
 import { useState, useTransition } from "react"
 import { useSearchParams } from "next/navigation"
 import { useForm } from "react-hook-form"
+import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { SignInValidation } from "@/lib/validations/auth"
+import {
+  SignInFormValues,
+  getSignInFormSchema
+} from "@/lib/validations/auth"
 import { signInWithCredentials } from "@/lib/actions/auth/signin-with-credentials"
 
 import { Button } from "@/components/ui/button"
@@ -31,15 +34,20 @@ export const SignInForm = () => {
   const [showTwoFactor, setShowTwoFactor] = useState(false)
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof SignInValidation>>({
-    resolver: zodResolver(SignInValidation),
+  const t = useTranslations("SignInForm")
+  const validationMessages = useTranslations("SignInForm.validation")
+  const serverError = useTranslations("SomeForm.server.error")
+
+  const form = useForm<SignInFormValues>({
+    resolver: zodResolver(getSignInFormSchema(validationMessages)),
     defaultValues: {
       email: "",
-      password: ""
+      password: "",
+      code: "",
     }
   })
 
-  async function onSubmit(values: z.infer<typeof SignInValidation>) {
+  async function onSubmit(values: SignInFormValues) {
     // console.log(values)
     setError("")
     setSuccess("")
@@ -59,14 +67,14 @@ export const SignInForm = () => {
             setShowTwoFactor(true)
           }
         })
-        .catch(() => setError("Something went wrong"))
+        .catch(() => setError(serverError("generic")))
     })
   }
 
   return (
     <FormWrapper
-      headerLabel="Welcome back"
-      backButtonLabel="Don't have an account?"
+      headerLabel={t("header")}
+      backButtonLabel={t("back-button")}
       backButtonHref="/signup"
       showSocial
     >
@@ -79,11 +87,12 @@ export const SignInForm = () => {
                 name="code"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Two Factor Code</FormLabel>
+                    <FormLabel>{t("code")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending}
                         placeholder="123456"
+                        autoComplete="one-time-code"
                         {...field}
                       />
                     </FormControl>
@@ -99,11 +108,12 @@ export const SignInForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t("email")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending}
                         placeholder="mail@example.com"
+                        autoComplete="email"
                         {...field}
                       />
                     </FormControl>
@@ -116,12 +126,13 @@ export const SignInForm = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("password")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending}
                         type="password"
-                        placeholder="your password"
+                        placeholder={t("password")}
+                        autoComplete="current-password"
                         {...field}
                       />
                     </FormControl>
@@ -132,7 +143,7 @@ export const SignInForm = () => {
                       className="px-0 font-normal"
                     >
                       <Link href="/reset">
-                        Forgot password?
+                        {t("reset-link")}
                       </Link>
                     </Button>
                     <FormMessage />
@@ -150,7 +161,7 @@ export const SignInForm = () => {
             type="submit"
             disabled={isPending}
           >
-            {isPending ? "Submitting..." : showTwoFactor ? "Confirm" : "Sign In"}
+            {isPending ? t("submitting") : showTwoFactor ? t("confirm") : t("submit")}
           </Button>
         </form>
       </Form>

@@ -1,35 +1,36 @@
 "use server"
 
-import { z } from "zod"
 import bcrypt from "bcryptjs"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { verifyToken, isTokenError } from "@/lib/token"
 import { User } from "@/lib/models/auth.model"
 import { UserProvider } from "@/lib/models/types"
-import { NewPasswordValidation } from "@/lib/validations/auth"
-
-type NewPasswordInput = z.infer<typeof NewPasswordValidation>
+import { NewPasswordFormValues, getNewPasswordFormSchema } from "@/lib/validations/auth"
 
 export const newPassword = async (
-  values: NewPasswordInput,
+  values: NewPasswordFormValues,
   token?: string | null
 ) => {
-  const validatedFields = NewPasswordValidation.safeParse(values)
+  const t = await getTranslations("NewPasswordForm.server")
+  const tokenError = await getTranslations("SomeForm.server.error")
+
+  const validatedFields = getNewPasswordFormSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: t("error.invalid-fields") }
   }
 
   if (!token) {
-    return { error: "Missing token!" }
+    return { error: tokenError("missing-token") }
   }
 
   const res = await verifyToken(token)
   // console.log({res})
 
   if (isTokenError(res)) {
-    return { error: res.error }
+    return { error: tokenError(`${res.error}`) }
   }
 
   await connectDB()
@@ -37,11 +38,11 @@ export const newPassword = async (
   const existingUser = await User.findOne({email: res.email})
 
   if (!existingUser) {
-    return { error: "Email does not exist!" }
+    return { error: t("error.email-not-found") }
   }
 
   if (existingUser.provider !== UserProvider.CREDENTIALS) {
-    return { error: "Email has already been used for third-party login" }
+    return { error: t("error.third-party") }
   }
   
   const { newPassword } = validatedFields.data
@@ -53,5 +54,5 @@ export const newPassword = async (
     { password: hashedPassword }
   )
 
-  return { success: "Password updated!" }
+  return { success: t("success.password-updated") }
 }
