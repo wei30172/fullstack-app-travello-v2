@@ -12,12 +12,12 @@
   },
   "ErrorCard": {
     "header": "哎呀！出了點問題！",
-    "back-button": "返回登入頁"
+    "backButton": "返回登入頁"
   },
   "SignInForm": {
     "header": "歡迎回來",
-    "back-button": "尚未註冊帳號",
-    "reset-link": "忘記密碼",
+    "backButton": "尚未註冊帳號",
+    "resetLink": "忘記密碼",
     "code": "驗證碼",
     "email": "電子郵件",
     "password": "密碼",
@@ -36,25 +36,25 @@
     },
     "server": {
       "error": {
-        "invalid-fields": "部分欄位錯誤。",
-        "email-not-found": "該電子郵件尚未註冊。",
-        "invalid-code": "驗證碼錯誤。",
-        "code-expired": "驗證碼已過期。",
-        "invalid-credentials": "電子郵件或密碼錯誤。",
+        "invalidFields": "部分欄位格式錯誤。",
+        "emailNotFound": "該電子郵件尚未註冊。",
+        "invalidCode": "驗證碼錯誤。",
+        "codeExpired": "驗證碼已過期。",
+        "invalidCredentials": "電子郵件或密碼錯誤。",
         "generic": "發生錯誤，請稍後再試。"
       },
       "success": {
-        "confirmation-sent": "已寄出確認信件。"
+        "confirmationSent": "已寄出確認信件。"
       }
     }
   },
   "SignUpForm": {
     "header": "建立帳號",
-    "back-button": "已經註冊帳號",
+    "backButton": "已經註冊帳號",
     "name": "使用者名稱",
     "email": "電子郵件",
     "password": "密碼",
-    "confirm-password": "確認密碼",
+    "confirmPassword": "確認密碼",
     "submitting": "註冊中...",
     "submit": "註冊",
     "validation": {
@@ -70,25 +70,25 @@
         "required": "密碼為必填",
         "invalid": "密碼長度至少 8 個字元"
       },
-      "confirm-password": {
+      "confirmPassword": {
         "required": "請再次輸入密碼",
         "invalid": "密碼不一致"
       }
     },
     "server": {
       "error": {
-        "invalid-fields": "部分欄位錯誤。",
-        "email-exists": "該電子郵件已註冊。",
-        "email-third-party": "該電子郵件已用於第三方登入。"
+        "invalidFields": "部分欄位格式錯誤。",
+        "emailExists": "該電子郵件已註冊。",
+        "emailThirdParty": "該電子郵件已用於第三方登入。"
       },
       "success": {
-        "confirmation-sent": "已寄出確認郵件。"
+        "confirmationSent": "已寄出確認郵件。"
       }
     }
   },
   "ResetForm": {
     "header": "忘記密碼？",
-    "back-button": "返回登入頁",
+    "backButton": "返回登入頁",
     "email": "電子郵件",
     "submitting": "發送中...",
     "submit": "發送重設郵件",
@@ -100,40 +100,40 @@
     },
     "server": {
       "error": {
-        "invalid-fields": "電子郵件格式錯誤。",
-        "email-not-found": "該電子郵件尚未註冊。",
-        "third-party": "該電子郵件已用於第三方登入。"
+        "invalidFields": "電子郵件格式錯誤。",
+        "emailNotFound": "該電子郵件尚未註冊。",
+        "emailThirdParty": "該電子郵件已用於第三方登入。"
       },
       "success": {
-        "reset-sent": "已發送密碼重設郵件。"
+        "resetSent": "已發送密碼重設郵件。"
       }
     }
   },
   "NewPasswordForm": {
     "header": "重設您的密碼",
-    "back-button": "返回登入頁",
-    "new-password": "新密碼",
-    "confirm-password": "確認密碼",
+    "backButton": "返回登入頁",
+    "newPassword": "新密碼",
+    "confirmPassword": "確認密碼",
     "submitting": "重設中...",
     "submit": "重設密碼",
     "validation": {
-      "new-password": {
+      "newPassword": {
         "required": "請輸入新密碼",
         "invalid": "密碼長度至少需 8 個字元"
       },
-      "confirm-password": {
+      "confirmPassword": {
         "required": "請確認新密碼",
         "invalid": "兩次輸入的密碼不一致"
       }
     },
     "server": {
       "error": {
-        "invalid-fields": "部分欄位格式錯誤。",
-        "email-not-found": "該電子郵件尚未註冊。",
-        "third-party": "該電子郵件已用於第三方登入。"
+        "invalidFields": "部分欄位格式錯誤。",
+        "emailNotFound": "該電子郵件尚未註冊。",
+        "emailThirdParty": "該電子郵件已用於第三方登入。"
       },
       "success": {
-        "password-updated": "密碼已成功更新。"
+        "passwordUpdated": "密碼已成功更新。"
       }
     }
   },
@@ -142,9 +142,9 @@
     "name": "使用者名稱",
     "email": "電子郵件",
     "password": "目前密碼",
-    "new-password": "新密碼",
+    "newPassword": "新密碼",
     "isTwoFactorEnabled": "雙重驗證",
-    "isTwoFactorEnabled-description": "啟用雙重驗證",
+    "isTwoFactorEnabledDescription": "啟用雙重驗證",
     "submitting": "儲存中...",
     "submit": "儲存變更",
     "validation": {
@@ -155,7 +155,7 @@
         "required": "請輸入目前的密碼以修改密碼",
         "invalid": "如需修改密碼，原密碼至少需 8 個字元"
       },
-      "new-password": {
+      "newPassword": {
         "required": "請輸入新密碼以完成修改",
         "invalid": "新密碼至少需 8 個字元"
       }
@@ -163,35 +163,35 @@
     "server": {
       "error": {
         "unauthorized": "未授權的操作。",
-        "email-in-use": "該電子郵件已被使用。",
-        "incorrect-password": "密碼不正確。"
+        "emailInUse": "該電子郵件已被使用。",
+        "incorrectPassword": "密碼不正確。"
       },
       "success": {
-        "verification-sent": "已發送驗證信件。",
-        "settings-updated": "帳號資料已更新。"
+        "verificationSent": "已發送驗證信件。",
+        "settingsUpdated": "帳號資料已更新。"
       }
     }
   },
   "NewVerificationForm": {
     "header": "電子郵件驗證",
-    "back-button": "返回登入頁",
+    "backButton": "返回登入頁",
     "server": {
       "error": {
-        "email-not-found": "該電子郵件尚未註冊。",
-        "invalid-request": "驗證請求無效。"
+        "emailNotFound": "該電子郵件尚未註冊。",
+        "invalidRequest": "驗證請求無效。"
       },
       "success": {
-        "email-updated": "您的電子郵件已更新並完成驗證。",
-        "email-verified": "電子郵件驗證成功。"
+        "emailUpdated": "您的電子郵件已更新並完成驗證。",
+        "emailVerified": "電子郵件驗證成功。"
       }
     }
   },
   "SomeForm": {
     "server": {
       "error": {
-        "missing-token": "缺少驗證令牌。",
-        "token-expired": "驗證碼已過期。",
-        "token-invalid": "驗證碼無效。",
+        "missingToken": "缺少驗證令牌。",
+        "tokenExpired": "驗證碼已過期。",
+        "tokenInvalid": "驗證碼無效。",
         "generic": "發生錯誤，請稍後重試。"
       }
     }
