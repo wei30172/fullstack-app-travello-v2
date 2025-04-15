@@ -27,9 +27,9 @@ export const verifyToken = async (token: string): Promise<IPayload | IError> => 
     return decoded
   } catch (error) {
     if (error instanceof TokenExpiredError) {
-      return { error: "token-expired" }
+      return { error: "tokenExpired" }
     } else {
-      return { error: "token-invalid" }
+      return { error: "tokenInvalid" }
     }
   }
 }

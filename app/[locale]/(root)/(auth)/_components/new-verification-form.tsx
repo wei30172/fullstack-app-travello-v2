@@ -25,7 +25,7 @@ export const NewVerificationForm = () => {
     if (success || error) return
 
     if (!token) {
-      setError(serverError("missing-token"))
+      setError(serverError("missingToken"))
       return
     }
 
@@ -38,7 +38,7 @@ export const NewVerificationForm = () => {
         }
       })
       .catch(() => setError(serverError("generic")))
-  }, [token, success, error])
+  }, [token, success, error, serverError])
 
   useEffect(() => {
     onSubmit()
@@ -47,7 +47,7 @@ export const NewVerificationForm = () => {
   return (
     <FormWrapper
       headerLabel={t("header")}
-      backButtonLabel={t("back-button")}
+      backButtonLabel={t("backButton")}
       backButtonHref="/signin"
     >
       <div className="flex items-center w-full justify-center">

@@ -159,12 +159,12 @@ export const SettingsForm = () => {
                     name="newPassword"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("new-password")}</FormLabel>
+                        <FormLabel>{t("newPassword")}</FormLabel>
                         <FormControl>
                           <Input
                             disabled={isPending}
                             type="password"
-                            placeholder={t("new-password")}
+                            placeholder={t("newPassword")}
                             autoComplete="new-password"
                             {...field}
                           />
@@ -184,7 +184,7 @@ export const SettingsForm = () => {
                     <div className="space-y-0.5">
                       <FormLabel>{t("isTwoFactorEnabled")}</FormLabel>
                       <FormDescription>
-                        {t("isTwoFactorEnabled-description")}
+                        {t("isTwoFactorEnabledDescription")}
                       </FormDescription>
                     </div>
                     <FormControl>

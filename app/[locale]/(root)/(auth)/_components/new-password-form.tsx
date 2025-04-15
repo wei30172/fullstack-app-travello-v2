@@ -66,7 +66,7 @@ export const NewPasswordForm = () => {
   return (
     <FormWrapper
       headerLabel={t("header")}
-      backButtonLabel={t("back-button")}
+      backButtonLabel={t("backButton")}
       backButtonHref="/signin"
     >
       <Form {...form}>
@@ -77,12 +77,12 @@ export const NewPasswordForm = () => {
               name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("new-password")}</FormLabel>
+                  <FormLabel>{t("newPassword")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
                       type="password"
-                      placeholder={t("new-password")}
+                      placeholder={t("newPassword")}
                       autoComplete="new-password"
                       {...field}
                     />
@@ -96,12 +96,12 @@ export const NewPasswordForm = () => {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("confirm-password")}</FormLabel>
+                  <FormLabel>{t("confirmPassword")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
                       type="password"
-                      placeholder={t("confirm-password")}
+                      placeholder={t("confirmPassword")}
                       autoComplete="new-password"
                       {...field}
                     />

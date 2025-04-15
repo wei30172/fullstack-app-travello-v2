@@ -19,11 +19,11 @@ export const newPassword = async (
   const validatedFields = getNewPasswordFormSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: t("error.invalid-fields") }
+    return { error: t("error.invalidFields") }
   }
 
   if (!token) {
-    return { error: tokenError("missing-token") }
+    return { error: tokenError("missingToken") }
   }
 
   const res = await verifyToken(token)
@@ -38,11 +38,11 @@ export const newPassword = async (
   const existingUser = await User.findOne({email: res.email})
 
   if (!existingUser) {
-    return { error: t("error.email-not-found") }
+    return { error: t("error.emailNotFound") }
   }
 
   if (existingUser.provider !== UserProvider.CREDENTIALS) {
-    return { error: t("error.third-party") }
+    return { error: t("error.emailThirdParty") }
   }
   
   const { newPassword } = validatedFields.data
@@ -54,5 +54,5 @@ export const newPassword = async (
     { password: hashedPassword }
   )
 
-  return { success: t("success.password-updated") }
+  return { success: t("success.passwordUpdated") }
 }

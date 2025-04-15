@@ -17,7 +17,7 @@ export const signUpWithCredentials = async (
   const validatedFields = getSignUpFormSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: t("error.invalid-fields") }
+    return { error: t("error.invalidFields") }
   }
   
   const { email, password, name } = validatedFields.data
@@ -27,8 +27,8 @@ export const signUpWithCredentials = async (
   const existingUser = await User.findOne({email})
   if (existingUser) {
     const error = existingUser.provider === UserProvider.CREDENTIALS 
-      ? t("error.email-exists")
-      : t("error.email-third-party")
+      ? t("error.emailExists")
+      : t("error.emailThirdParty")
     return { error }
   }
 
@@ -46,5 +46,5 @@ export const signUpWithCredentials = async (
     verificationToken
   )
   
-  return { success: t("success.confirmation-sent") }
+  return { success: t("success.confirmationSent") }
 }

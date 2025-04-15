@@ -21,7 +21,7 @@ export const signInWithCredentials = async (
   const validatedFields = getSignInFormSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: t("error.invalid-fields") }
+    return { error: t("error.invalidFields") }
   }
   
   const { email, password, code } = validatedFields.data
@@ -32,7 +32,7 @@ export const signInWithCredentials = async (
   // console.log({existingUser})
   
   if (!existingUser || !existingUser.email || !existingUser.password) {
-    return { error: t("error.email-not-found") }
+    return { error: t("error.emailNotFound") }
   }
 
   if (!existingUser.emailVerified) {
@@ -44,7 +44,7 @@ export const signInWithCredentials = async (
       verificationToken
     )
 
-    return { success: t("success.confirmation-sent") }
+    return { success: t("success.confirmationSent") }
   }
 
   if (existingUser.isTwoFactorEnabled && existingUser.email) {
@@ -54,7 +54,7 @@ export const signInWithCredentials = async (
       })
 
       if (!twoFactorToken || twoFactorToken.token !== code) {
-        return { error: t("error.invalid-code") }
+        return { error: t("error.invalidCode") }
       }
 
       const hasExpired = new Date(twoFactorToken.expires) < new Date()
@@ -62,7 +62,7 @@ export const signInWithCredentials = async (
       await TwoFactorToken.findByIdAndDelete(twoFactorToken._id)
 
       if (hasExpired) {
-        return { error: t("error.code-expired") }
+        return { error: t("error.codeExpired") }
       }
 
       const existingConfirmation = await TwoFactorConfirmation.findOne({userId: existingUser._id})
@@ -99,7 +99,7 @@ export const signInWithCredentials = async (
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: t("error.invalid-credentials") }
+          return { error: t("error.invalidCredentials") }
         default:
           return { error: t("error.generic") }
       }

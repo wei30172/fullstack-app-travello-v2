@@ -44,7 +44,7 @@ export const settings = async (
     const dbUser = await User.findOne({email: values.email})
 
     if (dbUser && dbUser._id !== user._id) {
-      return { error: t("error.email-in-use") }
+      return { error: t("error.emailInUse") }
     }
 
     const verificationToken = await generateToken({email:values.email})
@@ -60,7 +60,7 @@ export const settings = async (
       emailVerified: null
     })
     
-    return { success: t("success.verification-sent") }
+    return { success: t("success.verificationSent") }
   }
 
   if (values.password && values.newPassword && existingUser.password) {
@@ -70,7 +70,7 @@ export const settings = async (
     )
 
     if (!passwordsMatch) {
-      return { error: t("error.incorrect-password") }
+      return { error: t("error.incorrectPassword") }
     }
 
     const salt = await bcrypt.genSalt(10)
@@ -84,5 +84,5 @@ export const settings = async (
 
   await User.findByIdAndUpdate(user._id, cleanedValues)
 
-  return { success: t("success.settings-updated") }
+  return { success: t("success.settingsUpdated") }
 }

@@ -9,7 +9,7 @@ export const ErrorCard = () => {
   return (
     <FormWrapper
       headerLabel={t("header")}
-      backButtonLabel={t("back-button")}
+      backButtonLabel={t("backButton")}
       backButtonHref="/signin"
     >
       <div className="w-full flex justify-center items-center">

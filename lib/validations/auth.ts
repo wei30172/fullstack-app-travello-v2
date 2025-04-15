@@ -35,11 +35,11 @@ export function getSignUpFormSchema(t?: (key: string) => string) {
         .min(8, t?.("password.invalid") || "Password must be 8+ characters"),
       confirmPassword: z
         .string()
-        .min(1, t?.("confirm-password.required") || "Password confirmation is required")
+        .min(1, t?.("confirmPassword.required") || "Password confirmation is required")
     })
     .refine((data) => data.password === data.confirmPassword, {
       path: ["confirmPassword"],
-      message: t?.("confirm-password.invalid") || "Password do not match"
+      message: t?.("confirmPassword.invalid") || "Password do not match"
     })
 }
 
@@ -62,15 +62,15 @@ export function getNewPasswordFormSchema(t?: (key: string) => string) {
     .object({
       newPassword: z
         .string()
-        .min(1, t?.("new-password.required") || "Password is required")
-        .min(8, t?.("new-password.invalid") || "Password must be 8+ characters"),
+        .min(1, t?.("newPassword.required") || "Password is required")
+        .min(8, t?.("newPassword.invalid") || "Password must be 8+ characters"),
       confirmPassword: z
         .string()
-        .min(1, t?.("confirm-password.required") || "Password confirmation is required")
+        .min(1, t?.("confirmPassword.required") || "Password confirmation is required")
     })
     .refine((data) => data.newPassword === data.confirmPassword, {
       path: ["confirmPassword"],
-      message: t?.("confirm-password.invalid") || "Passwords do not match"
+      message: t?.("confirmPassword.invalid") || "Passwords do not match"
     })
 }
 
@@ -110,7 +110,7 @@ export function getSettingsFormSchema(t?: (key: string) => string) {
       {
         path: ["newPassword"],
         message:
-          t?.("new-password.required") ||
+          t?.("newPassword.required") ||
           "To change password, enter new password."
       }
     )

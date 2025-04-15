@@ -61,7 +61,7 @@ export const ResetForm = () => {
   return (
     <FormWrapper
       headerLabel={t("header")}
-      backButtonLabel={t("back-button")}
+      backButtonLabel={t("backButton")}
       backButtonHref="/signin"
     >
       <Form {...form}>

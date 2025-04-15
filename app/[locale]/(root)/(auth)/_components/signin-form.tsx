@@ -74,7 +74,7 @@ export const SignInForm = () => {
   return (
     <FormWrapper
       headerLabel={t("header")}
-      backButtonLabel={t("back-button")}
+      backButtonLabel={t("backButton")}
       backButtonHref="/signup"
       showSocial
     >
@@ -143,7 +143,7 @@ export const SignInForm = () => {
                       className="px-0 font-normal"
                     >
                       <Link href="/reset">
-                        {t("reset-link")}
+                        {t("resetLink")}
                       </Link>
                     </Button>
                     <FormMessage />

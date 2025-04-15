@@ -24,7 +24,7 @@ export const newVerification = async (token: string) => {
   })
 
   if (!existingUser) {
-    return { error: t("error.email-not-found") }
+    return { error: t("error.emailNotFound") }
   }
   
   // Check if the token corresponds to a pending email update
@@ -36,7 +36,7 @@ export const newVerification = async (token: string) => {
       emailPendingVerification: null // Clear the pending email field
     })
 
-    return { success: t("success.email-updated") }
+    return { success: t("success.emailUpdated") }
   }
 
   if (!existingUser.emailVerified) {
@@ -46,8 +46,8 @@ export const newVerification = async (token: string) => {
       email: res.email
     })
 
-    return { success: t("success.email-verified") }
+    return { success: t("success.emailVerified") }
   }
 
-  return { error: t("error.invalid-request") }
+  return { error: t("error.invalidRequest") }
 }

@@ -17,7 +17,7 @@ export const resetPassword = async (
   const validatedFields = getResetFormSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: t("error.invalid-fields") }
+    return { error: t("error.invalidFields") }
   }
   
   const { email } = validatedFields.data
@@ -27,11 +27,11 @@ export const resetPassword = async (
   const existingUser = await User.findOne({email})
 
   if (!existingUser) {
-    return { error: t("error.email-not-found") }
+    return { error: t("error.emailNotFound") }
   }
 
   if (existingUser.provider !== UserProvider.CREDENTIALS) {
-    return { error: t("error.third-party") }
+    return { error: t("error.emailThirdParty") }
   }
   
   const passwordResetToken = await generateToken({email})
@@ -42,5 +42,5 @@ export const resetPassword = async (
     passwordResetToken
   )
 
-  return { success: t("success.reset-sent") }
+  return { success: t("success.resetSent") }
 }
