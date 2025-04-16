@@ -5,7 +5,10 @@ import { getTranslations } from "next-intl/server"
 import connectDB from "@/lib/db"
 import { User } from "@/lib/models/auth.model"
 import { UserProvider } from "@/lib/models/types"
-import { SignUpFormValues, getSignUpFormSchema } from "@/lib/validations/auth"
+import { 
+  SignUpFormValues,
+  getSignUpFormSchema
+ } from "@/lib/validations/auth"
 import { generateToken } from "@/lib/token"
 import { sendVerificationEmail } from "@/lib/mail"
 

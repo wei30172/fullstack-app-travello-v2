@@ -34,7 +34,7 @@ export const SignInForm = () => {
   const [showTwoFactor, setShowTwoFactor] = useState(false)
   const [isPending, startTransition] = useTransition()
 
-  const t = useTranslations("SignInForm")
+  const ui = useTranslations("SignInForm.ui")
   const validationMessages = useTranslations("SignInForm.validation")
   const serverError = useTranslations("SomeForm.server.error")
 
@@ -73,8 +73,8 @@ export const SignInForm = () => {
 
   return (
     <FormWrapper
-      headerLabel={t("header")}
-      backButtonLabel={t("backButton")}
+      headerLabel={ui("header")}
+      backButtonLabel={ui("backButton")}
       backButtonHref="/signup"
       showSocial
     >
@@ -87,7 +87,7 @@ export const SignInForm = () => {
                 name="code"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("code")}</FormLabel>
+                    <FormLabel>{ui("code")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending}
@@ -108,7 +108,7 @@ export const SignInForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("email")}</FormLabel>
+                    <FormLabel>{ui("email")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending}
@@ -126,12 +126,12 @@ export const SignInForm = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("password")}</FormLabel>
+                    <FormLabel>{ui("password")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending}
                         type="password"
-                        placeholder={t("password")}
+                        placeholder={ui("password")}
                         autoComplete="current-password"
                         {...field}
                       />
@@ -143,7 +143,7 @@ export const SignInForm = () => {
                       className="px-0 font-normal"
                     >
                       <Link href="/reset">
-                        {t("resetLink")}
+                        {ui("resetLink")}
                       </Link>
                     </Button>
                     <FormMessage />
@@ -161,7 +161,7 @@ export const SignInForm = () => {
             type="submit"
             disabled={isPending}
           >
-            {isPending ? t("submitting") : showTwoFactor ? t("confirm") : t("submit")}
+            {isPending ? ui("submitting") : showTwoFactor ? ui("confirm") : ui("submit")}
           </Button>
         </form>
       </Form>

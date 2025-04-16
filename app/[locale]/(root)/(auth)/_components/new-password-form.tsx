@@ -33,7 +33,7 @@ export const NewPasswordForm = () => {
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
-  const t = useTranslations("NewPasswordForm")
+  const ui = useTranslations("NewPasswordForm.ui")
   const validationMessages = useTranslations("NewPasswordForm.validation")
   const serverError = useTranslations("SomeForm.server.error")
 
@@ -65,8 +65,8 @@ export const NewPasswordForm = () => {
 
   return (
     <FormWrapper
-      headerLabel={t("header")}
-      backButtonLabel={t("backButton")}
+      headerLabel={ui("header")}
+      backButtonLabel={ui("backButton")}
       backButtonHref="/signin"
     >
       <Form {...form}>
@@ -77,12 +77,12 @@ export const NewPasswordForm = () => {
               name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("newPassword")}</FormLabel>
+                  <FormLabel>{ui("newPassword")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
                       type="password"
-                      placeholder={t("newPassword")}
+                      placeholder={ui("newPassword")}
                       autoComplete="new-password"
                       {...field}
                     />
@@ -96,12 +96,12 @@ export const NewPasswordForm = () => {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("confirmPassword")}</FormLabel>
+                  <FormLabel>{ui("confirmPassword")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
                       type="password"
-                      placeholder={t("confirmPassword")}
+                      placeholder={ui("confirmPassword")}
                       autoComplete="new-password"
                       {...field}
                     />
@@ -119,7 +119,7 @@ export const NewPasswordForm = () => {
             type="submit"
             disabled={isPending}
           >
-            {isPending ? t("submitting") : t("submit")}
+            {isPending ? ui("submitting") : ui("submit")}
           </Button>
         </form>
       </Form>

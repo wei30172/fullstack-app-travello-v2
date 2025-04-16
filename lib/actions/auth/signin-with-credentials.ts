@@ -7,9 +7,15 @@ import { signIn } from "@/auth"
 import { routes } from "@/routes"
 import connectDB from "@/lib/db"
 import { User, TwoFactorToken, TwoFactorConfirmation } from "@/lib/models/auth.model"
-import { SignInFormValues, getSignInFormSchema } from "@/lib/validations/auth"
+import {
+  SignInFormValues,
+  getSignInFormSchema
+} from "@/lib/validations/auth"
 import { generateToken, generateCode } from "@/lib/token"
-import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/lib/mail"
+import {
+  sendVerificationEmail,
+  sendTwoFactorTokenEmail
+} from "@/lib/mail"
 
 export const signInWithCredentials = async (
   values: SignInFormValues,
@@ -17,7 +23,8 @@ export const signInWithCredentials = async (
 ) => {
   // console.log({callbackUrl})
   const t = await getTranslations("SignInForm.server")
-
+  const serverError = await getTranslations("SomeForm.server.error")
+  
   const validatedFields = getSignInFormSchema().safeParse(values)
 
   if (!validatedFields.success) {
@@ -101,7 +108,7 @@ export const signInWithCredentials = async (
         case "CredentialsSignin":
           return { error: t("error.invalidCredentials") }
         default:
-          return { error: t("error.generic") }
+          return { error: serverError("generic") }
       }
     }
 

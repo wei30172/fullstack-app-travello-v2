@@ -42,7 +42,7 @@ export const SettingsForm = () => {
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
-  const t = useTranslations("SettingsForm")
+  const ui = useTranslations("SettingsForm.ui")
   const validationMessages = useTranslations("SettingsForm.validation")
   const serverError = useTranslations("SomeForm.server.error")
 
@@ -85,7 +85,7 @@ export const SettingsForm = () => {
     <Card className="w-[350px]">
       <CardHeader>
         <p className="text-2xl font-semibold text-center">
-          {t("header")}
+          {ui("header")}
         </p>
       </CardHeader>
       <CardContent>
@@ -97,11 +97,11 @@ export const SettingsForm = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("name")}</FormLabel>
+                    <FormLabel>{ui("name")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending}
-                        placeholder={t("name")}
+                        placeholder={ui("name")}
                         autoComplete="username"
                         {...field}
                       />
@@ -115,7 +115,7 @@ export const SettingsForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("email")}</FormLabel>
+                    <FormLabel>{ui("email")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending || user?.provider !== UserProvider.CREDENTIALS}
@@ -140,12 +140,12 @@ export const SettingsForm = () => {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("password")}</FormLabel>
+                        <FormLabel>{ui("password")}</FormLabel>
                         <FormControl>
                           <Input
                             disabled={isPending}
                             type="password"
-                            placeholder={t("password")}
+                            placeholder={ui("password")}
                             autoComplete="current-password"
                             {...field}
                           />
@@ -159,12 +159,12 @@ export const SettingsForm = () => {
                     name="newPassword"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("newPassword")}</FormLabel>
+                        <FormLabel>{ui("newPassword")}</FormLabel>
                         <FormControl>
                           <Input
                             disabled={isPending}
                             type="password"
-                            placeholder={t("newPassword")}
+                            placeholder={ui("newPassword")}
                             autoComplete="new-password"
                             {...field}
                           />
@@ -182,9 +182,9 @@ export const SettingsForm = () => {
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                     <div className="space-y-0.5">
-                      <FormLabel>{t("isTwoFactorEnabled")}</FormLabel>
+                      <FormLabel>{ui("isTwoFactorEnabled")}</FormLabel>
                       <FormDescription>
-                        {t("isTwoFactorEnabledDescription")}
+                        {ui("isTwoFactorEnabledDescription")}
                       </FormDescription>
                     </div>
                     <FormControl>
@@ -207,7 +207,7 @@ export const SettingsForm = () => {
               type="submit"
               disabled={isPending}
             >
-              {isPending ? t("submitting") : t("submit")}
+              {isPending ? ui("submitting") : ui("submit")}
             </Button>
           </form>
         </Form>

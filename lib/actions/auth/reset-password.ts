@@ -5,7 +5,10 @@ import { getTranslations } from "next-intl/server"
 import connectDB from "@/lib/db"
 import { User } from "@/lib/models/auth.model"
 import { UserProvider } from "@/lib/models/types"
-import { ResetFormValues, getResetFormSchema } from "@/lib/validations/auth"
+import {
+  ResetFormValues,
+  getResetFormSchema
+} from "@/lib/validations/auth"
 import { generateToken } from "@/lib/token"
 import { sendPasswordResetEmail } from "@/lib/mail"
 

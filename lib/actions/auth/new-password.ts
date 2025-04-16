@@ -7,14 +7,17 @@ import connectDB from "@/lib/db"
 import { verifyToken, isTokenError } from "@/lib/token"
 import { User } from "@/lib/models/auth.model"
 import { UserProvider } from "@/lib/models/types"
-import { NewPasswordFormValues, getNewPasswordFormSchema } from "@/lib/validations/auth"
+import {
+  NewPasswordFormValues,
+  getNewPasswordFormSchema
+} from "@/lib/validations/auth"
 
 export const newPassword = async (
   values: NewPasswordFormValues,
   token?: string | null
 ) => {
   const t = await getTranslations("NewPasswordForm.server")
-  const tokenError = await getTranslations("SomeForm.server.error")
+  const serverError = await getTranslations("SomeForm.server.error")
 
   const validatedFields = getNewPasswordFormSchema().safeParse(values)
 
@@ -23,14 +26,14 @@ export const newPassword = async (
   }
 
   if (!token) {
-    return { error: tokenError("missingToken") }
+    return { error: serverError("missingToken") }
   }
 
   const res = await verifyToken(token)
   // console.log({res})
 
   if (isTokenError(res)) {
-    return { error: tokenError(`${res.error}`) }
+    return { error: serverError(`${res.error}`) }
   }
 
   await connectDB()

@@ -29,7 +29,7 @@ export const ResetForm = () => {
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
-  const t = useTranslations("ResetForm")
+  const ui = useTranslations("ResetForm.ui")
   const validationMessages = useTranslations("ResetForm.validation")
   const serverError = useTranslations("SomeForm.server.error")
 
@@ -60,8 +60,8 @@ export const ResetForm = () => {
 
   return (
     <FormWrapper
-      headerLabel={t("header")}
-      backButtonLabel={t("backButton")}
+      headerLabel={ui("header")}
+      backButtonLabel={ui("backButton")}
       backButtonHref="/signin"
     >
       <Form {...form}>
@@ -72,7 +72,7 @@ export const ResetForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("email")}</FormLabel>
+                  <FormLabel>{ui("email")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
@@ -94,7 +94,7 @@ export const ResetForm = () => {
             type="submit"
             disabled={isPending}
           >
-            {isPending ? t("submitting") : t("submit")}
+            {isPending ? ui("submitting") : ui("submit")}
           </Button>
         </form>
       </Form>

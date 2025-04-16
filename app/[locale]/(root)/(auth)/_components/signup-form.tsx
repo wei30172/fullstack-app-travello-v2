@@ -29,7 +29,7 @@ export const SignUpForm = () => {
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
-  const t = useTranslations("SignUpForm")
+  const ui = useTranslations("SignUpForm.ui")
   const validationMessages = useTranslations("SignUpForm.validation")
   const serverError = useTranslations("SomeForm.server.error")
   
@@ -63,8 +63,8 @@ export const SignUpForm = () => {
 
   return (
     <FormWrapper
-      headerLabel={t("header")}
-      backButtonLabel={t("backButton")}
+      headerLabel={ui("header")}
+      backButtonLabel={ui("backButton")}
       backButtonHref="/signin"
       showSocial
     >
@@ -76,11 +76,11 @@ export const SignUpForm = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("name")}</FormLabel>
+                  <FormLabel>{ui("name")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
-                      placeholder={t("name")}
+                      placeholder={ui("name")}
                       autoComplete="username"
                       {...field}
                     />
@@ -94,7 +94,7 @@ export const SignUpForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("email")}</FormLabel>
+                  <FormLabel>{ui("email")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
@@ -112,12 +112,12 @@ export const SignUpForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("password")}</FormLabel>
+                  <FormLabel>{ui("password")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
                       type="password"
-                      placeholder={t("password")}
+                      placeholder={ui("password")}
                       autoComplete="new-password"
                       {...field}
                     />
@@ -131,12 +131,12 @@ export const SignUpForm = () => {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("confirmPassword")}</FormLabel>
+                  <FormLabel>{ui("confirmPassword")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
                       type="password"
-                      placeholder={t("confirmPassword")}
+                      placeholder={ui("confirmPassword")}
                       autoComplete="new-password"
                       {...field}
                     />
@@ -154,7 +154,7 @@ export const SignUpForm = () => {
             type="submit"
             disabled={isPending}
           >
-            {isPending ? t("submitting") : t("submit")}
+            {isPending ? ui("submitting") : ui("submit")}
           </Button>
         </form>
       </Form>

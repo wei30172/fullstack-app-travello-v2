@@ -15,7 +15,7 @@ export const NewVerificationForm = () => {
   const [error, setError] = useState<string | undefined>("")
   const [success, setSuccess] = useState<string | undefined>("")
   
-  const t = useTranslations("NewVerificationForm")
+  const ui = useTranslations("NewVerificationForm.ui")
   const serverError = useTranslations("SomeForm.server.error")
 
   const token = searchParams.get("token")
@@ -46,8 +46,8 @@ export const NewVerificationForm = () => {
 
   return (
     <FormWrapper
-      headerLabel={t("header")}
-      backButtonLabel={t("backButton")}
+      headerLabel={ui("header")}
+      backButtonLabel={ui("backButton")}
       backButtonHref="/signin"
     >
       <div className="flex items-center w-full justify-center">

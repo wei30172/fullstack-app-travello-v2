@@ -7,15 +7,15 @@ import { textFont } from "@/lib/fonts"
 import { Button } from "@/components/ui/button"
 
 const MarketingPage = () => {
-  const t = useTranslations("HomePage")
+  const ui = useTranslations("HomePage.ui")
   return (
     <section className="flex items-center justify-center flex-col text-gray-700">
       <div className="text-center mb-2">
         <h1 className="text-4xl md:text-6xl font-bold mb-4">
-          {t("title")}
+          {ui("title")}
         </h1>
         <p className="text-lg md:text-xl">
-          {t("subtitle")}
+          {ui("subtitle")}
         </p>
       </div>
       <div className="max-w-md md:max-w-lg text-center mb-6">
@@ -32,7 +32,7 @@ const MarketingPage = () => {
         "text-sm md:text-lg max-w-xs md:max-w-2xl text-center mx-auto",
         textFont.className
       )}>
-        {t("description")}
+        {ui("description")}
       </div>
       <Button
         className="my-4"
@@ -41,7 +41,7 @@ const MarketingPage = () => {
         asChild
       >
         <Link className="py-2 px-4" href="/signup">
-          {t("link")}
+          {ui("link")}
         </Link>
       </Button>
     </section>

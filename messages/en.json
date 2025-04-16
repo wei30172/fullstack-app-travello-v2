@@ -1,29 +1,37 @@
 {
   "HomePage": {
-    "title": "Effortless Travel Planning with Travello",
-    "subtitle": "Plan your trip with drag & drop tools and AI-powered suggestions",
-    "description": "Discover new destinations and build your itinerary in minutes. Travello helps you stay organized and inspired with a fun, visual planning experience.",
-    "link": "Start Planning Now"
+    "ui": {
+      "title": "Effortless Travel Planning with Travello",
+      "subtitle": "Plan your trip with drag & drop tools and AI-powered suggestions",
+      "description": "Discover new destinations and build your itinerary in minutes. Travello helps you stay organized and inspired with a fun, visual planning experience.",
+      "link": "Start Planning Now"
+    }
   },
   "Navbar": {
-    "create": "Create",
-    "signin": "Login",
-    "signup": "Try Travello for free"
+    "ui": {
+      "create": "Create",
+      "signin": "Login",
+      "signup": "Try Travello for free"
+    }
   },
   "ErrorCard": {
-    "header": "Oops! Something went wrong!",
-    "backButton": "Back to sign in"
+    "ui": {
+      "header": "Oops! Something went wrong!",
+      "backButton": "Back to sign in"
+    }
   },
   "SignInForm": {
-    "header": "Welcome back",
-    "backButton": "Don't have an account?",
-    "resetLink": "Forgot password?",
-    "code": "Two Factor Code",
-    "email": "Email",
-    "password": "Password",
-    "submitting": "Submitting...",
-    "confirm": "Confirm",
-    "submit": "Sign In",
+    "ui": {
+      "header": "Welcome back",
+      "backButton": "Don't have an account?",
+      "resetLink": "Forgot password?",
+      "code": "Two Factor Code",
+      "email": "Email",
+      "password": "Password",
+      "submitting": "Submitting...",
+      "confirm": "Confirm",
+      "submit": "Sign In"
+    },
     "validation": {
       "email": {
         "required": "Email is required",
@@ -40,8 +48,7 @@
         "emailNotFound": "This email is not registered.",
         "invalidCode": "Invalid verification code.",
         "codeExpired": "The verification code has expired.",
-        "invalidCredentials": "Incorrect email or password.",
-        "generic": "Something went wrong. Please try again later."
+        "invalidCredentials": "Incorrect email or password."
       },
       "success": {
         "confirmationSent": "A confirmation email has been sent."
@@ -49,14 +56,16 @@
     }
   },
   "SignUpForm": {
-    "header": "Create an account",
-    "backButton": "Already have an account?",
-    "name": "Username",
-    "email": "Email",
-    "password": "Password",
-    "confirmPassword": "Confirm password",
-    "submitting": "Submitting...",
-    "submit": "Sign Up",
+    "ui": {
+      "header": "Create an account",
+      "backButton": "Already have an account?",
+      "name": "Username",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "submitting": "Submitting...",
+      "submit": "Sign Up"
+    },
     "validation": {
       "name": {
         "required": "Username is required",
@@ -87,11 +96,13 @@
     }
   },
   "ResetForm": {
-    "header": "Forgot your password?",
-    "backButton": "Back to sign in",
-    "email": "Email",
-    "submitting": "Sending...",
-    "submit": "Send reset email",
+    "ui": {
+      "header": "Forgot your password?",
+      "backButton": "Back to sign in",
+      "email": "Email",
+      "submitting": "Sending...",
+      "submit": "Send reset email"
+    },
     "validation": {
       "email": {
         "required": "Email is required",
@@ -110,12 +121,14 @@
     }
   },
   "NewPasswordForm": {
-    "header": "Reset your password",
-    "backButton": "Back to sign in",
-    "newPassword": "New Password",
-    "confirmPassword": "Confirm Password",
-    "submitting": "Resetting...",
-    "submit": "Reset Password",
+    "ui": {
+      "header": "Reset your password",
+      "backButton": "Back to sign in",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "submitting": "Resetting...",
+      "submit": "Reset Password"
+    },
     "validation": {
       "newPassword": {
         "required": "Password is required",
@@ -138,15 +151,17 @@
     }
   },
   "SettingsForm": {
-    "header": "Account Settings",
-    "name": "Username",
-    "email": "Email",
-    "password": "Current Password",
-    "newPassword": "New Password",
-    "isTwoFactorEnabled": "Two Factor Authentication",
-    "isTwoFactorEnabledDescription": "Enable two factor authentication",
-    "submitting": "Saving...",
-    "submit": "Save Changes",
+    "ui": {
+      "header": "Account Settings",
+      "name": "Username",
+      "email": "Email",
+      "password": "Current Password",
+      "newPassword": "New Password",
+      "isTwoFactorEnabled": "Two Factor Authentication",
+      "isTwoFactorEnabledDescription": "Enable two factor authentication",
+      "submitting": "Saving...",
+      "submit": "Save Changes"
+    },
     "validation": {
       "email": {
         "invalid": "Invalid email"
@@ -173,8 +188,10 @@
     }
   },
   "NewVerificationForm": {
-    "header": "Confirming your email verification",
-    "backButton": "Back to sign in",
+    "ui": {
+      "header": "Confirming your email verification",
+      "backButton": "Back to sign in"
+    },
     "server": {
       "error": {
         "emailNotFound": "This email is not registered.",

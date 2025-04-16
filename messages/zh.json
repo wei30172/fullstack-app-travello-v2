@@ -1,29 +1,37 @@
 {
   "HomePage": {
-    "title": "用 Travello 輕鬆規劃旅程",
-    "subtitle": "拖曳工具與 AI 推薦，打造專屬行程好簡單",
-    "description": "探索世界各地、輕鬆安排每日行程。Travello 結合直覺操作與 AI 協助，讓旅遊規劃變得快速、有趣又充滿靈感。",
-    "link": "立即開始規劃"
+    "ui": {
+      "title": "用 Travello 輕鬆規劃旅程",
+      "subtitle": "拖曳工具與 AI 推薦，打造專屬行程好簡單",
+      "description": "探索世界各地、輕鬆安排每日行程。Travello 結合直覺操作與 AI 協助，讓旅遊規劃變得快速、有趣又充滿靈感。",
+      "link": "立即開始規劃"
+    }
   },
   "Navbar": {
-    "create": "新增旅程",
-    "signin": "登入",
-    "signup": "免費體驗 Travello"
+    "ui": {
+      "create": "新增旅程",
+      "signin": "登入",
+      "signup": "免費體驗 Travello"
+    }
   },
   "ErrorCard": {
-    "header": "哎呀！出了點問題！",
-    "backButton": "返回登入頁"
+    "ui": {
+      "header": "哎呀！出了點問題！",
+      "backButton": "返回登入頁"
+    }
   },
   "SignInForm": {
-    "header": "歡迎回來",
-    "backButton": "尚未註冊帳號",
-    "resetLink": "忘記密碼",
-    "code": "驗證碼",
-    "email": "電子郵件",
-    "password": "密碼",
-    "submitting": "登入中...",
-    "confirm": "確認",
-    "submit": "登入",
+    "ui": {
+      "header": "歡迎回來",
+      "backButton": "尚未註冊帳號",
+      "resetLink": "忘記密碼",
+      "code": "驗證碼",
+      "email": "電子郵件",
+      "password": "密碼",
+      "submitting": "登入中...",
+      "confirm": "確認",
+      "submit": "登入"
+    },
     "validation": {
       "email": {
         "required": "電子郵件為必填",
@@ -40,8 +48,7 @@
         "emailNotFound": "該電子郵件尚未註冊。",
         "invalidCode": "驗證碼錯誤。",
         "codeExpired": "驗證碼已過期。",
-        "invalidCredentials": "電子郵件或密碼錯誤。",
-        "generic": "發生錯誤，請稍後再試。"
+        "invalidCredentials": "電子郵件或密碼錯誤。"
       },
       "success": {
         "confirmationSent": "已寄出確認信件。"
@@ -49,14 +56,16 @@
     }
   },
   "SignUpForm": {
-    "header": "建立帳號",
-    "backButton": "已經註冊帳號",
-    "name": "使用者名稱",
-    "email": "電子郵件",
-    "password": "密碼",
-    "confirmPassword": "確認密碼",
-    "submitting": "註冊中...",
-    "submit": "註冊",
+    "ui": {
+      "header": "建立帳號",
+      "backButton": "已經註冊帳號",
+      "name": "使用者名稱",
+      "email": "電子郵件",
+      "password": "密碼",
+      "confirmPassword": "確認密碼",
+      "submitting": "註冊中...",
+      "submit": "註冊"
+    },
     "validation": {
       "name": {
         "required": "使用者名稱為必填",
@@ -87,11 +96,13 @@
     }
   },
   "ResetForm": {
-    "header": "忘記密碼？",
-    "backButton": "返回登入頁",
-    "email": "電子郵件",
-    "submitting": "發送中...",
-    "submit": "發送重設郵件",
+    "ui": {
+      "header": "忘記密碼？",
+      "backButton": "返回登入頁",
+      "email": "電子郵件",
+      "submitting": "發送中...",
+      "submit": "發送重設郵件"
+    },
     "validation": {
       "email": {
         "required": "請輸入電子郵件",
@@ -110,12 +121,14 @@
     }
   },
   "NewPasswordForm": {
-    "header": "重設您的密碼",
-    "backButton": "返回登入頁",
-    "newPassword": "新密碼",
-    "confirmPassword": "確認密碼",
-    "submitting": "重設中...",
-    "submit": "重設密碼",
+    "ui": {
+      "header": "重設您的密碼",
+      "backButton": "返回登入頁",
+      "newPassword": "新密碼",
+      "confirmPassword": "確認密碼",
+      "submitting": "重設中...",
+      "submit": "重設密碼"
+    },
     "validation": {
       "newPassword": {
         "required": "請輸入新密碼",
@@ -138,15 +151,17 @@
     }
   },
   "SettingsForm": {
-    "header": "帳號設定",
-    "name": "使用者名稱",
-    "email": "電子郵件",
-    "password": "目前密碼",
-    "newPassword": "新密碼",
-    "isTwoFactorEnabled": "雙重驗證",
-    "isTwoFactorEnabledDescription": "啟用雙重驗證",
-    "submitting": "儲存中...",
-    "submit": "儲存變更",
+    "ui": {
+      "header": "帳號設定",
+      "name": "使用者名稱",
+      "email": "電子郵件",
+      "password": "目前密碼",
+      "newPassword": "新密碼",
+      "isTwoFactorEnabled": "雙重驗證",
+      "isTwoFactorEnabledDescription": "啟用雙重驗證",
+      "submitting": "儲存中...",
+      "submit": "儲存變更"
+    },
     "validation": {
       "email": {
         "invalid": "電子郵件格式不正確"
@@ -173,8 +188,10 @@
     }
   },
   "NewVerificationForm": {
-    "header": "電子郵件驗證",
-    "backButton": "返回登入頁",
+    "ui": {
+      "header": "電子郵件驗證",
+      "backButton": "返回登入頁"
+    },
     "server": {
       "error": {
         "emailNotFound": "該電子郵件尚未註冊。",

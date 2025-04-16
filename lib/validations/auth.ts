@@ -3,19 +3,18 @@ import { UserRole } from "@/lib/models/types"
 
 export function getSignInFormSchema(t?: (key: string) => string) {
   return z
-  .object({
-    email: z
-      .string()
-      .min(1, t?.("email.required") || "Email is required")
-      .email(t?.("email.invalid") || "Invalid email"),
-    password: z
-      .string()
-      .min(1, t?.("password.required") || "Password is required")
-      .min(8, t?.("password.invalid") || "Password must be 8+ characters"),
-    code: z.string().optional().default("")
-  })
+    .object({
+      email: z
+        .string()
+        .min(1, t?.("email.required") || "Email is required")
+        .email(t?.("email.invalid") || "Invalid email"),
+      password: z
+        .string()
+        .min(1, t?.("password.required") || "Password is required")
+        .min(8, t?.("password.invalid") || "Password must be 8+ characters"),
+      code: z.string().optional().default("")
+    })
 }
-
 export type SignInFormValues = z.infer<ReturnType<typeof getSignInFormSchema>>
 
 export function getSignUpFormSchema(t?: (key: string) => string) {
@@ -42,7 +41,6 @@ export function getSignUpFormSchema(t?: (key: string) => string) {
       message: t?.("confirmPassword.invalid") || "Password do not match"
     })
 }
-
 export type SignUpFormValues = z.infer<ReturnType<typeof getSignUpFormSchema>>
 
 export function getResetFormSchema(t?: (key: string) => string) {
@@ -54,7 +52,6 @@ export function getResetFormSchema(t?: (key: string) => string) {
         .email(t?.("email.invalid") || "Invalid email")
     })
 }
-
 export type ResetFormValues = z.infer<ReturnType<typeof getResetFormSchema>>
 
 export function getNewPasswordFormSchema(t?: (key: string) => string) {
@@ -73,8 +70,6 @@ export function getNewPasswordFormSchema(t?: (key: string) => string) {
       message: t?.("confirmPassword.invalid") || "Passwords do not match"
     })
 }
-
-
 export type NewPasswordFormValues = z.infer<ReturnType<typeof getNewPasswordFormSchema>>
 
 const validatePassword = (t?: (key: string) => string) =>
@@ -115,5 +110,4 @@ export function getSettingsFormSchema(t?: (key: string) => string) {
       }
     )
 }
-
 export type SettingsFormValues = z.infer<ReturnType<typeof getSettingsFormSchema>>
