@@ -56,13 +56,13 @@ export default async function AppLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <QueryProvider>
-              <Toaster />
-              <ModalProvider />
-              <NextIntlClientProvider messages={messages}>
+            <NextIntlClientProvider messages={messages}>
+              <QueryProvider>
+                <Toaster />
+                <ModalProvider />
                 {children}
-              </NextIntlClientProvider>
-            </QueryProvider>
+              </QueryProvider>
+            </NextIntlClientProvider>
           </ThemeProvider>
         </SessionProvider>
       </body>
