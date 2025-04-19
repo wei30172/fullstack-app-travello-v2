@@ -7,6 +7,13 @@
       "link": "Start Planning Now"
     }
   },
+  "BoardsPage": {
+    "ui": {
+      "myTrips": "My trips",
+      "sharedTrips": "Shared trips",
+      "createNewTrip": "Create new trip"
+    }
+  },
   "Navbar": {
     "ui": {
       "create": "Create Trip",
@@ -18,6 +25,14 @@
       "workspace": "Workspace",
       "billing": "Billing",
       "trash": "Trash"
+    }
+  },
+  "ConfirmDialog": {
+    "ui": {
+      "title": "Confirm",
+      "description": "This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
     }
   },
   "ErrorCard": {
@@ -201,6 +216,230 @@
       "error": {
         "emailNotFound": "This email is not registered.",
         "invalidRequest": "Invalid verification request."
+      }
+    }
+  },
+  "AcceptShareForm": {
+    "ui": {
+      "header": "Accept Trip Sharing",
+      "processing": "Processing...",
+      "invitation": "You have been invited to join a trip. Click the button below to accept the invitation.",
+      "accept": "Accept",
+      "click": "Click",
+      "here": "here",
+      "goToTrip": "to go to the trip immediately"
+    },
+    "server": {
+      "success": {
+        "joinedRedirect": "Successfully joined the trip. Redirecting in 3 seconds..."
+      },
+      "error": {
+        "invalid": "Invalid or expired invitation.",
+        "expired": "Invitation has expired."
+      }
+    }
+  },
+  "BoardForm": {
+    "role": {
+      "owner": "Owner",
+      "editor": "Editor",
+      "viewer": "Viewer"
+    },
+    "ui": {
+      "createTitle": "Create Trip",
+      "manageTrip": "Manage Trip",
+      "tripTitlePlaceholder": "Trip title",
+      "tripLocationPlaceholder": "Trip location",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "submitCreate": "Create",
+      "submitUpdate": "Update",
+      "submitting": "Submitting...",
+      "copyTrip": "Copy Trip",
+      "deleteTrip": "Delete Trip",
+      "selectLanguage": "Select Language",
+      "language": {
+        "english": "English",
+        "traditionalChinese": "Traditional Chinese",
+        "simplifiedChinese": "Simplified Chinese",
+        "spanish": "Spanish",
+        "french": "French",
+        "japanese": "Japanese"
+      },
+      "askAI": "Ask AI",
+      "askingAI": "Asking AI...",
+      "addToCards": "Add to Cards",
+      "updating": "Updating...",
+      "aiSuggestions": "AI suggestions",
+      "aiUsesRemaining": "{remaining} AI uses remaining",
+      "aiUsesDescription": "You have {max} free AI uses available in Free Workspaces.",
+      "aiCountLoadError": "Error loading available count.",
+
+      "shareTitle": "Share {title}",
+      "ownerLabel": "Owner: {email}",
+      "ownerLoadingError": "Error loading trip owner.",
+      "sharedUsersTitle": "People with access",
+      "shareEmail": "Email",
+      "shareRole": "Role",
+      "shareButton": "Share",
+      "copyLink": "Copy Link",
+      "copied": "Trip link copied to clipboard",
+      "copyFailed": "Failed to copy link",
+      "leave": "Leave",
+      "leaveTrip": "Leave Trip",
+      
+      "removeCover": "Remove Cover",
+      "coverTitle": "Trip Cover",
+      "coverUploadLabel": "{remaining} cover uploads remaining",
+      "coverUploadDescription": "You have {max} free trip cover uploads available in Free Workspaces.",
+      "coverUploadPrompt": "Click or drag file to this area to upload",
+      "coverSubmitButton": "Submit",
+
+      "tripInTrash": "This trip is in the Trash.",
+      "restore": "Restore trip",
+      "deleteForever": "Delete forever",
+      "trashBoxPlaceholder": "Filter by trip title...",
+      "trashBoxNoResults": "Trash is empty.",
+      "trashBoxError": "Error loading archived trips."
+    },
+    "validation": {
+      "title": {
+        "min": "Title must be 2+ characters",
+        "max": "Title must be less than 100 characters"
+      },
+      "location": {
+        "min": "Description must be 2+ characters",
+        "max": "Description must be less than 100 characters"
+      },
+      "endDate": {
+        "invalid": "End date must be after start date"
+      },
+      "email": {
+        "required": "Email is required",
+        "invalid": "Invalid email"
+      }
+    },
+    "toast": {
+      "success": {
+        "created": "Trip created!",
+        "updated": "Trip \"{title}\" updated",
+        "copied": "Trip copied!",
+        "archived": "Trip moved to trash!",
+        "restored": "Trip \"{title}\" restored!",
+        "deleted": "Trip \"{title}\" deleted!",
+        "selfUnshared": "You have successfully removed yourself from the trip.",
+        "coverRemoved": "Cover removed and trip updated successfully!",
+        "coverUploaded": "Image uploaded successfully!"
+      },
+      "warning": {
+        "aiLimit": "You have reached your limit of free AI uses.",
+        "aiFieldsRequired": "Please provide location, start date, and end date.",
+        "aiDayRange": "The AI feature is only available for trips within 10 days",
+        "missingAIData": "No AI-generated itinerary to apply.",
+        "coverUploadRequired": "Please upload the image first",
+        "coverLimitReached": "You have reached your limit of free trip cover uploads."
+      },
+      "error": {
+        "copyFailed": "Failed to copy trip.",
+        "archiveFailed": "Failed to archive trip.",
+        "removeFailed": "Failed to remove cover.",
+        "updateFailed": "Failed to update trip after removing cover.",
+        "shareFailed": "Failed to share trip.",
+        "updateRoleFailed": "Failed to update role.",
+        "unshareFailed": "Failed to remove user from trip.",
+        "deleteFailed": "Failed to delete trip.",
+        "reorderFailed": "Failed to update order."
+      }
+    },
+    "server": {
+      "success": {
+        "alreadyShared": "This user already has {role} access to the trip.",
+        "roleUpdated": "Role updated to {role}.",
+        "invitationSent": "Invite email sent successfully!",
+        "unshared": "Sharing has been cancelled successfully."
+      },
+      "error": {
+        "aiUnavailable": "The OpenAI API key is currently not available.",
+        "aiAbort": "The AI request was cancelled.",
+        "aiFailed": "Failed to connect to AI service.",
+        
+        "cannotShareWithSelf": "Cannot share the trip with yourself.",
+        "onlyOwnerCanShare": "Only the owner can share this trip.",
+        "onlyOwnerCanUpdateRole": "Only the owner can update roles.",
+        "onlyOwnerCanUnshare": "Only the owner can unshare this trip.",
+        "userNotInList": "User not found in viewers or editors.",
+
+        "fileTypeNotAllowed": "File type not allowed.",
+        "fileSizeTooLarge": "File size too large. Maximum allowed size is {maxSize}.",
+        "signedUrlFailed": "Failed to generate signed URL.",
+        "mediaNotFound": "No cover information found.",
+        "removeMediaFailed": "Failed to remove cover information."
+      }
+    }
+  },
+  "ListForm": {
+    "ui": {
+      "addItinerary": "Add Itinerary",
+      "addItineraryPlaceholder": "Enter itinerary title...",
+      "itineraryActions": "Itinerary actions",
+      "addAttractions": "Add attractions...",
+      "copyItinerary": "Copy itinerary",
+      "deleteItinerary": "Delete itinerary"
+    },
+    "validation": {
+      "title": {
+        "required": "Title is required",
+        "min": "Title must be 2+ characters",
+        "max": "Title must be less than 100 characters"
+      }
+    },
+    "toast": {
+      "success": {
+        "itineraryCreated": "Itinerary \"{title}\" created",
+        "itineraryCopied": "Itinerary \"{title}\" added",
+        "itineraryDeleted": "Itinerary \"{title}\" deleted",
+        "itineraryUpdated": "Itinerary \"{title}\" updated",
+        "listReordered": "List reordered.",
+        "cardReordered": "Card reordered."
+      }
+    }
+  },
+  "CardForm": {
+    "ui": {
+      "addAttraction": "Add attraction",
+      "addAttractionButton": "Add a attraction",
+      "attractionPlaceholder": "Enter a title for this attractions...",
+      "attractionLoadError": "Error loading attraction.",
+      "inItinerary": "in itinerary",
+      "attractionDone": "Done",
+      "attractionCopy": "Copy",
+      "attractionDelete": "Delete",
+      "descriptionTitle": "Description",
+      "descriptionEditHint": "(Click to edit)",
+      "descriptionPlaceholder": "Add more detailed description...",
+      "descriptionEmpty": "No detailed description provided.",
+      "descriptionSave": "Save",
+      "descriptionCancel": "Cancel",
+      "color": "Tag Color"
+    },
+    "validation": {
+      "title": {
+        "required": "Title is required",
+        "min": "Title must be 2+ characters",
+        "max": "Title must be less than 100 characters"
+      },
+      "description": {
+        "max": "Description must be less than 300 characters"
+      }
+    },
+    "toast": {
+      "success": {
+        "attractionCreated": "Attractions \"{title}\" created",
+        "attractionUpdated": "Attraction \"{title}\" updated",
+        "attractionCopied": "Attraction \"{title}\" copied",
+        "attractionDeleted": "Attraction \"{title}\" deleted",
+        "attractionRenamed": "Renamed to \"{title}\"",
+        "colorUpdated": "Color changed for \"{title}\""
       }
     }
   },

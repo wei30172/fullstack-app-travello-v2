@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import { IBoard } from "@/lib/models/types"
 import { getArchivedBoards } from "@/lib/actions/board/get-archived-boards"
 import { updateBoard } from "@/lib/actions/board/update-board"
@@ -21,6 +22,10 @@ export const TrashBox = () => {
   const [search, setSearch] = useState("")
   const [isPending, startTransition] = useTransition()
   
+  const tUi = useTranslations("BoardForm.ui")
+  const tToast = useTranslations("BoardForm.toast")
+  const tError = useTranslations("Common.error")
+
   const queryClient = useQueryClient()
   const { data: archivedBoards, isLoading, isError } = useQuery<IBoard[]>({
     queryKey: ["archivedBoards"],
@@ -41,13 +46,19 @@ export const TrashBox = () => {
       })
       .then((res) => {
         if (res?.data) {
-          toast({ status: "success", title: `Trip "${res?.data.title}" restored!` })
+          toast({
+            status: "success",
+            title: tToast("success.restored", { title: res?.data.title })
+          })
           queryClient.invalidateQueries({ queryKey: ["archivedBoards"] })
         } else if (res?.error) {
-          toast({ status: "error", description: res?.error })
+          toast({
+            status: "error",
+            description: res?.error
+          })
         }
       })
-      .catch(() => toast({ status: "error", description: "Something went wrong" }))
+      .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
@@ -56,14 +67,20 @@ export const TrashBox = () => {
       deleteBoard({ boardId })
         .then((res) => {
           if (res?.data) {
-            toast({ status: "success", title: `Trip "${res?.data.title}" deleted!` })
+            toast({
+              status: "success",
+              title: tToast("success.deleted", { title: res.data.title })
+            })
             queryClient.invalidateQueries({ queryKey: ["archivedBoards"] })
           }
           if (res?.error) {
-            toast({ status: "error", description: "Failed to delete trip." })
+            toast({
+              status: "error",
+              description: tToast("error.deleteFailed")
+            })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
@@ -71,7 +88,7 @@ export const TrashBox = () => {
     return (
       <div className="p-2 pt-0">
         <span className="text-xs">
-          Error loading archived trips.
+          {tUi("trashBoxError")}
         </span>
       </div>
     )
@@ -93,13 +110,13 @@ export const TrashBox = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="h-7 px-2 focus-visible:ring-transparent bg-secondary"
-          placeholder="Filter by board title..."
+          placeholder={tUi("trashBoxPlaceholder")}
         />
       </div>
       <div className="mt-2 px-1 pb-1">
         {filteredBoards?.length === 0 ? (
           <p className="text-xs text-center text-muted-foreground pb-2">
-            No Trip found.
+            {tUi("trashBoxNoResults")}
           </p>
         ) : (filteredBoards?.map((board) => (
           <div

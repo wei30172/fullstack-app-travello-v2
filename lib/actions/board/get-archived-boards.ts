@@ -1,6 +1,7 @@
 "use server"
 
 import { currentUser } from "@/lib/session"
+import mongoose from "mongoose"
 import connectDB from "@/lib/db"
 
 import { Board } from "@/lib/models/board.model"
@@ -22,6 +23,11 @@ export const getArchivedBoards = async (): Promise<IBoard[]> => {
   boards = boards.map(board => {
     const boardObject = board.toObject()
     boardObject._id = boardObject._id.toString()
+    boardObject.userId = boardObject.userId.toString()
+
+    if (boardObject.lists) {
+      boardObject.lists = boardObject.lists.map((id: mongoose.Types.ObjectId) => id.toString())
+    }
 
     return boardObject
   })

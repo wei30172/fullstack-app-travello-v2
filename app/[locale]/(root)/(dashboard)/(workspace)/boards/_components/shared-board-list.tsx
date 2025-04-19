@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { getTranslations } from "next-intl/server"
 import { BoardRole } from "@/lib/models/types"
 import { getSharedBoards } from "@/lib/actions/board/get-shared-boards"
 
@@ -6,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { GiIsland } from "react-icons/gi"
 
 export const SharedBoardList = async () => {
+  const tUi = await getTranslations("BoardsPage.ui")
   const boards = await getSharedBoards()
   // console.log({boards})
 
@@ -17,7 +19,7 @@ export const SharedBoardList = async () => {
     <div className="space-y-4 mb-10">
       <div className="flex items-center font-semibold text-lg text-gray-700">
         <GiIsland className="h-6 w-6 mr-2" />
-        Shared trips
+        {tUi("sharedTrips")}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {boards && boards.map((board) => {

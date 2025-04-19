@@ -7,6 +7,13 @@
       "link": "立即開始規劃"
     }
   },
+  "BoardsPage": {
+    "ui": {
+      "myTrips": "我的行程",
+      "sharedTrips": "共享行程",
+      "createNewTrip": "建立新旅程"
+    }
+  },
   "Navbar": {
     "ui": {
       "create": "新增旅程",
@@ -18,6 +25,14 @@
       "workspace": "工作區",
       "billing": "付款設定",
       "trash": "垃圾桶"
+    }
+  },
+  "ConfirmDialog": {
+    "ui": {
+      "title": "操作確認",
+      "description": "此操作無法復原，確定要繼續嗎？",
+      "cancel": "取消",
+      "confirm": "確認"
     }
   },
   "ErrorCard": {
@@ -204,6 +219,230 @@
       }
     }
   },
+  "AcceptShareForm": {
+    "ui": {
+      "header": "接受行程分享",
+      "processing": "處理中...",
+      "invitation": "您已受邀加入一趟旅程，請點擊下方按鈕接受邀請。",
+      "accept": "接受邀請",
+      "click": "點擊",
+      "here": "這裡",
+      "goToTrip": "立即前往旅程頁面"
+    },
+    "server": {
+      "success": {
+        "joinedRedirect": "您已成功加入此旅程！3 秒後將自動前往旅程頁面..."
+      },
+      "error": {
+        "invalid": "邀請無效或已過期。",
+        "expired": "邀請已過期。"
+      }
+    }
+  },
+  "BoardForm": {
+    "role": {
+      "owner": "擁有者",
+      "editor": "編輯者",
+      "viewer": "檢視者"
+    },
+    "ui": {
+      "createTitle": "建立行程",
+      "manageTrip": "管理行程",
+      "tripTitlePlaceholder": "行程標題",
+      "tripLocationPlaceholder": "旅行地點",
+      "startDate": "出發日期",
+      "endDate": "回程日期",
+      "submitCreate": "建立",
+      "submitUpdate": "更新",
+      "submitting": "送出中...",
+      "copyTrip": "複製行程",
+      "deleteTrip": "刪除行程",
+      "selectLanguage": "選擇語言",
+      "language": {
+        "english": "英文",
+        "traditionalChinese": "繁體中文",
+        "simplifiedChinese": "簡體中文",
+        "spanish": "西班牙文",
+        "french": "法文",
+        "japanese": "日文"
+      },
+      "askAI": "詢問 AI",
+      "askingAI": "正在詢問 AI...",
+      "addToCards": "新增至卡片",
+      "updating": "更新中...",
+      "aiSuggestions": "AI 行程建議",
+      "aiUsesRemaining": "剩餘 {remaining} 次 AI 使用次數",
+      "aiUsesDescription": "您在免費版本中可使用 {max} 次 AI 功能。",
+      "aiCountLoadError": "載入剩餘次數時發生錯誤。",
+
+      "shareTitle": "分享 {title}",
+      "ownerLabel": "擁有者：{email}",
+      "ownerLoadingError": "載入行程擁有者時發生錯誤。",
+      "sharedUsersTitle": "已授權的使用者",
+      "shareEmail": "電子郵件",
+      "shareRole": "權限",
+      "shareButton": "分享",
+      "copyLink": "複製連結",
+      "copied": "已複製行程連結到剪貼簿",
+      "copyFailed": "複製連結失敗",
+      "leave": "退出",
+      "leaveTrip": "退出行程",
+
+      "removeCover": "移除封面",
+      "coverTitle": "行程封面",
+      "coverUploadLabel": "剩餘 {remaining} 次封面上傳次數",
+      "coverUploadDescription": "您在免費版本中可使用 {max} 次封面上傳。",
+      "coverUploadPrompt": "點擊或拖曳檔案到此區域以上傳",
+      "coverSubmitButton": "送出",
+
+      "tripInTrash": "此行程已被移至垃圾桶。",
+      "restore": "復原行程",
+      "deleteForever": "永久刪除",
+      "trashBoxPlaceholder": "以行程名稱過濾...",
+      "trashBoxNoResults": "垃圾桶為空。",
+      "trashBoxError": "載入已封存行程時發生錯誤。"
+    },
+    "validation": {
+      "title": {
+        "min": "標題至少需 2 個字元",
+        "max": "標題不能超過 100 個字元"
+      },
+      "location": {
+        "min": "地點描述至少需 2 個字元",
+        "max": "地點描述不能超過 100 個字元"
+      },
+      "endDate": {
+        "invalid": "結束日期必須在開始日期之後"
+      },
+      "email": {
+        "required": "請輸入電子郵件",
+        "invalid": "電子郵件格式不正確"
+      }
+    },
+    "toast": {
+      "success": {
+        "created": "旅程建立成功！",
+        "updated": "旅程「{title}」已更新",
+        "copied": "旅程已複製！",
+        "archived": "旅程已移至垃圾桶！",
+        "restored": "已復原行程「{title}」！",
+        "deleted": "已刪除行程「{title}」！",
+        "selfUnshared": "您已成功退出此行程。",
+        "coverRemoved": "封面已移除，並成功更新行程！",
+        "coverUploaded": "圖片上傳成功！"
+      },
+      "warning": {
+        "aiLimit": "您已達到免費 AI 使用次數上限。",
+        "aiFieldsRequired": "請輸入地點、開始日期和結束日期。",
+        "aiDayRange": "AI 功能僅限行程天數 1 至 10 天",
+        "missingAIData": "尚未產生 AI 行程建議。",
+        "coverUploadRequired": "請先上傳圖片",
+        "coverLimitReached": "您已達到免費封面上傳次數上限。"
+      },
+      "error": {
+        "copyFailed": "行程複製失敗。",
+        "archiveFailed": "無法將行程移至垃圾桶。",
+        "removeFailed": "移除封面失敗。",
+        "updateFailed": "移除後更新行程失敗。",
+        "shareFailed": "分享行程失敗。",
+        "updateRoleFailed": "更新權限失敗。",
+        "unshareFailed": "移除使用者失敗。",
+        "deleteFailed": "刪除行程失敗。",
+        "reorderFailed": "更新順序失敗，請稍後再試。"
+      }
+    },
+    "server": {
+      "success": {
+        "alreadyShared": "此使用者已擁有此行程的 {role} 權限",
+        "roleUpdated": "已更新為 {role} 身份。",
+        "invitationSent": "邀請信件已成功寄出！",
+        "unshared": "已成功取消分享。"
+      },
+      "error": {
+        "aiUnavailable": "目前無法使用 OpenAI 金鑰。",
+        "aiAbort": "AI 請求已取消。",
+        "aiFailed": "無法連接至 AI 服務。",
+
+        "cannotShareWithSelf": "無法與自己分享此行程。",
+        "onlyOwnerCanShare": "只有擁有者可以分享此行程。",
+        "onlyOwnerCanUpdateRole": "只有擁有者可以更新角色。",
+        "userNotInList": "在檢視者或編輯者名單中找不到該使用者。",
+        "onlyOwnerCanUnshare": "只有擁有者可以取消分享此行程。",
+
+        "fileTypeNotAllowed": "檔案類型不被允許。",
+        "fileSizeTooLarge": "檔案過大，最大允許大小為 {maxSize}。",
+        "signedUrlFailed": "無法產生簽署網址。",
+        "mediaNotFound": "找不到封面資料。",
+        "removeMediaFailed": "刪除封面資料失敗。"
+      }
+    }
+  },
+  "ListForm": {
+    "ui": {
+      "addItinerary": "新增行程",
+      "addItineraryPlaceholder": "輸入行程標題...",
+      "itineraryActions": "行程操作",
+      "addAttractions": "新增景點...",
+      "copyItinerary": "複製本日行程",
+      "deleteItinerary": "刪除本日行程"
+    },
+    "validation": {
+      "title": {
+        "required": "請輸入標題",
+        "min": "標題至少需 2 個字元",
+        "max": "標題不能超過 100 個字元"
+      }
+    },
+    "toast": {
+      "success": {
+        "itineraryCreated": "行程「{title}」已新增",
+        "itineraryCopied": "行程「{title}」已新增",
+        "itineraryDeleted": "行程「{title}」已刪除",
+        "itineraryUpdated": "行程「{title}」已刪更新",
+        "listReordered": "列表已重新排序。",
+        "cardReordered": "卡片已重新排序。"
+      }
+    }
+  },
+  "CardForm": {
+    "ui": {
+      "addAttraction": "新增景點",
+      "addAttractionButton": "新增一個景點",
+      "attractionPlaceholder": "輸入此景點的標題...",
+      "attractionLoadError": "載入景點時發生錯誤。",
+      "inItinerary": "隸屬於行程",
+      "attractionDone": "已完成",
+      "attractionCopy": "複製景點",
+      "attractionDelete": "刪除景點",
+      "descriptionTitle": "景點說明",
+      "descriptionEditHint": "（點擊可編輯）",
+      "descriptionPlaceholder": "新增更詳細的說明內容...",
+      "descriptionEmpty": "尚未提供詳細說明。",
+      "descriptionSave": "儲存",
+      "descriptionCancel": "取消",
+      "color": "顏色標註"
+    },
+    "validation": {
+      "title": {
+        "required": "請輸入標題",
+        "min": "標題至少需 2 個字元",
+        "max": "標題不能超過 100 個字元"
+      },
+      "description": {
+        "max": "描述不能超過 300 個字元"
+      }
+    },
+    "toast": {
+      "success": {
+        "attractionCreated": "景點「{title}」已建立",
+        "attractionUpdated": "景點「{title}」已更新",
+        "attractionCopied": "景點「{title}」已複製",
+        "attractionDeleted": "景點「{title}」已刪除",
+        "attractionRenamed": "已重新命名為「{title}」",
+        "colorUpdated": "已變更「{title}」的顏色標註"
+      }
+    }
+  },
   "Common": {
     "error": {
       "missingToken": "缺少驗證令牌。",
@@ -216,7 +455,7 @@
       "boardNotFound": "找不到此旅程內容。",
       "listNotFound": "找不到此行程內容",
       "cardNotFound": "找不到此景點內容",
-      "listAndCardsCreationFailed": "建立清單與景點時發生部分失敗。"
+      "listAndCardsCreationFailed": "建立清單與景點時發生錯誤。"
     }
   }
 }

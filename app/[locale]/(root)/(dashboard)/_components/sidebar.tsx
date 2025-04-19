@@ -1,6 +1,7 @@
 "use client"
 
 import { useMediaQuery } from "usehooks-ts"
+import {useTranslations} from "next-intl"
 
 import {
   Popover,
@@ -13,22 +14,23 @@ import { TrashBox } from "./trash-box"
 import { FiSettings, FiMap, FiTrash } from "react-icons/fi"
 
 export const Sidebar = () => {
+  const tUi = useTranslations("Navbar.ui")
   const isMobile = useMediaQuery("(max-width: 768px)")
 
   const routes = [
     {
       icon: <FiSettings className="h-4 w-4 mr-2" />,
-      label: "Settings",
+      label: tUi("settings"),
       url: "/settings"
     },
     {
       icon: <FiMap className="h-4 w-4 mr-2" />,
-      label: "Trips",
+      label: tUi("trips"),
       url: "/boards"
     }
     // {
     //   icon: <FiCreditCard className="h-4 w-4 mr-2" />,
-    //   label: "Billing",
+    //   label: tUi("billing"),
     //   url: "/billing"
     // }
   ]
@@ -37,7 +39,7 @@ export const Sidebar = () => {
     <>
       <div className="font-medium text-xs flex items-center mb-4 pl-4 pt-4">
         <span className="text-lg text-teal-900">
-          Workspace
+          {tUi("workspace")}
         </span>
       </div>
       <SidebarLinks routes={routes}/>
@@ -49,7 +51,7 @@ export const Sidebar = () => {
             variant="ghost"
           >
             <FiTrash className="h-4 w-4 mr-2"/>
-            Trash
+            {tUi("trash")}
           </Button>
         </PopoverTrigger>
         <PopoverContent

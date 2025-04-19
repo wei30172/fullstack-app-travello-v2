@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { getTranslations } from "next-intl/server"
 import { getMyBoards } from "@/lib/actions/board/get-my-boards"
 
 import { Skeleton } from "@/components/ui/skeleton"
@@ -6,6 +7,7 @@ import { FormPopover } from "@/components/shared/form/form-popover"
 import { GiIsland } from "react-icons/gi"
 
 export const MyBoardList = async () => {
+  const tUi = await getTranslations("BoardsPage.ui")
   const boards = await getMyBoards()
   // console.log({boards})
 
@@ -13,7 +15,7 @@ export const MyBoardList = async () => {
     <div className="space-y-4 mb-10">
       <div className="flex items-center font-semibold text-lg text-gray-700">
         <GiIsland className="h-6 w-6 mr-2" />
-        My trips
+        {tUi("myTrips")}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <FormPopover
@@ -24,7 +26,7 @@ export const MyBoardList = async () => {
             role="button"
             className="aspect-video relative h-full w-full bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition"
           >
-            <p className="text-sm">Create new trip</p>
+            <p className="text-sm">{tUi("createNewTrip")}</p>
           </div>
         </FormPopover>
         {boards && boards.map((board) => (
