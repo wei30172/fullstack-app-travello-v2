@@ -6,7 +6,7 @@ import { MobileSidebar } from "./mobile-sidebar"
 import { FiPlus } from "react-icons/fi"
 
 export const Navbar = () => {
-  const ui = useTranslations("Navbar.ui")
+  const tUi = useTranslations("Navbar.ui")
 
   return (
     <nav className="fixed z-50 top-0 mx-12 md:mx-36 h-16 flex items-center">
@@ -14,7 +14,7 @@ export const Navbar = () => {
       <div className="flex items-center gap-x-4">
         <FormPopover align="start" sideOffset={6}>
           <Button variant="primary" size="sm" className="rounded-sm hidden md:block h-auto py-1.5 px-2">
-            {ui("create")}
+            {tUi("create")}
           </Button>
         </FormPopover>
         <FormPopover sideOffset={8}>

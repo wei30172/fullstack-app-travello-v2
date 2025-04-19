@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { LocaleSwitcher } from "@/components/shared/button/locale-switcher"
 
 export const MarketingNavbar = () => {
-  const ui = useTranslations("Navbar.ui")
+  const tUi = useTranslations("Navbar.ui")
   
   return (
     <div className="fixed top-0 w-full h-12 px-4 border-b shadow-sm bg-gray-100 dark:bg-gray-900 flex items-center">
@@ -16,12 +16,12 @@ export const MarketingNavbar = () => {
           <LocaleSwitcher />
           <Button variant="outline" size="sm" asChild>
             <Link href="/signin">
-              {ui("signin")}
+              {tUi("signin")}
             </Link>
           </Button>
           <Button variant="primary" size="sm" asChild>
             <Link href="/signup">
-              {ui("signup")}
+              {tUi("signup")}
             </Link>
           </Button>
         </div>
