@@ -16,12 +16,13 @@ export const settings = async (
   values: SettingsFormValues
 ) => {
   const t = await getTranslations("SettingsForm.server")
+  const tError = await getTranslations("Common.error")
 
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: t("error.unauthorized") }
+    return { error: tError("unauthorized") }
   }
 
   await connectDB()
@@ -30,7 +31,7 @@ export const settings = async (
   // console.log({existingUser})
 
   if (!existingUser) {
-    return { error: t("error.unauthorized") }
+    return { error: tError("unauthorized") }
   }
 
   if (user.provider !== UserProvider.CREDENTIALS) {

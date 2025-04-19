@@ -33,12 +33,12 @@ export const NewPasswordForm = () => {
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
-  const ui = useTranslations("NewPasswordForm.ui")
-  const validationMessages = useTranslations("NewPasswordForm.validation")
-  const serverError = useTranslations("SomeForm.server.error")
+  const tUi = useTranslations("NewPasswordForm.ui")
+  const tValidation = useTranslations("NewPasswordForm.validation")
+  const tError = useTranslations("Common.error")
 
   const form = useForm<NewPasswordFormValues>({
-    resolver: zodResolver(getNewPasswordFormSchema(validationMessages)),
+    resolver: zodResolver(getNewPasswordFormSchema(tValidation)),
     defaultValues: {
       newPassword: "",
       confirmPassword: ""
@@ -59,14 +59,14 @@ export const NewPasswordForm = () => {
             setSuccess(data.success)
           }
         })
-        .catch(() => setError(serverError("generic")))
+        .catch(() => setError(tError("generic")))
     })
   }
 
   return (
     <FormWrapper
-      headerLabel={ui("header")}
-      backButtonLabel={ui("backButton")}
+      headerLabel={tUi("header")}
+      backButtonLabel={tUi("backButton")}
       backButtonHref="/signin"
     >
       <Form {...form}>
@@ -77,12 +77,12 @@ export const NewPasswordForm = () => {
               name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{ui("newPassword")}</FormLabel>
+                  <FormLabel>{tUi("newPassword")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
                       type="password"
-                      placeholder={ui("newPassword")}
+                      placeholder={tUi("newPassword")}
                       autoComplete="new-password"
                       {...field}
                     />
@@ -96,12 +96,12 @@ export const NewPasswordForm = () => {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{ui("confirmPassword")}</FormLabel>
+                  <FormLabel>{tUi("confirmPassword")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
                       type="password"
-                      placeholder={ui("confirmPassword")}
+                      placeholder={tUi("confirmPassword")}
                       autoComplete="new-password"
                       {...field}
                     />
@@ -119,7 +119,7 @@ export const NewPasswordForm = () => {
             type="submit"
             disabled={isPending}
           >
-            {isPending ? ui("submitting") : ui("submit")}
+            {isPending ? tUi("submitting") : tUi("submit")}
           </Button>
         </form>
       </Form>

@@ -16,11 +16,12 @@ export const signUpWithCredentials = async (
   values: SignUpFormValues
 ) => {
   const t = await getTranslations("SignUpForm.server")
-
+  const tError = await getTranslations("Common.error")
+  
   const validatedFields = getSignUpFormSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: t("error.invalidFields") }
+    return { error: tError("invalidFields") }
   }
   
   const { email, password, name } = validatedFields.data

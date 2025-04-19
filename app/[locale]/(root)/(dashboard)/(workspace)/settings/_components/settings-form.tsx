@@ -42,12 +42,12 @@ export const SettingsForm = () => {
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
-  const ui = useTranslations("SettingsForm.ui")
-  const validationMessages = useTranslations("SettingsForm.validation")
-  const serverError = useTranslations("SomeForm.server.error")
+  const tUi = useTranslations("SettingsForm.ui")
+  const tValidation = useTranslations("SettingsForm.validation")
+  const tError = useTranslations("Common.error")
 
   const form = useForm<SettingsFormValues>({
-    resolver: zodResolver(getSettingsFormSchema(validationMessages)),
+    resolver: zodResolver(getSettingsFormSchema(tValidation)),
     defaultValues: {
       name: user?.name || "",
       email: user?.email || "",
@@ -73,7 +73,7 @@ export const SettingsForm = () => {
             setSuccess(data.success)
           }
         })
-        .catch(() => setError(serverError("generic")))
+        .catch(() => setError(tError("generic")))
     })
   }
 
@@ -85,7 +85,7 @@ export const SettingsForm = () => {
     <Card className="w-[350px]">
       <CardHeader>
         <p className="text-2xl font-semibold text-center">
-          {ui("header")}
+          {tUi("header")}
         </p>
       </CardHeader>
       <CardContent>
@@ -97,11 +97,11 @@ export const SettingsForm = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{ui("name")}</FormLabel>
+                    <FormLabel>{tUi("name")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending}
-                        placeholder={ui("name")}
+                        placeholder={tUi("name")}
                         autoComplete="username"
                         {...field}
                       />
@@ -115,7 +115,7 @@ export const SettingsForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{ui("email")}</FormLabel>
+                    <FormLabel>{tUi("email")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending || user?.provider !== UserProvider.CREDENTIALS}
@@ -140,12 +140,12 @@ export const SettingsForm = () => {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{ui("password")}</FormLabel>
+                        <FormLabel>{tUi("password")}</FormLabel>
                         <FormControl>
                           <Input
                             disabled={isPending}
                             type="password"
-                            placeholder={ui("password")}
+                            placeholder={tUi("password")}
                             autoComplete="current-password"
                             {...field}
                           />
@@ -159,12 +159,12 @@ export const SettingsForm = () => {
                     name="newPassword"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{ui("newPassword")}</FormLabel>
+                        <FormLabel>{tUi("newPassword")}</FormLabel>
                         <FormControl>
                           <Input
                             disabled={isPending}
                             type="password"
-                            placeholder={ui("newPassword")}
+                            placeholder={tUi("newPassword")}
                             autoComplete="new-password"
                             {...field}
                           />
@@ -182,9 +182,9 @@ export const SettingsForm = () => {
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                     <div className="space-y-0.5">
-                      <FormLabel>{ui("isTwoFactorEnabled")}</FormLabel>
+                      <FormLabel>{tUi("isTwoFactorEnabled")}</FormLabel>
                       <FormDescription>
-                        {ui("isTwoFactorEnabledDescription")}
+                        {tUi("isTwoFactorEnabledDescription")}
                       </FormDescription>
                     </div>
                     <FormControl>
@@ -207,7 +207,7 @@ export const SettingsForm = () => {
               type="submit"
               disabled={isPending}
             >
-              {isPending ? ui("submitting") : ui("submit")}
+              {isPending ? tUi("submitting") : tUi("submit")}
             </Button>
           </form>
         </Form>

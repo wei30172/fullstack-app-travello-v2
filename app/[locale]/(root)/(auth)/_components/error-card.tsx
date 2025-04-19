@@ -4,12 +4,12 @@ import { FiAlertTriangle } from "react-icons/fi"
 import { FormWrapper } from "@/components/shared/form/form-wrapper"
 
 export const ErrorCard = () => {
-  const ui = useTranslations("ErrorCard.ui")
+  const tUi = useTranslations("ErrorCard.ui")
 
   return (
     <FormWrapper
-      headerLabel={ui("header")}
-      backButtonLabel={ui("backButton")}
+      headerLabel={tUi("header")}
+      backButtonLabel={tUi("backButton")}
       backButtonHref="/signin"
     >
       <div className="w-full flex justify-center items-center">

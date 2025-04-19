@@ -15,8 +15,8 @@ export const NewVerificationForm = () => {
   const [error, setError] = useState<string | undefined>("")
   const [success, setSuccess] = useState<string | undefined>("")
   
-  const ui = useTranslations("NewVerificationForm.ui")
-  const serverError = useTranslations("SomeForm.server.error")
+  const tUi = useTranslations("NewVerificationForm.ui")
+  const tError = useTranslations("Common.error")
 
   const token = searchParams.get("token")
 
@@ -25,7 +25,7 @@ export const NewVerificationForm = () => {
     if (success || error) return
 
     if (!token) {
-      setError(serverError("missingToken"))
+      setError(tError("missingToken"))
       return
     }
 
@@ -37,8 +37,8 @@ export const NewVerificationForm = () => {
           setSuccess(data.success)
         }
       })
-      .catch(() => setError(serverError("generic")))
-  }, [token, success, error, serverError])
+      .catch(() => setError(tError("generic")))
+  }, [token, success, error, tError])
 
   useEffect(() => {
     onSubmit()
@@ -46,8 +46,8 @@ export const NewVerificationForm = () => {
 
   return (
     <FormWrapper
-      headerLabel={ui("header")}
-      backButtonLabel={ui("backButton")}
+      headerLabel={tUi("header")}
+      backButtonLabel={tUi("backButton")}
       backButtonHref="/signin"
     >
       <div className="flex items-center w-full justify-center">

@@ -8,13 +8,13 @@ import { User } from "@/lib/models/auth.model"
 
 export const newVerification = async (token: string) => {
   const t = await getTranslations("NewVerificationForm.server")
-  const serverError = await getTranslations("SomeForm.server.error")
+  const tError = await getTranslations("Common.error")
 
   const res = await verifyToken(token)
   // console.log({res})
 
   if (isTokenError(res)) {
-    return { error: serverError(`${res.error}`) }
+    return { error: tError(`${res.error}`) }
   }
   
   await connectDB()

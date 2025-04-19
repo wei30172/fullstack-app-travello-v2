@@ -16,11 +16,12 @@ export const resetPassword = async (
   values: ResetFormValues
 ) => {
   const t = await getTranslations("ResetForm.server")
-  
+  const tError = await getTranslations("Common.error")
+
   const validatedFields = getResetFormSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: t("error.invalidFields") }
+    return { error: tError("invalidFields") }
   }
   
   const { email } = validatedFields.data

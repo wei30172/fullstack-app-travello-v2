@@ -11,7 +11,13 @@
     "ui": {
       "create": "新增旅程",
       "signin": "登入",
-      "signup": "免費體驗 Travello"
+      "signup": "免費體驗 Travello",
+      "signout": "登出",
+      "settings": "帳戶設定",
+      "trips": "我的旅程",
+      "workspace": "工作區",
+      "billing": "付款設定",
+      "trash": "垃圾桶"
     }
   },
   "ErrorCard": {
@@ -43,15 +49,14 @@
       }
     },
     "server": {
+      "success": {
+        "confirmationSent": "已寄出確認信件。"
+      },
       "error": {
-        "invalidFields": "部分欄位格式錯誤。",
         "emailNotFound": "該電子郵件尚未註冊。",
         "invalidCode": "驗證碼錯誤。",
         "codeExpired": "驗證碼已過期。",
         "invalidCredentials": "電子郵件或密碼錯誤。"
-      },
-      "success": {
-        "confirmationSent": "已寄出確認信件。"
       }
     }
   },
@@ -85,13 +90,12 @@
       }
     },
     "server": {
-      "error": {
-        "invalidFields": "部分欄位格式錯誤。",
-        "emailExists": "該電子郵件已註冊。",
-        "emailThirdParty": "該電子郵件已用於第三方登入。"
-      },
       "success": {
         "confirmationSent": "已寄出確認郵件。"
+      },
+      "error": {
+        "emailExists": "該電子郵件已註冊。",
+        "emailThirdParty": "該電子郵件已用於第三方登入。"
       }
     }
   },
@@ -110,13 +114,12 @@
       }
     },
     "server": {
-      "error": {
-        "invalidFields": "電子郵件格式錯誤。",
-        "emailNotFound": "該電子郵件尚未註冊。",
-        "emailThirdParty": "該電子郵件已用於第三方登入。"
-      },
       "success": {
         "resetSent": "已發送密碼重設郵件。"
+      },
+      "error": {
+        "emailNotFound": "該電子郵件尚未註冊。",
+        "emailThirdParty": "該電子郵件已用於第三方登入。"
       }
     }
   },
@@ -140,13 +143,12 @@
       }
     },
     "server": {
-      "error": {
-        "invalidFields": "部分欄位格式錯誤。",
-        "emailNotFound": "該電子郵件尚未註冊。",
-        "emailThirdParty": "該電子郵件已用於第三方登入。"
-      },
       "success": {
         "passwordUpdated": "密碼已成功更新。"
+      },
+      "error": {
+        "emailNotFound": "該電子郵件尚未註冊。",
+        "emailThirdParty": "該電子郵件已用於第三方登入。"
       }
     }
   },
@@ -176,14 +178,13 @@
       }
     },
     "server": {
-      "error": {
-        "unauthorized": "未授權的操作。",
-        "emailInUse": "該電子郵件已被使用。",
-        "incorrectPassword": "密碼不正確。"
-      },
       "success": {
         "verificationSent": "已發送驗證信件。",
         "settingsUpdated": "帳號資料已更新。"
+      },
+      "error": {
+        "emailInUse": "該電子郵件已被使用。",
+        "incorrectPassword": "密碼不正確。"
       }
     }
   },
@@ -193,24 +194,29 @@
       "backButton": "返回登入頁"
     },
     "server": {
-      "error": {
-        "emailNotFound": "該電子郵件尚未註冊。",
-        "invalidRequest": "驗證請求無效。"
-      },
       "success": {
         "emailUpdated": "您的電子郵件已更新並完成驗證。",
         "emailVerified": "電子郵件驗證成功。"
+      },
+      "error": {
+        "emailNotFound": "該電子郵件尚未註冊。",
+        "invalidRequest": "驗證請求無效。"
       }
     }
   },
-  "SomeForm": {
-    "server": {
-      "error": {
-        "missingToken": "缺少驗證令牌。",
-        "tokenExpired": "驗證碼已過期。",
-        "tokenInvalid": "驗證碼無效。",
-        "generic": "發生錯誤，請稍後重試。"
-      }
+  "Common": {
+    "error": {
+      "missingToken": "缺少驗證令牌。",
+      "tokenExpired": "驗證碼已過期。",
+      "tokenInvalid": "驗證碼無效。",
+      "unauthorized": "您沒有執行此操作的權限。",
+      "invalidFields": "欄位填寫有誤。",
+      "actionFailed": "操作失敗，請稍後再試一次。",
+      "generic": "發生錯誤，請稍後重試。",
+      "boardNotFound": "找不到此旅程內容。",
+      "listNotFound": "找不到此行程內容",
+      "cardNotFound": "找不到此景點內容",
+      "listAndCardsCreationFailed": "建立清單與景點時發生部分失敗。"
     }
   }
 }

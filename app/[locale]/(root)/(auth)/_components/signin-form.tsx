@@ -34,12 +34,12 @@ export const SignInForm = () => {
   const [showTwoFactor, setShowTwoFactor] = useState(false)
   const [isPending, startTransition] = useTransition()
 
-  const ui = useTranslations("SignInForm.ui")
-  const validationMessages = useTranslations("SignInForm.validation")
-  const serverError = useTranslations("SomeForm.server.error")
+  const tUi = useTranslations("SignInForm.ui")
+  const tValidation = useTranslations("SignInForm.validation")
+  const tError = useTranslations("Common.error")
 
   const form = useForm<SignInFormValues>({
-    resolver: zodResolver(getSignInFormSchema(validationMessages)),
+    resolver: zodResolver(getSignInFormSchema(tValidation)),
     defaultValues: {
       email: "",
       password: "",
@@ -67,14 +67,14 @@ export const SignInForm = () => {
             setShowTwoFactor(true)
           }
         })
-        .catch(() => setError(serverError("generic")))
+        .catch(() => setError(tError("generic")))
     })
   }
 
   return (
     <FormWrapper
-      headerLabel={ui("header")}
-      backButtonLabel={ui("backButton")}
+      headerLabel={tUi("header")}
+      backButtonLabel={tUi("backButton")}
       backButtonHref="/signup"
       showSocial
     >
@@ -87,7 +87,7 @@ export const SignInForm = () => {
                 name="code"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{ui("code")}</FormLabel>
+                    <FormLabel>{tUi("code")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending}
@@ -108,7 +108,7 @@ export const SignInForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{ui("email")}</FormLabel>
+                    <FormLabel>{tUi("email")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending}
@@ -126,12 +126,12 @@ export const SignInForm = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{ui("password")}</FormLabel>
+                    <FormLabel>{tUi("password")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending}
                         type="password"
-                        placeholder={ui("password")}
+                        placeholder={tUi("password")}
                         autoComplete="current-password"
                         {...field}
                       />
@@ -143,7 +143,7 @@ export const SignInForm = () => {
                       className="px-0 font-normal"
                     >
                       <Link href="/reset">
-                        {ui("resetLink")}
+                        {tUi("resetLink")}
                       </Link>
                     </Button>
                     <FormMessage />
@@ -161,7 +161,7 @@ export const SignInForm = () => {
             type="submit"
             disabled={isPending}
           >
-            {isPending ? ui("submitting") : showTwoFactor ? ui("confirm") : ui("submit")}
+            {isPending ? tUi("submitting") : showTwoFactor ? tUi("confirm") : tUi("submit")}
           </Button>
         </form>
       </Form>

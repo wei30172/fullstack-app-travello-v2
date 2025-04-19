@@ -17,23 +17,23 @@ export const newPassword = async (
   token?: string | null
 ) => {
   const t = await getTranslations("NewPasswordForm.server")
-  const serverError = await getTranslations("SomeForm.server.error")
+  const tError = await getTranslations("Common.error")
 
   const validatedFields = getNewPasswordFormSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: t("error.invalidFields") }
+    return { error: tError("invalidFields") }
   }
 
   if (!token) {
-    return { error: serverError("missingToken") }
+    return { error: tError("missingToken") }
   }
 
   const res = await verifyToken(token)
   // console.log({res})
 
   if (isTokenError(res)) {
-    return { error: serverError(`${res.error}`) }
+    return { error: tError(`${res.error}`) }
   }
 
   await connectDB()

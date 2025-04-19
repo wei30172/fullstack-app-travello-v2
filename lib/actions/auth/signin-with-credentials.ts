@@ -23,12 +23,12 @@ export const signInWithCredentials = async (
 ) => {
   // console.log({callbackUrl})
   const t = await getTranslations("SignInForm.server")
-  const serverError = await getTranslations("SomeForm.server.error")
+  const tError = await getTranslations("Common.error")
   
   const validatedFields = getSignInFormSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: t("error.invalidFields") }
+    return { error: tError("invalidFields") }
   }
   
   const { email, password, code } = validatedFields.data
@@ -108,7 +108,7 @@ export const signInWithCredentials = async (
         case "CredentialsSignin":
           return { error: t("error.invalidCredentials") }
         default:
-          return { error: serverError("generic") }
+          return { error: tError("actionFailed") }
       }
     }
 

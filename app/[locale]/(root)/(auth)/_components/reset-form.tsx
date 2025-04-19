@@ -29,12 +29,12 @@ export const ResetForm = () => {
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
-  const ui = useTranslations("ResetForm.ui")
-  const validationMessages = useTranslations("ResetForm.validation")
-  const serverError = useTranslations("SomeForm.server.error")
+  const tUi = useTranslations("ResetForm.ui")
+  const tValidation = useTranslations("ResetForm.validation")
+  const tError = useTranslations("Common.error")
 
   const form = useForm<ResetFormValues>({
-    resolver: zodResolver(getResetFormSchema(validationMessages)),
+    resolver: zodResolver(getResetFormSchema(tValidation)),
     defaultValues: {
       email: ""
     }
@@ -54,14 +54,14 @@ export const ResetForm = () => {
             setSuccess(data.success)
           }
         })
-        .catch(() => setError(serverError("generic")))
+        .catch(() => setError(tError("generic")))
     })
   }
 
   return (
     <FormWrapper
-      headerLabel={ui("header")}
-      backButtonLabel={ui("backButton")}
+      headerLabel={tUi("header")}
+      backButtonLabel={tUi("backButton")}
       backButtonHref="/signin"
     >
       <Form {...form}>
@@ -72,7 +72,7 @@ export const ResetForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{ui("email")}</FormLabel>
+                  <FormLabel>{tUi("email")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
@@ -94,7 +94,7 @@ export const ResetForm = () => {
             type="submit"
             disabled={isPending}
           >
-            {isPending ? ui("submitting") : ui("submit")}
+            {isPending ? tUi("submitting") : tUi("submit")}
           </Button>
         </form>
       </Form>
