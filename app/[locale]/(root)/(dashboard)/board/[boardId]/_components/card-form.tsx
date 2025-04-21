@@ -9,6 +9,7 @@ import {
 } from "react"
 import { useParams } from "next/navigation"
 import { useOnClickOutside, useEventListener } from "usehooks-ts"
+import { useTranslations } from "next-intl"
 import { BoardRole } from "@/lib/models/types"
 import { FormErrors } from "@/lib/validations/types"
 import { createCard } from "@/lib/actions/card/create-card"
@@ -41,6 +42,10 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
   const [fieldErrors, setFieldErrors] = useState<FormErrors>({})
   const [isPending, startTransition] = useTransition()
 
+  const tUi = useTranslations("CardForm.ui")
+  const tToast = useTranslations("CardForm.toast")
+  const tError = useTranslations("Common.error")
+  
   const formRef = useRef<HTMLFormElement>(null)
 
   const onKeyDown = (e: KeyboardEvent) => {
@@ -61,7 +66,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
 
   const onSubmit = (formData: FormData) => {
     if (role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
     
@@ -74,7 +79,10 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
         .then((res) => {
           setFieldErrors({})
           if (res?.data) {
-            toast({ status: "success", title: `Attractions "${res?.data.title}" created` })
+            toast({
+              status: "success",
+              title: tToast("success.attractionCreated", { title: res?.data.title })
+            })
             formRef.current?.reset()
           } else if (res?.error) {
             toast({ status: "error", description: res?.error })
@@ -83,7 +91,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
             setFieldErrors(res?.errors)
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
@@ -98,7 +106,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
           id="title"
           onKeyDown={onTextareakeyDown}
           ref={ref}
-          placeholder="Enter a title for this attractions..."
+          placeholder={tUi("attractionPlaceholder")}
           errors={fieldErrors}
           className="text-teal-900"
         />
@@ -110,7 +118,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
         />
         <div className="flex items-center gap-x-1">
           <FormSubmit>
-            Add attraction
+            {tUi("addAttraction")}
           </FormSubmit>
           <Button
             size="sm"
@@ -134,7 +142,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
         variant="ghost"
       >
         <FiPlus className="h-4 w-4 mr-2" />
-        Add a attraction
+        {tUi("addAttractionButton")}
       </Button>
     </div>
   )

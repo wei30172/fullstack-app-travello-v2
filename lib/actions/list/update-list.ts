@@ -1,30 +1,33 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { Board } from "@/lib/models/board.model"
 import { List } from "@/lib/models/list.model"
-import { UpdateListValidation } from "@/lib/validations/list"
-
-type UpdateListInput = z.infer<typeof UpdateListValidation>
+import { 
+  UpdateListFormValues,
+  getUpdateListSchema
+} from "@/lib/validations/list"
 
 export const updateList = async (
-  values: UpdateListInput
+  values: UpdateListFormValues
 ) => {
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = UpdateListValidation.safeParse(values)
+  const validatedFields = getUpdateListSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   const { title, id, boardId } = validatedFields.data
@@ -38,7 +41,7 @@ export const updateList = async (
       board.userId.toString() !== user._id.toString() &&
       !board.editors.includes(user.email)
     ) {
-      return { error: "Editing is restricted to authorized users only." }
+      return { error: tError("unauthorized") }
     }
     
     const list = await List.findOneAndUpdate(
@@ -51,6 +54,6 @@ export const updateList = async (
     return { data: { title: list.title } }
 
   } catch (error) {
-    return { error: "Failed to update" }
+    return { error: tError("actionFailed") }
   }
 }

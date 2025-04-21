@@ -1,6 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
@@ -11,10 +12,13 @@ type UnShareSelfInput = {
 }
 
 export const unshareSelf = async (values: UnShareSelfInput) => {
+  const tServer = await getTranslations("BoardForm.server")
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
 
   if (!user) {
-    return { error: "You are not authorized." }
+    return { error: tError("unauthorized") }
   }
 
   const { boardId } = values
@@ -25,14 +29,14 @@ export const unshareSelf = async (values: UnShareSelfInput) => {
     const board = await Board.findById(boardId)
 
     if (!board) {
-      return { error: "Board not found." }
+      return { error: tError("boardNotFound") }
     }
 
     const wasViewer = board.viewers.includes(user.email)
     const wasEditor = board.editors.includes(user.email)
 
     if (!wasViewer && !wasEditor) {
-      return { error: "You are not a part of this board." }
+      return { error: tServer("error.userNotInList") }
     }
 
     board.viewers = board.viewers.filter((e: string) => e !== user.email)
@@ -46,6 +50,6 @@ export const unshareSelf = async (values: UnShareSelfInput) => {
     return { data: { role: removedRole } }
 
   } catch (error) {
-    return { error: "Failed to remove yourself from the trip" }
+    return { error: tError("actionFailed") }
   }
 }

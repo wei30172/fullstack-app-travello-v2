@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import { CardWithList, BoardRole } from "@/lib/models/types"
 import { updateCard } from "@/lib/actions/card/update-card"
 import { copyCard } from "@/lib/actions/card/copy-card"
@@ -29,9 +30,13 @@ export const Options = ({
   const [isPending, startTransition] = useTransition()
   const [completed, setCompleted] = useState(data.isCompleted || false)
 
+  const tUi = useTranslations("CardForm.ui")
+  const tToast = useTranslations("CardForm.toast")
+  const tError = useTranslations("Common.error")
+  
   const handleSwitchChange = () => {
     if (data.role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
 
@@ -48,19 +53,19 @@ export const Options = ({
             })
             toast({
               status: "success",
-              title: `Attraction "${res?.data.title}" updated`
+              title: tToast("success.attractionUpdated", { title: res?.data.title })
             })
           } else if (res?.error) {
             toast({ status: "error", description: res?.error })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
   const onCopy = () => {
     if (data.role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
 
@@ -70,19 +75,22 @@ export const Options = ({
       copyCard({ id: data._id, boardId })
         .then((res) => {
           if (res?.data) {
-            toast({ status: "success", title: `Attraction "${res?.data.title}" copied` })
+            toast({
+              status: "success",
+              title: tToast("success.attractionCopied", { title: res?.data.title })
+            })
             cardModal.onClose()
           } else if (res?.error) {
             toast({ status: "error", description: res?.error })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
   const onDelete = () => {
     if (data.role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Deleting is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
 
@@ -92,13 +100,16 @@ export const Options = ({
       deleteCard({ id: data._id, boardId})
         .then((res) => {
           if (res?.data) {
-            toast({ status: "success", title: `Attraction "${res?.data.title}" deleted` })
+            toast({
+              status: "success",
+              title: tToast("success.attractionDeleted", { title: res?.data.title })
+            })
             cardModal.onClose()
           } else if (res?.error) {
             toast({ status: "error", description: res?.error })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
   
@@ -107,7 +118,7 @@ export const Options = ({
       <div className="mx-2">
         <div className="flex items-center justify-between">
           <label htmlFor="isCompleted" className="font-medium text-sm text-gray-700 cursor-pointer">
-            Done
+            {tUi("attractionDone")}
           </label>
           <Switch
             id="isCompleted"
@@ -122,7 +133,7 @@ export const Options = ({
           size="inline"
           className="w-full mt-6 mb-2"
           disabled={isPending}>
-          Copy
+          {tUi("attractionCopy")}
         </Button>
         <ConfirmDialog onConfirm={onDelete}>
           <Button
@@ -130,7 +141,7 @@ export const Options = ({
             size="inline"
             className="w-full"
             disabled={isPending}>
-            Delete
+            {tUi("attractionDelete")}
           </Button>
         </ConfirmDialog>
       </div>

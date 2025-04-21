@@ -1,37 +1,42 @@
 "use server"
 
-import { z } from "zod"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { Board } from "@/lib/models/board.model"
 import { BoardRole } from "@/lib/models/types"
-import { ShareBoardValidation } from "@/lib/validations/board"
+import { 
+  ShareBoardFormValues,
+  getShareBoardSchema
+} from "@/lib/validations/board"
 import { generateInvitation } from "@/lib/token"
 import { sendInvitationEmail } from "@/lib/mail"
 
-type SharedBoardInput = z.infer<typeof ShareBoardValidation>
-
 export const shareBoard = async (
-  values: SharedBoardInput
+  values:  ShareBoardFormValues
 ) => {
+  const tServer = await getTranslations("BoardForm.server")
+  const tRole = await getTranslations("BoardForm.role")
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = ShareBoardValidation.safeParse(values)
+  const validatedFields = getShareBoardSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   const { boardId, email, role } = validatedFields.data
 
   if (email === user.email) {
-    return { error: "Cannot share the trip with yourself." }
+    return { error: tServer("error.cannotShareWithSelf") }
   }
 
   try {
@@ -40,22 +45,22 @@ export const shareBoard = async (
     const board = await Board.findById(boardId)
 
     if (!board) {
-      return { error: "Trip not found" }
+      return { error: tError("boardNotFound") }
     }
 
     if (board.userId.toString() !== user._id.toString()) {
-      return { error: "Only the owner can share this trip." }
+      return { error: tServer("error.onlyOwnerCanShare") }
     }
 
     const updateRole = (newRole: BoardRole, addTo: string, removeFrom: string) => {
       if (board[addTo].includes(email)) {
-        return { success: `This email is already shared as a ${newRole}.` }
+        return { success: tServer("success.alreadyShared", { role: tRole(newRole) }) }
       }
       if (board[removeFrom].includes(email)) {
         board[removeFrom] = board[removeFrom].filter((e: string) => e !== email)
         board[addTo].push(email)
         board.save()
-        return { success: `Role updated to ${newRole}.` }
+        return { success: tServer("success.roleUpdated", { role: tRole(newRole) }) }
       }
       return null
     }
@@ -75,9 +80,9 @@ export const shareBoard = async (
       invitationToken
     )
 
-    return { success: "Invite email sent!" }
+    return { success: tServer("success.invitationSent") }
 
   } catch (error) {
-    return { error: "Failed to share" }
+    return { error: tError("actionFailed") }
   }
 }

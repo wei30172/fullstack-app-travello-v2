@@ -1,29 +1,34 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { Board } from "@/lib/models/board.model"
 import { BoardRole } from "@/lib/models/types"
-import { ShareBoardValidation } from "@/lib/validations/board"
-
-type UpdateShareRoleInput = z.infer<typeof ShareBoardValidation>
+import { 
+  ShareBoardFormValues,
+  getShareBoardSchema
+} from "@/lib/validations/board"
 
 export const updateShareRole = async (
-  values: UpdateShareRoleInput
+  values: ShareBoardFormValues
 ) => {
+  const tServer = await getTranslations("BoardForm.server")
+  const tRole = await getTranslations("BoardForm.role")
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = ShareBoardValidation.safeParse(values)
+  const validatedFields = getShareBoardSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   const { boardId, email, role } = validatedFields.data
@@ -34,27 +39,30 @@ export const updateShareRole = async (
     const board = await Board.findById(boardId)
 
     if (!board) {
-      return { error: "Trip not found" }
+      return { error: tError("boardNotFound") }
     }
 
     if (board.userId.toString() !== user._id.toString()) {
-      return { error: "Only the owner can update roles." }
+      return { error: tServer("error.onlyOwnerCanUpdateRole") }
     }
 
-    if (!board.viewers.includes(email) && !board.editors.includes(email)) {
-      return { error: "User not found in viewers or editors." }
+    const wasViewer = board.viewers.includes(email)
+    const wasEditor = board.editors.includes(email)
+
+    if (!wasViewer && !wasEditor) {
+      return { error: tServer("error.userNotInList") }
     }
 
     const updateRole = (newRole: BoardRole, addTo: string, removeFrom: string) => {
       if (board[addTo].includes(email)) {
-        return { success: `This email is already shared as a ${newRole}.` }
+        return { success: tServer("success.alreadyShared", { role: tRole(newRole) }) }
       }
       if (board[removeFrom].includes(email)) {
         board[removeFrom] = board[removeFrom].filter((e: string) => e !== email)
       }
       board[addTo].push(email)
       board.save()
-      return { success: `Role updated to ${newRole}.` }
+      return { success: tServer("success.roleUpdated", { role: tRole(newRole) }) }
     }
 
     const updateResult = role === BoardRole.EDITOR
@@ -66,9 +74,9 @@ export const updateShareRole = async (
       return updateResult
     }
 
-    return { error: "Failed to update role" }
+    return { error: tError("actionFailed") }
     
   } catch (error) {
-    return { error: "Failed to update role" }
+    return { error: tError("actionFailed") }
   }
 }

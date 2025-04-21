@@ -1,7 +1,7 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
@@ -9,24 +9,27 @@ import { Board } from "@/lib/models/board.model"
 import { List } from "@/lib/models/list.model"
 import { Card } from "@/lib/models/card.model"
 import { ICard } from "@/lib/models/types"
-import { CopyBoardValidation } from "@/lib/validations/board"
-
-type CopyBoardInput = z.infer<typeof CopyBoardValidation>
+import { 
+  CopyBoardFormValues,
+  getCopyBoardSchema
+} from "@/lib/validations/board"
 
 export const copyBoard = async (
-  values: CopyBoardInput
+  values: CopyBoardFormValues
 ) => {
+  const tError = await getTranslations("Common.error")
+  
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = CopyBoardValidation.safeParse(values)
+  const validatedFields = getCopyBoardSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   const { boardId } = validatedFields.data
@@ -42,14 +45,14 @@ export const copyBoard = async (
       })
   
     if (!boardToCopy) {
-      return { error: "Trip not found" }
+      return { error: tError("boardNotFound") }
     }
   
     if (
       boardToCopy.userId.toString() !== user._id.toString() &&
       !boardToCopy.editors.includes(user.email)
     ) {
-      return { error: "Editing is restricted to authorized users only." }
+      return { error: tError("unauthorized") }
     }
 
     const newBoard = new Board({
@@ -104,6 +107,6 @@ export const copyBoard = async (
     return { data: { title: board.title } }
 
   } catch (error) {
-    return { error: "Failed to copy" }
+    return { error: tError("actionFailed") }
   }
 }

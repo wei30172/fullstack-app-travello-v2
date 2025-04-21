@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useTransition  } from "react"
+import { useTranslations } from "next-intl"
 import { DragDropContext, Droppable } from "@hello-pangea/dnd"
 import { ListWithCards, BoardRole } from "@/lib/models/types"
 import { updateListOrder } from "@/lib/actions/list/update-list-order"
@@ -36,13 +37,16 @@ export const ListContainer = ({
   const [orderedData, setOrderedData] = useState(data)
   const [isPending, startTransition] = useTransition()
 
+  const tToast = useTranslations("ListForm.toast")
+  const tError = useTranslations("Common.error")
+  
   useEffect(() => {
     setOrderedData(data)
   }, [data])
 
   const onDragEnd = (result: any) => {
     if (role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
 
@@ -77,12 +81,12 @@ export const ListContainer = ({
         updateListOrder({ lists: listsForUpdate, boardId })
           .then((res) => {
             if (res?.data) {
-              toast({ status: "success", title: "List reordered" })
+              toast({ status: "success", title: tToast("success.listReordered") })
             } else if (res?.error) {
               toast({ status: "error", description: res?.error })
             }
           })
-          .catch(() => toast({ status: "error", description: "Something went wrong" }))
+          .catch(() => toast({ status: "error", description: tError("generic") }))
       })
     }
 
@@ -136,12 +140,12 @@ export const ListContainer = ({
           updateCardOrder({ cards: cardsForUpdate, boardId })
             .then((res) => {
               if (res?.data) {
-                toast({ status: "success", title: "Card reordered" })
+                toast({ status: "success", title: tToast("success.cardReordered") })
               } else if (res?.error) {
                 toast({ status: "error", description: res?.error })
               }
             })
-            .catch(() => toast({ status: "error", description: "Something went wrong" }))
+            .catch(() => toast({ status: "error", description: tError("generic") }))
         })
 
       // Card moved to another list
@@ -184,12 +188,12 @@ export const ListContainer = ({
           updateCardOrder({ cards: updatedCards, boardId })
             .then((res) => {
               if (res?.data) {
-                toast({ status: "success", title: "Card reordered" })
+                toast({ status: "success", title: tToast("success.cardReordered") })
               } else if (res?.error) {
                 toast({ status: "error", description: res?.error })
               }
             })
-            .catch(() => toast({ status: "error", description: "Something went wrong" }))
+            .catch(() => toast({ status: "error", description: tError("generic") }))
         })
       }
     }

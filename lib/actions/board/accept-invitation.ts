@@ -1,6 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { Board, Invitation } from "@/lib/models/board.model"
@@ -9,6 +10,9 @@ import { TokenStatus, BoardRole } from "@/lib/models/types"
 export const acceptInvitation = async (
   token: string
 ) => {
+  const t = await getTranslations("AcceptShareForm.server")
+  const tError = await getTranslations("Common.error")
+
   try {
     await connectDB()
 
@@ -17,7 +21,7 @@ export const acceptInvitation = async (
     })
 
     if (!invitation) {
-      return { error: "Invalid or expired invitation" }
+      return { error: t("error.invalid") }
     }
 
     const hasExpired = new Date(invitation.expires) < new Date()
@@ -26,13 +30,13 @@ export const acceptInvitation = async (
       invitation.status = TokenStatus.EXPIRED
       await invitation.save()
       
-      return { error: "Invitation has expired" }
+      return { error: t("error.expired") }
     }
 
     const board = await Board.findById(invitation.boardId)
 
     if (!board) {
-      return { error: "Trip not found" }
+      return { error: tError("boardNotFound") }
     }
 
     if (invitation.role === BoardRole.VIEWER && !board.viewers.includes(invitation.email)) {
@@ -49,9 +53,9 @@ export const acceptInvitation = async (
     await invitation.save()
 
     revalidatePath(`/board/${board._id.toString()}`)
-    return { success: "Trip accepted.", boardId: invitation.boardId }
+    return { success: t("success.joinedRedirect") , boardId: invitation.boardId }
     
   } catch (error) {
-    return { error: "Failed to accept share" }
+    return { error: tError("actionFailed") }
   }
 }

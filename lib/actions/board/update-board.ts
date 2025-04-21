@@ -1,29 +1,32 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { Board } from "@/lib/models/board.model"
-import { UpdateBoardValidation } from "@/lib/validations/board"
-
-type UpdateBoardInput = z.infer<typeof UpdateBoardValidation>
+import { 
+  UpdateBoardFormValues,
+  getUpdateBoardSchema
+} from "@/lib/validations/board"
 
 export const updateBoard = async (
-  values: UpdateBoardInput
+  values: UpdateBoardFormValues
 ) => {
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = UpdateBoardValidation.safeParse(values)
+  const validatedFields = getUpdateBoardSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   const { boardId, title, location, startDate, endDate, imageUrl, isArchived } = validatedFields.data
@@ -37,7 +40,7 @@ export const updateBoard = async (
       board.userId.toString() !== user._id.toString() &&
       !board.editors.includes(user.email)
     ) {
-      return { error: "This function is restricted to authorized users only." }
+      return { error: tError("unauthorized") }
     }
 
     const boardToUpdate = await Board.findByIdAndUpdate(
@@ -48,13 +51,13 @@ export const updateBoard = async (
     // console.log({id, board})
 
     if (!boardToUpdate) {
-      return { error: "Trip not found" }
+      return { error: tError("boardNotFound") }
     }
 
     revalidatePath(`/board/${boardId}`)
     return { data: { title: boardToUpdate.title } }
 
   } catch (error) {
-    return { error: "Failed to update" }
+    return { error: tError("actionFailed") }
   }
 }

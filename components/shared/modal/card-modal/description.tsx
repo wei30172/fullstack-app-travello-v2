@@ -4,6 +4,7 @@ import { useState, useTransition, useRef } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEventListener, useOnClickOutside } from "usehooks-ts"
+import { useTranslations } from "next-intl"
 import { CardWithList, BoardRole } from "@/lib/models/types"
 import { updateCard } from "@/lib/actions/card/update-card"
 import { FormErrors } from "@/lib/validations/types"
@@ -36,6 +37,10 @@ export const Description = ({
   const [isEditing, setIsEditing] = useState(false)
   const [isPending, startTransition] = useTransition()
 
+  const tUi = useTranslations("CardForm.ui")
+  const tToast = useTranslations("CardForm.toast")
+  const tError = useTranslations("Common.error")
+  
   const formRef = useRef<HTMLFormElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -64,7 +69,7 @@ export const Description = ({
 
   const onSubmit = (formData: FormData) => {
     if (data.role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
     
@@ -78,11 +83,11 @@ export const Description = ({
           if (res?.data) {
             queryClient.invalidateQueries({
               queryKey: ["card", res?.data._id]
-            }),
+            })
             toast({
               status: "success",
-              title: `Attraction "${res?.data.title}" updated`
-            }),
+              title: tToast("success.attractionUpdated", { title: res?.data.title })
+            })
             disableEditing()
           } else if (res?.error) {
             toast({ status: "error", description: res?.error })
@@ -91,7 +96,7 @@ export const Description = ({
             setFieldErrors(res?.errors)
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
@@ -100,7 +105,8 @@ export const Description = ({
       <LuMapPin className="h-5 w-5 mt-0.5 text-gray-700" />
       <div className="w-full">
         <p className="font-semibold text-gray-700 mb-6">
-          Description{data.role !== BoardRole.VIEWER && "(Click to edit)"}
+          {tUi("descriptionTitle")}
+          {data.role !== BoardRole.VIEWER && tUi("descriptionEditHint")}
         </p>
         {isEditorOrOwner ? (
           isEditing ? (
@@ -113,14 +119,14 @@ export const Description = ({
                 id="description"
                 value={tempDescription}
                 className="w-full mt-2 min-h-[80px]"
-                placeholder="Add more detailed description"
+                placeholder={tUi("descriptionPlaceholder")}
                 onChange={(e) => setTempDescription(e.target.value)}
                 errors={fieldErrors}
                 ref={textareaRef}
               />
               <div className="flex items-center gap-x-2">
                 <FormSubmit>
-                  Save
+                  {tUi("descriptionSave")}
                 </FormSubmit>
                 <Button
                   type="button"
@@ -129,7 +135,7 @@ export const Description = ({
                   variant="ghost"
                   disabled={isPending}
                 >
-                  Cancel
+                  {tUi("descriptionCancel")}
                 </Button>
               </div>
             </form>
@@ -141,7 +147,7 @@ export const Description = ({
                 border-transparent border border-gray-700 rounded-md cursor-pointer"
               style={{ whiteSpace: "pre-wrap" }}
             >
-              {tempDescription || "Add more detailed description..."}
+              {tempDescription || tUi("descriptionPlaceholder")}
             </div>
           )
         ) : (
@@ -149,7 +155,7 @@ export const Description = ({
               border-transparent border border-gray-700 rounded-md"
             style={{ whiteSpace: "pre-wrap" }}
           >
-            {data.description || "No detailed description provided."}
+            {data.description || tUi("descriptionEmpty")}
           </div>
         )}
       </div>

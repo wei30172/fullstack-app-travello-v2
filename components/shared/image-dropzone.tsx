@@ -4,6 +4,7 @@ import { useMemo, useCallback } from "react"
 import Image from "next/image"
 import { useDropzone, type DropzoneOptions } from "react-dropzone"
 import { twMerge } from "tailwind-merge"
+import { useTranslations } from "next-intl"
 
 import { Spinner } from "@/components/shared/spinner"
 import { Button } from "@/components/ui/button"
@@ -41,6 +42,8 @@ export const ImageDropzone = ({
   onSubmit,
   dropzoneOptions
 }: ImageDropzoneProps) => {
+  const tUi = useTranslations("BoardForm.ui")
+
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0]
     if (file) {
@@ -136,7 +139,7 @@ export const ImageDropzone = ({
           <div className="flex flex-col items-center justify-center text-xs text-gray-400">
             <IoMdCloudUpload className="mb-2 h-7 w-7" />
             <div className="text-gray-400">
-              Click or drag file to this area to upload
+              {tUi("coverUploadPrompt")}
             </div>
           </div>
         )}
@@ -162,7 +165,7 @@ export const ImageDropzone = ({
             onClick={handleSubmit}
             disabled={disabled}
           >
-            Submit
+            {tUi("coverSubmitButton")}
           </Button>
         </div>
       )}

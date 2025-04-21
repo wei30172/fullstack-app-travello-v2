@@ -2,7 +2,6 @@
 
 import { currentUser } from "@/lib/session"
 import connectDB from "@/lib/db"
-
 import { Board } from "@/lib/models/board.model"
 import { IBoard, BoardRole } from "@/lib/models/types"
 

@@ -3,6 +3,7 @@
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { unshareSelf } from "@/lib/actions/board/unshare-self-board"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
@@ -20,28 +21,35 @@ export const UnshareSelf = ({
 
   const [isPending, startTransition] = useTransition()
 
+  const tUi = useTranslations("BoardForm.ui")
+  const tToast = useTranslations("BoardForm.toast")
+  const tError = useTranslations("Common.error")
+  
   const onClick = () => {
     startTransition(() => {
       unshareSelf({ boardId })
         .then((res) => {
           if (res?.data) {
-            toast({ status: "success", description: `You have successfully removed yourself as an ${res?.data.role} from the trip.` })
+            toast({
+              status: "success",
+              description: tToast("success.selfUnshared")
+            })
             router.push("/boards")
           } else if (res?.error) {
             toast({ status: "error", description: res?.error })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
   return (
-    <ConfirmDialog onConfirm={onClick} actiontitle="Leave">
+    <ConfirmDialog onConfirm={onClick} actiontitle={tUi("leave")}>
       <Button
         variant="secondary"
         className="w-full"
         disabled={isPending}>
-        Leave Trip
+        {tUi("leaveTrip")}
       </Button>
     </ConfirmDialog>
   )

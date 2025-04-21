@@ -4,6 +4,7 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
 import { useCurrentUser } from "@/hooks/use-session"
+import {useTranslations} from "next-intl"
 
 import { FaRegUserCircle } from "react-icons/fa"
 import { IoMdLogIn, IoMdLogOut } from "react-icons/io"
@@ -54,16 +55,21 @@ const UserNavLinks = ({
   ))
 )
 
-export const AuthLink = ({ isSignedIn = false }) => (
+interface AuthLinkProps {
+  isSignedIn?: boolean
+  tUi: ReturnType<typeof useTranslations>
+}
+
+export const AuthLink = ({ isSignedIn = false, tUi }: AuthLinkProps) => (
   isSignedIn ? (
     <SignOutButton>
       <IoMdLogOut className="h-4 w-4 mr-2"/>
-      Sign Out
+      {tUi("signout")}
     </SignOutButton>
   ) : (
     <SignInButton>
       <IoMdLogIn className="h-4 w-4 mr-2"/>
-      Sign In
+      {tUi("signin")}
     </SignInButton>
   )
 )
@@ -73,20 +79,22 @@ export const UserButton = () => {
   const user = useCurrentUser()
   // console.log({user})
 
+  const tUi = useTranslations("Navbar.ui")
+
   const userNavLinks = [
     {
       icon: <FiSettings />,
-      label: "Settings",
+      label: tUi("settings"),
       url: "/settings"
     },
     {
       icon: <FiMap />,
-      label: "Trips",
+      label: tUi("trips"),
       url: "/boards"
     }
     // {
     //   icon: <FiCreditCard />,
-    //   label: "Billing",
+    //   label: tUi("billing"),
     //   url: "/billing"
     // }
   ]
@@ -109,7 +117,7 @@ export const UserButton = () => {
       </>
       )}
         <DropdownMenuItem>
-          <AuthLink isSignedIn={user ? true : false} />
+          <AuthLink isSignedIn={!!user} tUi={tUi} />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

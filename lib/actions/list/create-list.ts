@@ -1,34 +1,37 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { Board } from "@/lib/models/board.model"
 import { List } from "@/lib/models/list.model"
 import { IList } from "@/lib/models/types"
-import { CreateListValidation } from "@/lib/validations/list"
+import { 
+  CreateListFormValues,
+  getCreateListSchema
+} from "@/lib/validations/list"
 import { createCard } from "@/lib/actions/card/create-card"
 import { deleteCard } from "@/lib/actions/card/delete-card"
 
-type CreateListInput = z.infer<typeof CreateListValidation>
-
 export const createList = async (
-  values: CreateListInput
+  values: CreateListFormValues
 ) => {
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = CreateListValidation.safeParse(values)
+  const validatedFields = getCreateListSchema().safeParse(values)
 
   if (!validatedFields.success) {
     return {
-      error: "Invalid fields!",
+      error: tError("invalidFields"),
       errors: validatedFields.error.flatten().fieldErrors
     }
   }
@@ -41,14 +44,14 @@ export const createList = async (
     const board = await Board.findById(boardId)
 
     if (!board) {
-      return { error: "Trip not found" }
+      return { error: tError("boardNotFound") }
     }
 
     if (
       board.userId.toString() !== user._id.toString() &&
       !board.editors.includes(user.email)
     ) {
-      return { error: "Editing is restricted to authorized users only." }
+      return { error: tError("unauthorized") }
     }
     
     const lastList = await List.findOne({ boardId })
@@ -81,17 +84,17 @@ export const createList = async (
       // with an array of objects describing the outcome of each promise.
       const cardResults = await Promise.allSettled(cardPromises)
       
-      const failedCards = cardResults.filter(result => result.status === 'rejected')
+      const failedCards = cardResults.filter(result => result.status === "rejected")
       
       if (failedCards.length > 0) {
-        const succeededCards = cardResults.filter(result => result.status === 'fulfilled') as PromiseFulfilledResult<any>[]
+        const succeededCards = cardResults.filter(result => result.status === "fulfilled") as PromiseFulfilledResult<any>[]
         const deletePromises = succeededCards.map(card => deleteCard({
           id: card.value.data._id,
           boardId
         }))
 
         await Promise.allSettled(deletePromises)
-        throw new Error('Failed to fully create list and cards')
+        throw new Error(tError("listAndCardsCreationFailed"))
       }
     }
 
@@ -99,6 +102,8 @@ export const createList = async (
     return { data: { title: list.title } }
 
   } catch (error) {
-    return { error: "Failed to create" }
+    return { error:
+      (error instanceof Error && error.message) ||
+      tError("actionFailed") }
   }
 }

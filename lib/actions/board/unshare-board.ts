@@ -1,29 +1,33 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { Board, Invitation } from "@/lib/models/board.model"
-import { UnShareBoardValidation } from "@/lib/validations/board"
-
-type SharedBoardInput = z.infer<typeof UnShareBoardValidation>
+import { 
+  UnshareBoardFormValues,
+  getUnshareBoardSchema
+} from "@/lib/validations/board"
 
 export const unshareBoard = async (
-  values: SharedBoardInput
+  values: UnshareBoardFormValues
 ) => {
+  const tServer = await getTranslations("BoardForm.server")
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = UnShareBoardValidation.safeParse(values)
+  const validatedFields = getUnshareBoardSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   const { boardId, email } = validatedFields.data
@@ -34,11 +38,11 @@ export const unshareBoard = async (
     const board = await Board.findById(boardId)
 
     if (!board) {
-      return { error: "Trip not found" }
+      return { error: tError("boardNotFound") }
     }
 
     if (board.userId.toString() !== user._id.toString()) {
-      return { error: "Only the owner can unshare this trip." }
+      return { error: tServer("error.onlyOwnerCanUnshare") }
     }
 
     await Invitation.deleteMany({ boardId, email })
@@ -47,7 +51,7 @@ export const unshareBoard = async (
     const wasEditor = board.editors.includes(email)
 
     if (!wasViewer && !wasEditor) {
-      return { success: "This email was not shared." }
+      return { error: tServer("error.userNotInList") }
     }
 
     board.viewers = board.viewers.filter((e: string) => e !== email)
@@ -56,9 +60,9 @@ export const unshareBoard = async (
     await board.save()
     
     revalidatePath(`/board/${board._id.toString()}`)
-    return { success: "Cancel sharing successfully." }
+    return { success: tServer("success.unshared") }
 
   } catch (error) {
-    return { error: "Failed to unshare" }
+    return { error: tError("actionFailed") }
   }
 }

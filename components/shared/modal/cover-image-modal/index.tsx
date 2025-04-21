@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import { MAX_FREE_COVER } from "@/constants/board"
 import { CountType, BoardRole, IBoard } from "@/lib/models/types"
 import { useCurrentUser, useCheckRole } from "@/hooks/use-session"
@@ -25,7 +26,7 @@ import {
 } from "@/components/ui/dialog"
 import { useToast } from "@/components/ui/use-toast"
 import { ImageDropzone } from "@/components/shared/image-dropzone"
-import { AvailableCount } from "@/components/shared/available-count"
+import { AvailableCount } from "@/components/shared/AI-response/available-count"
 
 const computeSHA256 = async (file: File) => {
   if (!window.crypto || !crypto.subtle) {
@@ -47,6 +48,10 @@ export const CoverImageModal = () => {
   const [isPending, startTransition] = useTransition()
   const coverImage =  useCoverModal()
   const [file, setFile] = useState<File | undefined>(undefined)
+
+  const tUi = useTranslations("BoardForm.ui")
+  const tToast = useTranslations("BoardForm.toast")
+  const tError = useTranslations("Common.error")
 
   const onClose = () => {
     setFile(undefined)
@@ -93,7 +98,7 @@ export const CoverImageModal = () => {
       })
     }
   
-    toast({ status: "success", title: "Image uploaded successfully!" })
+    toast({ status: "success", title: tToast("success.coverUploaded") })
     onClose()
   }
   
@@ -104,7 +109,7 @@ export const CoverImageModal = () => {
     }
 
     if (!file) {
-      toast({ status: "warning", description: "Please upload the image first" })
+      toast({ status: "warning", description: tToast("warning.coverUploadRequired") })
       return
     }
 
@@ -112,9 +117,7 @@ export const CoverImageModal = () => {
 
     if (!canUse && !checkRole) {
       toast({
-        status: "warning",
-        description: "You have reached your limit of free board cover uploads."
-      })
+        status: "warning", description: tToast("warning.coverLimitReached") })
       return
     }
 
@@ -125,12 +128,12 @@ export const CoverImageModal = () => {
         const board = await getBoard(boardId)
 
         if (!board) {
-          toast({ status: "error", title: "Trip not found!" })
+          toast({ status: "error", title: tError("boardNotFound") })
           return
         }
         
         if (board.role === BoardRole.VIEWER) {
-          toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+          toast({ status: "warning", description: tError("unauthorized") })
           return
         }
 
@@ -139,27 +142,25 @@ export const CoverImageModal = () => {
         await handleSuccessfulUpload(user._id.toString(), board, mediaUrl, mediaType)
       } catch (error) {
         console.error("Error during upload process:", error)
-        toast({ status: "error", description: (error as Error).message || "Unknown error during upload process" })
+        toast({ status: "error", description: (error as Error).message || tError("generic") })
       }
     })
   }
-
   
-
   return (
     <Dialog open={coverImage.isOpen} onOpenChange={coverImage.onClose}>
       <DialogContent>
         <DialogHeader>
           <h2 className="text-center text-lg font-semibold">
-            Trip Cover
+            {tUi("coverTitle")}
           </h2>
         </DialogHeader>
         <AvailableCount
           queryKey={CountType.BOARD_COVER_COUNT}
           queryFn={getAvailableBoardCoverCount}
           maxCount={MAX_FREE_COVER}
-          label="{remaining} cover uploads remaining"
-          description={`You have ${MAX_FREE_COVER} free board cover uploads available in Free Workspaces.`}
+          label={tUi("coverUploadLabel", { remaining: "{remaining}" })}
+          description={tUi("coverUploadDescription", { max: MAX_FREE_COVER })}
         />
         <ImageDropzone
           className="w-full outline-none"

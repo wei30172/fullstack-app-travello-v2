@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import { getUserEmailById } from "@/lib/actions/auth/get-user"
 
 import { Skeleton } from "@/components/ui/skeleton"
@@ -16,10 +17,12 @@ export const BoardOwner = ({
     enabled: !!userId
   })
 
+  const tUi = useTranslations("BoardForm.ui")
+
   if (isError) {
     return (
       <div className="text-sm text-center text-gray-500 pb-4">
-        Error loading board owner.
+        {tUi("ownerLoadingError")}
       </div>
     )
   }
@@ -34,7 +37,7 @@ export const BoardOwner = ({
 
   return (
     <div className="text-sm text-center text-gray-500 pb-4">
-      Owner: {userEmail}
+      {tUi("ownerLabel", { email: userEmail })}
     </div>
   )
 }

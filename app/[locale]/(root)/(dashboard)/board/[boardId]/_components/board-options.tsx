@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { IBoard, BoardRole } from "@/lib/models/types"
 import { updateBoard } from "@/lib/actions/board/update-board"
 import { copyBoard } from "@/lib/actions/board/copy-board"
@@ -31,9 +32,13 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
 
+  const tUi = useTranslations("BoardForm.ui")
+  const tToast = useTranslations("BoardForm.toast")
+  const tError = useTranslations("Common.error")
+  
   const handleArchiveBoard = () => {
     if (boardData.role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Deleting is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
 
@@ -44,19 +49,19 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
       })
       .then((res) => {
         if (res?.data) {
-          toast({ status: "success", title: "Trip moved to trash!" })
+          toast({ status: "success", title: tToast("success.archived") })
           setIsPopoverOpen(false)
         } else if (res?.error) {
-          toast({ status: "error", description: "Failed to delete trip" })
+          toast({ status: "error", description: res?.error })
         }
       })
-      .catch(() => toast({ status: "error", description: "Something went wrong" }))
+      .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
   const handleCopyBoard = () => {
     if (boardData.role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
     
@@ -64,14 +69,14 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
       copyBoard({ boardId: boardData._id })
         .then((res) => {
           if (res?.data) {
-            toast({ status: "success", title: "Trip copied!" })
+            toast({ status: "success", title: tToast("success.copied") })
             setIsPopoverOpen(false)
             router.push("/boards")
           } else if (res?.error) {
             toast({ status: "error", description: res?.error })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
@@ -100,7 +105,7 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
         align="start"
       >
         <div className="text-md font-medium text-center text-teal-600 pb-2">
-          Manage Trip
+          {tUi("manageTrip")}
         </div>
         
         <PopoverClose asChild>
@@ -125,7 +130,7 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
           className="w-full mt-4 mb-2"
           disabled={isPending}
         >
-          Copy Trip
+          {tUi("copyTrip")}
         </Button>
         <Button
           onClick={handleArchiveBoard}
@@ -133,7 +138,7 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
           className="w-full"
           disabled={isPending}
         >
-          Delete Trip
+          {tUi("deleteTrip")}
         </Button>
       </PopoverContent>
     </Popover>

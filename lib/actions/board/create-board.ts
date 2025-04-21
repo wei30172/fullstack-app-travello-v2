@@ -1,32 +1,35 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { calculateDays, formatDateTime } from "@/lib/date"
 
 import { Board } from "@/lib/models/board.model"
-import { CreateBoardValidation } from "@/lib/validations/board"
+import { 
+  CreateBoardFormValues,
+  getCreateBoardSchema
+} from "@/lib/validations/board"
 import { createList } from "@/lib/actions/list/create-list"
 
-type CreateBoardInput = z.infer<typeof CreateBoardValidation>
-
 export const createBoard = async (
-  values: CreateBoardInput
+  values: CreateBoardFormValues
 ) => {
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = CreateBoardValidation.safeParse(values)
+  const validatedFields = getCreateBoardSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   try {
@@ -61,6 +64,8 @@ export const createBoard = async (
     return { data: { _id: board._id.toString() } }
 
   } catch (error) {
-    return { error: "Failed to create" }
+    return { error:
+      (error instanceof Error && error.message) ||
+      tError("actionFailed") }
   }
 }

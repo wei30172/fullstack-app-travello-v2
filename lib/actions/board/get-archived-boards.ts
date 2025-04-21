@@ -2,8 +2,8 @@
 
 import { currentUser } from "@/lib/session"
 import mongoose from "mongoose"
-import connectDB from "@/lib/db"
 
+import connectDB from "@/lib/db"
 import { Board } from "@/lib/models/board.model"
 import { IBoard } from "@/lib/models/types"
 

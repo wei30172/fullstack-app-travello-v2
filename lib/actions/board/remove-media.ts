@@ -1,6 +1,7 @@
 "use server"
 
 import { DeleteObjectCommand } from "@aws-sdk/client-s3"
+import { getTranslations } from "next-intl/server"
 
 import s3Client from "@/lib/s3client"
 import connectDB from "@/lib/db"
@@ -32,12 +33,14 @@ const getUserIdFromUrl = async (url: string): Promise<string | null> => {
 export const removeMedia = async (
   url: string
 ) => {
+  const tServer = await getTranslations("BoardForm.server")
+
   try {
     await deleteFileFromS3(url)
 
     const userId = await getUserIdFromUrl(url)
     if (!userId) {
-      return { error: "No media information found" }
+      return { error:  tServer("error.mediaNotFound") }
     }
     await decreaseBoardCoverCount(userId)
 
@@ -50,6 +53,6 @@ export const removeMedia = async (
     return { success: true }
   } catch (error) {
     console.error(`Error removing media information for URL: ${url}`, error)
-    return { error: "Failed to remove media information" }
+    return { error: tServer("error.removeMediaFailed") }
   }
 }

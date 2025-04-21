@@ -3,6 +3,7 @@
 import { useState, useTransition, useRef } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import { CardWithList, BoardRole } from "@/lib/models/types"
 import { updateCard } from "@/lib/actions/card/update-card"
 
@@ -27,6 +28,10 @@ export const Header = ({
   const [title, setTitle] = useState(data?.title)
   const [isPending, startTransition] = useTransition()
 
+  const tUi = useTranslations("CardForm.ui")
+  const tToast = useTranslations("CardForm.toast")
+  const tError = useTranslations("Common.error")
+  
   const inputRef = useRef<HTMLInputElement>(null)
 
   const onBlur = () => {
@@ -36,7 +41,7 @@ export const Header = ({
 
   const onSubmit = (formData: FormData) => {
     if (data.role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
     
@@ -56,14 +61,14 @@ export const Header = ({
             })
             toast({
               status: "success",
-              title: `Renamed to "${res?.data.title}"`
+              title: tToast("success.attractionRenamed", { title: res?.data.title })
             })
             setTitle(res?.data.title)
           } else if (res?.error) {
             toast({ status: "error", description: res?.error })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
@@ -90,7 +95,7 @@ export const Header = ({
           </div>
         )}
         <p className="text-sm text-muted-foreground">
-          in itinerary <span className="font-semibold">{data.list.title}</span>
+          {tUi("inItinerary")} <span className="font-semibold">{data.list.title}</span>
         </p>
       </div>
     </div>

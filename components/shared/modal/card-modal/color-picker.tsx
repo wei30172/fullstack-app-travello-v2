@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import { CardWithList, BoardRole } from "@/lib/models/types"
 import { updateCard } from "@/lib/actions/card/update-card"
 
@@ -24,6 +25,10 @@ export const ColorPicker = ({ data }: ColorPickerProps) => {
   const [cardColor, setCardColor] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
+  const tUi = useTranslations("CardForm.ui")
+  const tToast = useTranslations("CardForm.toast")
+  const tError = useTranslations("Common.error")
+  
   const colors = [
     "", "#e57373", "#f06292", "#ba68c8", "#9575cd", "#7986cb",
     "#64b5f6", "#4fc3f7", "#4dd0e1", "#4db6ac", "#81c784", "#aed581",
@@ -33,7 +38,7 @@ export const ColorPicker = ({ data }: ColorPickerProps) => {
 
   const selectColor = (color: string) => {
     if (data.role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
 
@@ -49,13 +54,13 @@ export const ColorPicker = ({ data }: ColorPickerProps) => {
             })
             toast({
               status: "success",
-              title: `Color changed to "${res?.data.title}"`
+              title: tToast("success.colorUpdated", { title: res?.data.title })
             })
           } else if (res?.error) {
             toast({ status: "error", description: res?.error })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
   
@@ -64,7 +69,7 @@ export const ColorPicker = ({ data }: ColorPickerProps) => {
       <LuMapPin className="h-5 w-5 mt-0.5 text-gray-700" />
       <div className="w-full">
         <p className="font-semibold text-gray-700 mb-2">
-          Color
+          {tUi("color")}
         </p>
         <div className="p-4 bg-gray-800 rounded-lg grid grid-cols-6 sm:grid-cols-8 gap-2">
           {colors.map(color => (

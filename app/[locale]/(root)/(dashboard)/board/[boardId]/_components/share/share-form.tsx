@@ -2,10 +2,13 @@
 
 import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
+import { useTranslations } from "next-intl"
 import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
 import { IBoard, BoardRole } from "@/lib/models/types"
-import { ShareBoardValidation } from "@/lib/validations/board"
+import { 
+  ShareBoardFormValues,
+  getShareBoardSchema
+} from "@/lib/validations/board"
 import { shareBoard } from "@/lib/actions/board/share-board"
 import { unshareBoard } from "@/lib/actions/board/unshare-board"
 import { updateShareRole } from "@/lib/actions/board/update-share-role"
@@ -46,9 +49,12 @@ const SharedUsers = ({
   handleUnshare,
   isPending,
 }: SharedUsersProps ) => {
+  const tRole = useTranslations("BoardForm.role")
+  const tUi = useTranslations("BoardForm.ui")
+
   return (
     <div className="mt-6 text-sm">
-      <h3 className="text-lg font-semibold">People with access</h3>
+      <h3 className="text-lg font-semibold">{tUi("sharedUsersTitle")}</h3>
       {sharedUsers.map((user) => (
         <div
           key={user.email}
@@ -65,8 +71,8 @@ const SharedUsers = ({
               <SelectValue />
             </SelectTrigger>
             <SelectContent ref={handleSelectContentRef} >
-              <SelectItem value={BoardRole.VIEWER}>Viewer</SelectItem>
-              <SelectItem value={BoardRole.EDITOR}>Editor</SelectItem>
+              <SelectItem value={BoardRole.VIEWER}>{tRole("viewer")}</SelectItem>
+              <SelectItem value={BoardRole.EDITOR}>{tRole("editor")}</SelectItem>
             </SelectContent>
           </Select>
           <Button
@@ -74,6 +80,7 @@ const SharedUsers = ({
             onClick={() => handleUnshare(user.email)}
             disabled={isPending}
             className="px-2"
+            aria-label="Remove user"
           >
             <FiTrash className="w-4 h-4" />
           </Button>
@@ -98,8 +105,13 @@ export const ShareForm = ({ boardData }: ShareFormProps) => {
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof ShareBoardValidation>>({
-    resolver: zodResolver(ShareBoardValidation),
+  const tRole = useTranslations("BoardForm.role")
+  const tUi = useTranslations("BoardForm.ui")
+  const tValidation = useTranslations("BoardForm.validation")
+  const tError = useTranslations("Common.error")
+
+  const form = useForm<ShareBoardFormValues>({
+    resolver: zodResolver(getShareBoardSchema(tValidation)),
     defaultValues: {
       boardId: boardData._id,
       email: "",
@@ -110,15 +122,15 @@ export const ShareForm = ({ boardData }: ShareFormProps) => {
   const copyLink = () => {
     const link = `${window.location.origin}/board/${boardData._id}`
     navigator.clipboard.writeText(link)
-      .then(() => setSuccess("Link copied to clipboard"))
-      .catch(() => setError("Failed to copy link"))
+      .then(() => setSuccess(tUi("copied")))
+      .catch(() => setError(tUi("copyFailed")))
   }
 
   const isError = (data: { success?: string; error?: string }): data is { error: string } => {
     return "error" in data
   }
 
-  async function onSubmit(values: z.infer<typeof ShareBoardValidation>) {
+  async function onSubmit(values: ShareBoardFormValues) {
     // console.log(values)
     setError("")
     setSuccess("")
@@ -132,7 +144,7 @@ export const ShareForm = ({ boardData }: ShareFormProps) => {
             setSuccess(data.success)
           }
         })
-        .catch(() => setError("Something went wrong"))
+        .catch(() => setError(tError("generic")))
     })
   }
 
@@ -158,7 +170,7 @@ export const ShareForm = ({ boardData }: ShareFormProps) => {
             )
           }
         })
-        .catch(() => setError("Something went wrong"))
+        .catch(() => setError(tError("generic")))
     })
   }
 
@@ -176,7 +188,7 @@ export const ShareForm = ({ boardData }: ShareFormProps) => {
             setSharedUsers(sharedUsers.filter(user => user.email !== email))
           }
         })
-        .catch(() => setError("Something went wrong"))
+        .catch(() => setError(tError("generic")))
     })
   }
 
@@ -190,11 +202,12 @@ export const ShareForm = ({ boardData }: ShareFormProps) => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{tUi("shareEmail")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
                       placeholder="mail@example.com"
+                      autoComplete="email"
                       {...field}
                     />
                   </FormControl>
@@ -207,7 +220,7 @@ export const ShareForm = ({ boardData }: ShareFormProps) => {
               name="role"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Role</FormLabel>
+                  <FormLabel>{tUi("shareRole")}</FormLabel>
                   <FormControl>
                     <Select
                       disabled={isPending}
@@ -218,8 +231,8 @@ export const ShareForm = ({ boardData }: ShareFormProps) => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent ref={handleSelectContentRef} >
-                        <SelectItem value={BoardRole.VIEWER}>Viewer</SelectItem>
-                        <SelectItem value={BoardRole.EDITOR}>Editor</SelectItem>
+                        <SelectItem value={BoardRole.VIEWER}>{tRole("viewer")}</SelectItem>
+                        <SelectItem value={BoardRole.EDITOR}>{tRole("editor")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -238,7 +251,7 @@ export const ShareForm = ({ boardData }: ShareFormProps) => {
               onClick={form.handleSubmit(onSubmit)}
               disabled={isPending}
             >
-              Share
+              {tUi("shareButton")}
             </Button>
             <Button
               variant="secondary"
@@ -246,7 +259,7 @@ export const ShareForm = ({ boardData }: ShareFormProps) => {
               onClick={copyLink}
             >
               <AiOutlineLink className="w-4 h-4 mr-2" />
-              Copy Link
+              {tUi("copyLink")}
             </Button>
           </div>
         </form>

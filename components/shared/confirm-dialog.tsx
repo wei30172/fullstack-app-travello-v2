@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { useTranslations } from "next-intl"
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,12 +20,14 @@ interface DeleteConfirmDialogProps {
 }
 
 export const ConfirmDialog = ({
-  actiontitle = "Delete",
+  actiontitle,
   children,
   onConfirm
 }: DeleteConfirmDialogProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
+  const tUi = useTranslations("ConfirmDialog.ui")
+  
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
@@ -33,19 +37,19 @@ export const ConfirmDialog = ({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Confirm</AlertDialogTitle>
+          <AlertDialogTitle>{tUi("title")}</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone.
+            {tUi("description")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setIsOpen(false)}>
-            Cancel
+            {tUi("cancel")}
           </AlertDialogCancel>
           <AlertDialogAction
             className="bg-red-500"
             onClick={onConfirm}>
-            {actiontitle}
+            {actiontitle || tUi("confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

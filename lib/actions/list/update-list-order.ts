@@ -1,29 +1,32 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { List } from "@/lib/models/list.model"
-import { UpdateListOrderValidation } from "@/lib/validations/list"
-
-type UpdateListOrderInput = z.infer<typeof UpdateListOrderValidation>
+import {
+  UpdateListOrderFormValues,
+  getUpdateListOrderSchema
+} from "@/lib/validations/list"
 
 export const updateListOrder = async (
-  values: UpdateListOrderInput
+  values: UpdateListOrderFormValues
 ) => {
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = UpdateListOrderValidation.safeParse(values)
+  const validatedFields = getUpdateListOrderSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   const { lists, boardId } = validatedFields.data
@@ -47,6 +50,6 @@ export const updateListOrder = async (
     return { data: { id: boardId } }
 
   } catch (error) {
-    return { error: "Failed to reorder" }
+    return { error: tError("actionFailed") }
   }
 }

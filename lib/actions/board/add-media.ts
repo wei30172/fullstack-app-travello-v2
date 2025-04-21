@@ -1,20 +1,23 @@
 "use server"
 
-import { z } from "zod"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { Media } from "@/lib/models/board.model"
-import { AddMediaValidation } from "@/lib/validations/board"
-
-type AddMediaInput = z.infer<typeof AddMediaValidation>
+import { 
+  AddMediaFormValues,
+  getAddMediaSchema
+} from "@/lib/validations/board"
 
 export const addMedia = async (
-  values: AddMediaInput
+  values: AddMediaFormValues
 ) => {
-  const validatedFields = AddMediaValidation.safeParse(values)
+  const tError = await getTranslations("Common.error")
+
+  const validatedFields = getAddMediaSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   try {
@@ -27,6 +30,6 @@ export const addMedia = async (
 
     return { data: { _id: media._id.toString() } }
   } catch (error) {
-    return { error: "Failed to save media information" }
+    return { error: tError("actionFailed") }
   }
 }

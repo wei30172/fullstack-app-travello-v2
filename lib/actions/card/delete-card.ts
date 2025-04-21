@@ -1,31 +1,34 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { Board } from "@/lib/models/board.model"
 import { Card } from "@/lib/models/card.model"
 import { List } from "@/lib/models/list.model"
-import { DeleteCardValidation } from "@/lib/validations/card"
-
-type DeleteCardInput = z.infer<typeof DeleteCardValidation>
+import { 
+  DeleteCardFormValues,
+  getDeleteCardSchema
+} from "@/lib/validations/card"
 
 export const deleteCard = async (
-  values: DeleteCardInput
+  values: DeleteCardFormValues
 ) => {
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = DeleteCardValidation.safeParse(values)
+  const validatedFields = getDeleteCardSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   const { id, boardId } = validatedFields.data
@@ -39,13 +42,13 @@ export const deleteCard = async (
       board.userId.toString() !== user._id.toString() &&
       !board.editors.includes(user.email)
     ) {
-      return { error: "Deleting is restricted to authorized users only." }
+      return { error: tError("unauthorized") }
     }
 
     const card = await Card.findById(id)
     
     if (!card) {
-      return { error: "Card not found" }
+      return { error: tError("cardNotFound") }
     }
   
     // Delete the Card itself
@@ -60,6 +63,6 @@ export const deleteCard = async (
     return { data: { title: card.title } }
 
   } catch (error) {
-    return { error: "Failed to delete" }
+    return { error: tError("actionFailed") }
   }
 }

@@ -1,30 +1,33 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { Card } from "@/lib/models/card.model"
 import { List } from "@/lib/models/list.model"
-import { UpdateCardOrderValidation } from "@/lib/validations/card"
-
-type UpdateCardOrderInput = z.infer<typeof UpdateCardOrderValidation>
+import { 
+  UpdateCardOrderFormValues,
+  getUpdateCardOrderSchema
+} from "@/lib/validations/card"
 
 export const updateCardOrder = async (
-  values: UpdateCardOrderInput
+  values: UpdateCardOrderFormValues
 ) => {
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = UpdateCardOrderValidation.safeParse(values)
+  const validatedFields = getUpdateCardOrderSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   const { cards, boardId, } = validatedFields.data
@@ -34,7 +37,7 @@ export const updateCardOrder = async (
 
     const updateOperations = cards.map(async (card) => {
       const currentCard = await Card.findById(card._id)
-      if (!currentCard) throw new Error('Card not found')
+      if (!currentCard) throw new Error(tError("cardNotFound"))
 
       const sourceListId = currentCard.listId
       const destListId = card.listId
@@ -69,6 +72,8 @@ export const updateCardOrder = async (
     return { data: { id: boardId } }
 
   } catch (error) {
-    return { error: "Failed to reorder" }
+    return { error:
+      (error instanceof Error && error.message) ||
+      tError("actionFailed") }
   }
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useQuery } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import { getCard } from "@/lib/actions/card/get-card"
 import { useCardModal } from "@/hooks/use-card-modal"
 import { BoardRole } from "@/lib/models/types"
@@ -28,6 +29,8 @@ export const CardModal = () => {
   const [tempDescription, setTempDescription] = useState<string>("")
   const isEditorOrOwner = cardData?.role === BoardRole.EDITOR || cardData?.role === BoardRole.OWNER
 
+  const tUi = useTranslations("CardForm.ui")
+
   useEffect(() => {
     if (cardData) {
       setTempDescription(cardData.description || "")
@@ -38,7 +41,7 @@ export const CardModal = () => {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent>
-          <div>Error loading card.</div>
+          <div>{tUi("attractionLoadError")}</div>
         </DialogContent>
       </Dialog>
     )

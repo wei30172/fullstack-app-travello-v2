@@ -283,7 +283,7 @@
       "shareRole": "權限",
       "shareButton": "分享",
       "copyLink": "複製連結",
-      "copied": "已複製行程連結到剪貼簿",
+      "copied": "已複製行程連結",
       "copyFailed": "複製連結失敗",
       "leave": "退出",
       "leaveTrip": "退出行程",
@@ -329,7 +329,8 @@
         "deleted": "已刪除行程「{title}」！",
         "selfUnshared": "您已成功退出此行程。",
         "coverRemoved": "封面已移除，並成功更新行程！",
-        "coverUploaded": "圖片上傳成功！"
+        "coverUploaded": "圖片上傳成功！",
+        "itineraryCreated": "行程「{title}」已新增"
       },
       "warning": {
         "aiLimit": "您已達到免費 AI 使用次數上限。",
@@ -353,7 +354,7 @@
     },
     "server": {
       "success": {
-        "alreadyShared": "此使用者已擁有此行程的 {role} 權限",
+        "alreadyShared": "使用者已擁有此行程的 {role} 權限",
         "roleUpdated": "已更新為 {role} 身份。",
         "invitationSent": "邀請信件已成功寄出！",
         "unshared": "已成功取消分享。"
@@ -363,10 +364,10 @@
         "aiAbort": "AI 請求已取消。",
         "aiFailed": "無法連接至 AI 服務。",
 
-        "cannotShareWithSelf": "無法與自己分享此行程。",
+        "cannotShareWithSelf": "無法與自己分享行程。",
         "onlyOwnerCanShare": "只有擁有者可以分享此行程。",
         "onlyOwnerCanUpdateRole": "只有擁有者可以更新角色。",
-        "userNotInList": "在檢視者或編輯者名單中找不到該使用者。",
+        "userNotInList": "檢視者或編輯者名單中找不到該使用者。",
         "onlyOwnerCanUnshare": "只有擁有者可以取消分享此行程。",
 
         "fileTypeNotAllowed": "檔案類型不被允許。",
@@ -398,7 +399,7 @@
         "itineraryCreated": "行程「{title}」已新增",
         "itineraryCopied": "行程「{title}」已新增",
         "itineraryDeleted": "行程「{title}」已刪除",
-        "itineraryUpdated": "行程「{title}」已刪更新",
+        "itineraryUpdated": "行程「{title}」已更新",
         "listReordered": "列表已重新排序。",
         "cardReordered": "卡片已重新排序。"
       }

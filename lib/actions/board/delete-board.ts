@@ -1,7 +1,7 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
@@ -9,24 +9,27 @@ import { currentUser } from "@/lib/session"
 import { Card } from "@/lib/models/card.model"
 import { List } from "@/lib/models/list.model"
 import { Board } from "@/lib/models/board.model"
-import { DeleteBoardValidation } from "@/lib/validations/board"
-
-type DeleteBoardInput = z.infer<typeof DeleteBoardValidation>
+import { 
+  DeleteBoardFormValues,
+  getDeleteBoardSchema
+} from "@/lib/validations/board"
 
 export const deleteBoard = async (
-  values: DeleteBoardInput
+  values: DeleteBoardFormValues
 ) => {
+  const tError = await getTranslations("Common.error")
+  
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = DeleteBoardValidation.safeParse(values)
+  const validatedFields = getDeleteBoardSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   const { boardId } = validatedFields.data
@@ -40,12 +43,12 @@ export const deleteBoard = async (
       board.userId.toString() !== user._id.toString() &&
       !board.editors.includes(user.email)
     ) {
-      return { error: "Deleting is restricted to authorized users only." }
+      return { error: tError("unauthorized") }
     }
 
 
     // Find the IDs of all Lists belonging to this Board
-    const lists = await List.find({ boardId }).select('_id')
+    const lists = await List.find({ boardId }).select("_id")
 
     // Extract all List IDs from results
     const listIds = lists.map(list => list._id)
@@ -63,6 +66,6 @@ export const deleteBoard = async (
     return { data: { title: board.title } }
     
   } catch (error) {
-    return { error: "Failed to delete" }
+    return { error: tError("actionFailed") }
   }
 }

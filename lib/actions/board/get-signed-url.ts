@@ -2,6 +2,7 @@
 
 import { PutObjectCommand } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
+import { getTranslations } from "next-intl/server"
 
 import s3Client from "@/lib/s3client"
 import { currentUser } from "@/lib/session"
@@ -33,18 +34,21 @@ export async function getSignedURL({
   fileSize,
   checksum
 }: GetSignedURLParams): Promise<SignedURLResponse> {
+  const tServer = await getTranslations("BoardForm.server")
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
   if (!allowedFileTypes.includes(fileType)) {
-    return { error: "File type not allowed" }
+    return { error: tServer("error.fileTypeNotAllowed") }
   }
 
   if (fileSize > maxFileSize) {
-    return { error: `File size too large. Maximum allowed size is ${formatFileSize(maxFileSize)}.` }
+    return { error: tServer("error.fileSizeTooLarge", { maxSize: formatFileSize(maxFileSize)}) }
   }
 
   const userId = user._id.toString()
@@ -71,6 +75,6 @@ export async function getSignedURL({
     return { success: { url } }
   } catch (error) {
     console.error("Error generating signed URL", error)
-    return { error: "Failed to generate signed URL" }
+    return { error: tServer("error.signedUrlFailed") }
   }
 }

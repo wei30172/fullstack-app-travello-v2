@@ -1,31 +1,34 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { Board } from "@/lib/models/board.model"
 import { List } from "@/lib/models/list.model"
 import { Card } from "@/lib/models/card.model"
-import { CopyCardValidation } from "@/lib/validations/card"
-
-type CopyCardInput = z.infer<typeof CopyCardValidation>
+import { 
+  CopyCardFormValues,
+  getCopyCardSchema
+} from "@/lib/validations/card"
 
 export const copyCard = async (
-  values: CopyCardInput
+  values: CopyCardFormValues
 ) => {
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = CopyCardValidation.safeParse(values)
+  const validatedFields = getCopyCardSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   const { id, boardId } = validatedFields.data
@@ -39,11 +42,11 @@ export const copyCard = async (
       board.userId.toString() !== user._id.toString() &&
       !board.editors.includes(user.email)
     ) {
-      return { error: "Editing is restricted to authorized users only." }
+      return { error: tError("unauthorized") }
     }
 
     const cardToCopy = await Card.findById(id)
-    if (!cardToCopy) { return { error: "Card not found" } }
+    if (!cardToCopy) { return { error: tError("cardNotFound") } }
     
     const lastCard = await Card.findOne({ listId: cardToCopy.listId })
       .sort({ order: -1 }) // Descending order
@@ -69,6 +72,6 @@ export const copyCard = async (
     return { data: { title: card.title } }
 
   } catch (error) {
-    return { error: "Failed to copy" }
+    return { error: tError("actionFailed") }
   }
 }

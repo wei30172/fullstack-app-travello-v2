@@ -1,32 +1,35 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { Board } from "@/lib/models/board.model"
 import { List } from "@/lib/models/list.model"
 import { Card } from "@/lib/models/card.model"
-import { CreateCardValidation } from "@/lib/validations/card"
-
-type CreateCardInput = z.infer<typeof CreateCardValidation>
+import { 
+  CreateCardFormValues,
+  getCreateCardSchema
+} from "@/lib/validations/card"
 
 export const createCard = async (
-  values: CreateCardInput
+  values: CreateCardFormValues
 ) => {
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = CreateCardValidation.safeParse(values)
+  const validatedFields = getCreateCardSchema().safeParse(values)
 
   if (!validatedFields.success) {
     return {
-      error: "Invalid fields!",
+      error: tError("invalidFields"),
       errors: validatedFields.error.flatten().fieldErrors
     }
   }
@@ -42,13 +45,13 @@ export const createCard = async (
       board.userId.toString() !== user._id.toString() &&
       !board.editors.includes(user.email)
     ) {
-      return { error: "Editing is restricted to authorized users only." }
+      return { error: tError("unauthorized") }
     }
     
     const list = await List.findById(listId)
     
     if (!list) {
-      return { error: "List not found" }
+      return { error: tError("listNotFound") }
     }
     
     let newOrder = order
@@ -77,6 +80,6 @@ export const createCard = async (
     }}
 
   } catch (error) {
-    return { error: "Failed to create" }
+    return { error: tError("actionFailed") }
   }
 }

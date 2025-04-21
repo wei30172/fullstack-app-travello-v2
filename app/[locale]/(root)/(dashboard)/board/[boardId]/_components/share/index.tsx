@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import { IBoard, BoardRole } from "@/lib/models/types"
 
 import { Button } from "@/components/ui/button"
@@ -21,9 +22,12 @@ interface ShareProps {
 }
 
 export const Share = ({ boardData }: ShareProps) => {
+  const tRole = useTranslations("BoardForm.role")
+  const tUi = useTranslations("BoardForm.ui")
+
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
-  const roleLabel = boardData.role === BoardRole.OWNER ? "Owner" 
-                  : boardData.role === BoardRole.EDITOR ? "Editor" : "Viewer"
+  const roleLabel = boardData.role === BoardRole.OWNER ? tRole("owner")
+                  : boardData.role === BoardRole.EDITOR ? tRole("editor") : tRole("viewer")
 
   return (
     <Popover open={isPopoverOpen} onOpenChange={
@@ -50,7 +54,7 @@ export const Share = ({ boardData }: ShareProps) => {
         align="start"
       >
         <div className="text-md font-medium text-center text-teal-600 pb-2">
-          Share {boardData.title || "Trip"}
+          {tUi("shareTitle", { title: boardData.title || "Trip" })}
         </div>
         <div className="absolute top-2 left-2 bg-black/50 text-white border dark:border-white text-xs px-2 py-1 rounded">
           {roleLabel}

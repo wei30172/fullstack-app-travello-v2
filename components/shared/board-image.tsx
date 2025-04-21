@@ -3,6 +3,7 @@
 import { useTransition } from "react"
 import { useParams } from "next/navigation"
 import { useCoverModal } from "@/hooks/use-cover-modal"
+import { useTranslations } from "next-intl"
 import { removeMedia } from "@/lib/actions/board/remove-media"
 import { updateBoard } from "@/lib/actions/board/update-board"
 import { useToast } from "@/components/ui/use-toast"
@@ -29,6 +30,11 @@ const BoardImage = ({
   const { toast } = useToast()
   
   const [isPending, startTransition] = useTransition()
+
+  const tUi = useTranslations("BoardForm.ui")
+  const tToast = useTranslations("BoardForm.toast")
+  const tError = useTranslations("Common.error")
+
   const coverImage =  useCoverModal()
 
   const handleOpen = () => {
@@ -46,16 +52,16 @@ const BoardImage = ({
           if (res?.success) {
             const updateRes = await updateBoard({ imageUrl: "", boardId })
             if (updateRes?.data) {
-              toast({ status: "success", title: "Media removed and board updated successfully!" })
+              toast({ status: "success", title: tToast("success.coverRemoved") })
               onClose()
             } else {
-              throw new Error(updateRes?.error || "Update failed")
+              throw new Error(updateRes?.error || tToast("error.updateFailed"))
             }
           } else {
-            throw new Error(res?.error || "Removal failed")
+            throw new Error(res?.error || tToast("error.removeFailed"))
           }
         } catch (error) {
-          toast({ status: "error", description: (error as Error).message || "Something went wrong" })
+          toast({ status: "error", description: (error as Error).message || tError("generic") })
         }
       })
     }
@@ -84,7 +90,7 @@ const BoardImage = ({
           >
             <IoImage className="h-4 w-4" />
           </Button>
-          <ConfirmDialog onConfirm={handleRemove} actiontitle="Remove Cover">
+          <ConfirmDialog onConfirm={handleRemove} actiontitle={tUi("removeCover")}>
             <Button
               className="text-muted-foreground p-2 rounded-full shadow-md"
               variant="outline"

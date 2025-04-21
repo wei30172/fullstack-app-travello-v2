@@ -3,6 +3,7 @@
 import { useState, useTransition, useRef } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { useEventListener, useOnClickOutside } from "usehooks-ts"
+import { useTranslations } from "next-intl"
 import { BoardRole } from "@/lib/models/types"
 import { FormErrors } from "@/lib/validations/types"
 import { createList } from "@/lib/actions/list/create-list"
@@ -33,6 +34,10 @@ export const ListForm = ({
   const formRef = useRef<HTMLFormElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const tUi = useTranslations("ListForm.ui")
+  const tToast = useTranslations("ListForm.toast")
+  const tError = useTranslations("Common.error")
+  
   const enableEditing = () => {
     if (role === BoardRole.VIEWER) return
 
@@ -57,7 +62,7 @@ export const ListForm = ({
 
   const onSubmit = (formData: FormData) => {
     if (role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
     
@@ -69,7 +74,10 @@ export const ListForm = ({
         .then((res) => {
           setFieldErrors({})
           if (res?.data) {
-            toast({ status: "success", title: `Itinerary "${res?.data.title}" created` })
+            toast({
+              status: "success",
+              title: tToast("success.itineraryCreated", { title: res?.data.title })
+            })
             disableEditing()
             router.refresh()
           } else if (res?.error) {
@@ -79,7 +87,7 @@ export const ListForm = ({
             setFieldErrors(res?.errors)
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
@@ -97,7 +105,7 @@ export const ListForm = ({
             errors={fieldErrors}
             id="title"
             className="text-sm text-teal-900 px-2 py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition"
-            placeholder="Enter itinerary title..."
+            placeholder={tUi("addItineraryPlaceholder")}
           />
           <input
             hidden
@@ -106,7 +114,7 @@ export const ListForm = ({
           />
           <div className="flex items-center gap-x-1">
             <FormSubmit>
-              Add Itinerary
+              {tUi("addItinerary")}
             </FormSubmit>
             <Button
               onClick={disableEditing}
@@ -129,7 +137,7 @@ export const ListForm = ({
         className="w-full rounded-sm bg-white/80 hover:bg-white/50 transition p-3 flex items-center font-medium text-sm"
       >
         <FiPlus className="h-4 w-4 mr-2" />
-        Add Itinerary
+        {tUi("addItinerary")}
       </button>
     </ListWrapper>
   )

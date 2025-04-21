@@ -2,6 +2,7 @@
 
 import { useTransition  } from "react"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { updateBoard } from "@/lib/actions/board/update-board"
 import { deleteBoard } from "@/lib/actions/board/delete-board"
 
@@ -19,6 +20,10 @@ export const BoardBanner = ( { boardId }: BoardBannerProps) => {
 
   const [isPending, startTransition] = useTransition()
 
+  const tUi = useTranslations("BoardForm.ui")
+  const tToast = useTranslations("BoardForm.toast")
+  const tError = useTranslations("Common.error")
+  
   const handleRestore = () => {
     startTransition(() => {
       updateBoard({
@@ -27,12 +32,18 @@ export const BoardBanner = ( { boardId }: BoardBannerProps) => {
       })
       .then((res) => {
         if (res?.data) {
-          toast({ status: "success", title: `Trip "${res?.data.title}" restored!` })
+          toast({
+            status: "success",
+            title: tToast("success.restored", { title: res?.data.title })
+          })
         } else if (res?.error) {
-          toast({ status: "error", description: res?.error })
+          toast({
+            status: "error",
+            description: res?.error
+          })
         }
       })
-      .catch(() => toast({ status: "error", description: "Something went wrong" }))
+      .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
@@ -41,20 +52,26 @@ export const BoardBanner = ( { boardId }: BoardBannerProps) => {
       deleteBoard({ boardId })
         .then((res) => {
           if (res?.data) {
-            toast({ status: "success", title: `Trip "${res?.data.title}" deleted!` })
+            toast({
+              status: "success",
+              title: tToast("success.deleted", { title: res?.data.title })
+            })
             router.push("/boards")
           }
           if (res?.error) {
-            toast({ status: "error", description: "Failed to delete trip." })
+            toast({
+              status: "error",
+              description: tToast("error.deleteFailed")
+            })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
   return (
     <div className="h-12 bg-rose-500 p-2 text-center text-sm text-white flex items-center gap-x-2 justify-center">
       <p>
-        This trip is in the Trash.
+        {tUi("tripInTrash")}
       </p>
       <Button
         size="sm"
@@ -62,7 +79,7 @@ export const BoardBanner = ( { boardId }: BoardBannerProps) => {
         variant="outline"
         className="border-white bg-transparent hover:bg-primary/5 text-white p-1 px-2 h-auto font-normal"
       >
-        Restore trip
+        {tUi("restore")}
       </Button>
       <ConfirmDialog onConfirm={handleRemove}>
         <Button
@@ -70,7 +87,7 @@ export const BoardBanner = ( { boardId }: BoardBannerProps) => {
           variant="outline"
           className="border-white bg-transparent hover:bg-primary/5 text-white p-1 px-2 h-auto font-normal"
         >
-          Delete forever
+          {tUi("deleteForever")}
         </Button>
       </ConfirmDialog>
       {isPending && (

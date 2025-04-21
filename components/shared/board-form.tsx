@@ -4,10 +4,13 @@ import { useState, useRef, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
 import DatePicker from "react-datepicker"
-import { CreateBoardValidation } from "@/lib/validations/board"
+import { 
+  CreateBoardFormValues,
+  getCreateBoardSchema
+} from "@/lib/validations/board"
 import { IBoard, BoardRole } from "@/lib/models/types"
 import { createBoard } from "@/lib/actions/board/create-board"
 import { updateBoard } from "@/lib/actions/board/update-board"
@@ -91,6 +94,12 @@ export const BoardForm = ({
   const [tripItinerary, setTripItinerary] = useState<TripItinerary | null>(null)
   const [openAIResponse, setOpenAIResponse] = useState<string>("")
   const [isStreaming, setIsStreaming] = useState(false)
+
+  const tUi = useTranslations("BoardForm.ui")
+  const tValidation = useTranslations("BoardForm.validation")
+  const tToast = useTranslations("BoardForm.toast")
+  const tError = useTranslations("Common.error")
+
   const abortControllerRef = useRef<AbortController | null>(null)
 
   const eventDefaultValues = {
@@ -109,12 +118,12 @@ export const BoardForm = ({
     }
     : eventDefaultValues
 
-  const form = useForm<z.infer<typeof CreateBoardValidation>>({
-    resolver: zodResolver(CreateBoardValidation),
+  const form = useForm<CreateBoardFormValues>({
+    resolver: zodResolver(getCreateBoardSchema(tValidation)),
     defaultValues: initialValues
   })
 
-  async function onSubmit(values: z.infer<typeof CreateBoardValidation>) {
+  async function onSubmit(values: CreateBoardFormValues) {
     // console.log({values})
     if (type === "Create") {
       startTransition(() => {
@@ -127,7 +136,7 @@ export const BoardForm = ({
         })
         .then((res) => {
           if (res?.data) {
-            toast({ status: "success", title: "Trip created!" })
+            toast({ status: "success", title: tToast("success.created") })
             form.reset()
             onClose()
             router.push(`/board/${res?.data._id}`)
@@ -135,7 +144,7 @@ export const BoardForm = ({
             toast({ status: "error", description: res?.error })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
       })
     }
 
@@ -146,7 +155,7 @@ export const BoardForm = ({
       }
       
       if (boardData.role === BoardRole.VIEWER) {
-        toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+        toast({ status: "warning", description: tError("unauthorized") })
         return
       }
       
@@ -161,21 +170,24 @@ export const BoardForm = ({
         })
         .then((res) => {
           if (res?.data) {
-            toast({ status: "success", title: `Trip "${res?.data.title}" updated` })
+            toast({
+              status: "success",
+              title: tToast("success.updated", { title: res?.data.title })
+            })
             form.reset()
             onClose()
           } else if (res?.error) {
             toast({ status: "error", description: res?.error })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
       })
     }
   }
 
   const handleAskAI = async () => {
     if (type === "Update" && boardData?.role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
 
@@ -184,7 +196,7 @@ export const BoardForm = ({
     if (!canUse && !checkRole) {
       toast({
         status: "warning",
-        description: "You have reached your limit of free AI uses."
+        description: tToast("warning.aiLimit")
       })
       return
     }
@@ -197,7 +209,7 @@ export const BoardForm = ({
     if (!values.location || !values.startDate || !values.endDate) {
       toast({
         status: "warning",
-        description: "Please provide location, start date, and end date."
+        description: tToast("warning.aiFieldsRequired")
       })
       setIsStreaming(false)
       return
@@ -208,7 +220,7 @@ export const BoardForm = ({
     if (days < 1 || days > 10) {
       toast({
         status: "warning",
-        description: "The AI feature is only available for trips that within 10 days"
+        description: tToast("warning.aiDayRange")
       })
       setIsStreaming(false)
       return
@@ -268,19 +280,19 @@ export const BoardForm = ({
     if (!boardData?._id) {
       toast({
         status: "error",
-        description: "Board data is not available."
+        description: tError("boardNotFound")
       })
       return
     }
     if (type === "Update" && boardData?.role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
 
     if (!tripItinerary) {
       toast({
         status: "warning",
-        description: "No AI-generated itinerary to apply."
+        description: tToast("warning.missingAIData")
       })
       return
     }
@@ -292,21 +304,24 @@ export const BoardForm = ({
           createList({ title, boardId, cardTitles })
           .then((res) => {
             if (res?.data) {
-              toast({ status: "success", title: `Itinerary "${res?.data.title}" created` })
+              toast({
+                status: "success",
+                title: tToast("success.itineraryCreated", { title: res?.data.title })
+              })
               router.refresh()
               onClose()
             } else if (res?.error) {
               toast({ status: "error", description: res?.error })
             }
           })
-          .catch(() => toast({ status: "error", description: "Something went wrong" }))
+          .catch(() => toast({ status: "error", description: tError("generic") }))
         })
       }
     } catch (error) {
       console.error(error)
       toast({
         status: "error",
-        description: "Failed to apply suggestions."
+        description: tError("generic")
       })
     }
   }
@@ -325,7 +340,7 @@ export const BoardForm = ({
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-3">
         {type === "Create" &&
           <div className="text-md font-medium text-center text-teal-600 pb-2">
-            Create Trip
+            {tUi("createTitle")}
           </div>
         }
         <FormField
@@ -338,7 +353,7 @@ export const BoardForm = ({
                   <LuGoal  className="h-4 w-4 m-1" />
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Trip title" {...field} />
+                  <Input placeholder={tUi("tripTitlePlaceholder")} {...field} />
                 </FormControl>
               </div>
               <FormMessage />
@@ -355,7 +370,7 @@ export const BoardForm = ({
                   <LuMapPin className="h-4 w-4 m-1" />
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Trip location" {...field} />
+                  <Input placeholder={tUi("tripLocationPlaceholder")} {...field} />
                 </FormControl>
               </div>
               <FormMessage />
@@ -367,7 +382,7 @@ export const BoardForm = ({
           name="startDate"
           render={({ field }) => (
             <DatePickerField
-              label="Start Date"
+              label={tUi("startDate")}
               value={field.value}
               onChange={(date: Date) => {
                 field.onChange(new Date(date.setHours(0, 0, 0, 0)))
@@ -380,7 +395,7 @@ export const BoardForm = ({
           name="endDate"
           render={({ field }) => (
             <DatePickerField
-              label="End Date"
+              label={tUi("endDate")}
               value={field.value}
               onChange={(date: Date) => {
                 field.onChange(new Date(date.setHours(0, 0, 0, 0)))
@@ -393,7 +408,9 @@ export const BoardForm = ({
           type="submit"
           disabled={isPending}
         >
-          {isPending ? "Submitting..." : type}
+          {isPending
+            ? tUi("submitting")
+            : tUi(type === "Create" ? "submitCreate" : "submitUpdate")}
         </Button>
         {
           type === "Update" && (

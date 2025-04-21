@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import { MAX_FREE_ASKAI } from "@/constants/board"
 import { getAvailableAskAiCount } from "@/lib/actions/user-limit"
 import { CountType } from "@/lib/models/types"
@@ -5,8 +6,8 @@ import { CountType } from "@/lib/models/types"
 import { FiPause } from "react-icons/fi"
 import { Button } from "@/components/ui/button"
 // import Markdown from "react-markdown"
-import { LanguageSelector } from "@/components/shared/language-selector"
-import { AvailableCount } from "@/components/shared/available-count"
+import { LanguageSelector } from "@/components/shared/AI-response/language-selector"
+import { AvailableCount } from "@/components/shared/AI-response/available-count"
 
 interface AIResponseProps {
   language: string
@@ -35,6 +36,8 @@ const AIResponse = ({
   handleStop,
   isUpdating
 }: AIResponseProps) => {
+  const tUi = useTranslations("BoardForm.ui")
+
   const itineraryElements = tripItinerary && Object.entries(tripItinerary).map(([attraction, activities], index) => (
     <div key={index}>
       <h3 className="font-semibold">{attraction}</h3>
@@ -65,7 +68,7 @@ const AIResponse = ({
           disabled={isUpdating}
           variant="primary"
         >
-          {isUpdating ? "Updating..." : "Ask AI"}
+          {isUpdating ? tUi("updating") : tUi("askAI")}
         </Button>
       }
       </div>
@@ -73,8 +76,8 @@ const AIResponse = ({
         queryKey={CountType.ASK_AI_COUNT}
         queryFn={getAvailableAskAiCount}
         maxCount={MAX_FREE_ASKAI}
-        label="{remaining} AI uses remaining"
-        description={`You have ${MAX_FREE_ASKAI} free AI uses available in Free Workspaces.`}
+        label={tUi("aiUsesRemaining", { remaining: "{remaining}" })}
+        description={tUi("aiUsesDescription", { max: MAX_FREE_ASKAI })}
       />
       {
         isStreaming &&
@@ -90,14 +93,14 @@ const AIResponse = ({
       {
         isStreaming && openAIResponse !== null &&
         <div className="streaming-animation mb-4">
-          <p className="text-center">Asking AI...</p>
+          <p className="text-center">{tUi("askingAI")}</p>
         </div>
       }
       {
         tripItinerary !== null &&
         <div className="border-t border-gray-300 pt-4" style={{ maxHeight: '200px', overflowY: 'auto' }}>
           <div className="flex justify-between items-center">
-            <h2 className="text-lg font-bold mb-2">AI suggestions</h2>
+            <h2 className="text-lg font-bold mb-2">{tUi("aiSuggestions")}</h2>
             <Button
               className="w-1/2 my-2"
               variant="primary"
@@ -105,7 +108,7 @@ const AIResponse = ({
               onClick={applySuggestions}
               disabled={isUpdating}
             >
-              {isUpdating ? "Updating..." : "Add to Cards"}
+              {isUpdating ? tUi("updating") : tUi("addToCards")}
             </Button>
           </div>
           {itineraryElements}

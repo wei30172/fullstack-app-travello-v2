@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import {
   Select,
   SelectContent,
@@ -6,15 +7,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { handleSelectContentRef } from "@/lib/utils"
-
-const languages = [
-  { label: "English", value: "English" },
-  { label: "Traditional Chinese", value: "Traditional Chinese" },
-  { label: "Simplified Chinese", value: "Simplified Chinese" },
-  { label: "Spanish", value: "Spanish" },
-  { label: "French", value: "French" },
-  { label: "Japanese", value: "Japanese" }
-]
 
 interface LanguageSelectorProps {
   language: string
@@ -27,6 +19,17 @@ export const LanguageSelector = ({
   setLanguage,
   isStreaming
 }:LanguageSelectorProps) => {
+  const tUi = useTranslations("BoardForm.ui")
+
+  const languages = [
+    { label: tUi("language.english"), value: "English" },
+    { label: tUi("language.traditionalChinese"), value: "Traditional Chinese" },
+    { label: tUi("language.simplifiedChinese"), value: "Simplified Chinese" },
+    { label: tUi("language.spanish"), value: "Spanish" },
+    { label: tUi("language.french"), value: "French" },
+    { label: tUi("language.japanese"), value: "Japanese" }
+  ]
+  
   return (
     <Select
       disabled={isStreaming}
@@ -34,7 +37,7 @@ export const LanguageSelector = ({
       value={language}
     >
       <SelectTrigger className="w-[500px]">
-        <SelectValue placeholder="Select Language" />
+        <SelectValue placeholder={tUi("selectLanguage")} />
       </SelectTrigger>
       <SelectContent ref={handleSelectContentRef} >
         {languages.map((lang) => (

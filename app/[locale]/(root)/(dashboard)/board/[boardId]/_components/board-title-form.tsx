@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useTransition, useEffect, useRef  } from "react"
+import { useTranslations } from "next-intl"
 import { IBoard, BoardRole } from "@/lib/models/types"
 import { updateBoard } from "@/lib/actions/board/update-board"
 
@@ -22,6 +23,9 @@ export const BoardTitleForm = ({ boardData }: BoardTitleFormProps) => {
   const [title, setTitle] = useState(boardData.title)
   const [isEditing, setIsEditing] = useState(false)
 
+  const tToast = useTranslations("BoardForm.toast")
+  const tError = useTranslations("Common.error")
+  
   useEffect(() => {
     setTitle(boardData.title)
   }, [boardData.title])
@@ -42,7 +46,7 @@ export const BoardTitleForm = ({ boardData }: BoardTitleFormProps) => {
 
   const onSubmit = (formData: FormData) => {
     if (boardData.role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
 
@@ -59,14 +63,17 @@ export const BoardTitleForm = ({ boardData }: BoardTitleFormProps) => {
       })
       .then((res) => {
         if (res?.data) {
-          toast({ status: "success", title: `Trip "${res.data.title}" updated` })
+          toast({
+            status: "success",
+            title: tToast("success.updated", { title: res?.data.title })
+          })
           setTitle(res.data.title)
           disableEditing()
         } else if (res?.error) {
           toast({ status: "error", description: res?.error })
         }
       })
-      .catch(() => toast({ status: "error", description: "Something went wrong" }))
+      .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 

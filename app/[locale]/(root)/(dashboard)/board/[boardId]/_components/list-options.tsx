@@ -1,6 +1,7 @@
 "use client"
 
 import { useTransition, useRef } from "react"
+import { useTranslations } from "next-intl"
 import { ListWithCards, BoardRole } from "@/lib/models/types"
 import { copyList } from "@/lib/actions/list/copy-list"
 import { deleteList } from "@/lib/actions/list/delete-list"
@@ -36,12 +37,16 @@ export const ListOptions = ({
 
   const [isPending, startTransition] = useTransition()
 
+  const tUi = useTranslations("ListForm.ui")
+  const tToast = useTranslations("ListForm.toast")
+  const tError = useTranslations("Common.error")
+  
   const closeRef = useRef<HTMLButtonElement>(null)
   const deleteFormRef = useRef<HTMLFormElement>(null)
 
   const onDelete = (formData: FormData) => {
     if (role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Deleting is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
 
@@ -52,19 +57,22 @@ export const ListOptions = ({
       deleteList({ id, boardId })
         .then((res) => {
           if (res?.data) {
-            toast({ status: "success", title: `Itinerary "${res?.data.title}" deleted` })
+            toast({
+              status: "success",
+              title: tToast("success.itineraryDeleted", { title: res?.data.title })
+            })
             closeRef.current?.click()
           } else if (res?.error) {
             toast({ status: "error", description: res?.error })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
   const onCopy = (formData: FormData) => {
     if (role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
     
@@ -75,13 +83,16 @@ export const ListOptions = ({
       copyList({ id, boardId })
         .then((res) => {
           if (res?.data) {
-            toast({ status: "success", title: `Itinerary "${res?.data.title}" added` })
+            toast({
+              status: "success",
+              title: tToast("success.itineraryCopied", { title: res?.data.title })
+            })
             closeRef.current?.click()
           } else if (res?.error) {
             toast({ status: "error", description: res?.error })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
@@ -98,7 +109,7 @@ export const ListOptions = ({
       </PopoverTrigger>
       <PopoverContent className="px-0 pt-3 pb-3" side="bottom" align="start">
         <div className="text-sm font-medium text-center text-teal-900 pb-4">
-          Itinerary actions
+          {tUi("itineraryActions")}
         </div>
         <PopoverClose ref={closeRef} asChild>
           <Button className="h-auto w-auto p-2 absolute top-2 right-2 text-teal-900" variant="ghost">
@@ -111,7 +122,7 @@ export const ListOptions = ({
           variant="ghost"
         >
           <FiPlus className="h-4 w-4 mr-2" />
-          Add attractions...
+          {tUi("addAttractions")}
         </Button>
         <form action={onCopy}>
           <input hidden name="id" id="id" defaultValue={listData._id} />
@@ -122,7 +133,7 @@ export const ListOptions = ({
             disabled={isPending}
           >
             <FaRegCopy className="h-4 w-4 mr-2" />
-            Copy itinerary
+            {tUi("copyItinerary")}
           </FormSubmit>
         </form>
         <Separator className="mt-6"/>
@@ -137,7 +148,7 @@ export const ListOptions = ({
               disabled={isPending}
             >
               <MdDelete className="h-4 w-4 mr-2" />
-              Delete itinerary
+              {tUi("deleteItinerary")}
             </FormSubmit>
           </ConfirmDialog>
         </form>

@@ -1,7 +1,7 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
@@ -9,24 +9,27 @@ import { Board } from "@/lib/models/board.model"
 import { List } from "@/lib/models/list.model"
 import { Card } from "@/lib/models/card.model"
 import { ICard } from "@/lib/models/types"
-import { CopyListValidation } from "@/lib/validations/list"
-
-type CopyListInput = z.infer<typeof CopyListValidation>
+import { 
+  CopyListFormValues,
+  getCopyListSchema
+} from "@/lib/validations/list"
 
 export const copyList = async (
-  values: CopyListInput
+  values: CopyListFormValues
 ) => {
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = CopyListValidation.safeParse(values)
+  const validatedFields = getCopyListSchema().safeParse(values)
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" }
+    return { error: tError("invalidFields") }
   }
 
   const { id, boardId } = validatedFields.data
@@ -40,7 +43,7 @@ export const copyList = async (
       board.userId.toString() !== user._id.toString() &&
       !board.editors.includes(user.email)
     ) {
-      return { error: "Editing is restricted to authorized users only." }
+      return { error: tError("unauthorized") }
     }
 
     // Copy the list
@@ -51,7 +54,7 @@ export const copyList = async (
       })
   
     if (!listToCopy) {
-      return { error: "List not found" }
+      return { error: tError("listNotFound") }
     }
     
     const lastList = await List.findOne({ boardId })
@@ -92,6 +95,6 @@ export const copyList = async (
     return { data: { title: list.title } }
 
   } catch (error) {
-    return { error: "Failed to copy" }
+    return { error: tError("actionFailed") }
   }
 }

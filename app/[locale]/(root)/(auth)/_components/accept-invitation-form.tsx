@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useState, useTransition } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { acceptInvitation } from "@/lib/actions/board/accept-invitation"
 
 import { FormError } from "@/components/shared/form/form-error"
@@ -19,6 +20,9 @@ export const AcceptShareForm = () => {
   const [boardId, setBoardId] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
+  const tUi = useTranslations("AcceptShareForm.ui")
+  const tError = useTranslations("Common.error")
+
   const token = searchParams.get("token")
 
   async function onSubmit() {
@@ -27,7 +31,7 @@ export const AcceptShareForm = () => {
     setSuccess("")
     
     if (!token) {
-      setError("Invalid invitation link")
+      setError(tError("missingToken"))
       return
     }
 
@@ -37,24 +41,24 @@ export const AcceptShareForm = () => {
         if (data?.error) {
           setError(data.error)
         } else if (data?.success) {
-          setSuccess(`${data.success} Redirecting in 3 seconds...`)
+          setSuccess(data.success)
           setBoardId(data.boardId)
           setTimeout(() => {
             router.push(`/board/${data.boardId}`)
           }, 3000)
         }
       })
-      .catch(() => setError("Something went wrong"))
+      .catch(() => setError(tError("generic")))
     })
   }
 
   return (
     <div className="flex flex-col items-center w-[360px] p-4 bg-teal-100 rounded-lg shadow-md">
-      <h1 className="text-xl font-semibold text-gray-900 mb-4">Accept Trip Share</h1>
+      <h1 className="text-xl font-semibold text-gray-900 mb-4">{tUi("header")}</h1>
       {isPending && (
         <>
           <Spinner className="text-gray-500" />
-          <p className="mt-2 text-gray-600">Processing ...</p>
+          <p className="mt-2 text-gray-600">{tUi("processing")}</p>
         </>
       )}
       <FormSuccess message={success} />
@@ -62,7 +66,7 @@ export const AcceptShareForm = () => {
       {!isPending && !success && (
         <>
           <p className="mb-4 text-sm text-gray-700 text-center">
-            You have been invited to join a trip. Click the button below to accept the invitation.
+            {tUi("invitation")}
           </p>
           <Button 
             onClick={onSubmit} 
@@ -70,17 +74,17 @@ export const AcceptShareForm = () => {
             className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200"
             disabled={isPending}
           >
-            Accept
+            {tUi("accept")}
           </Button>
         </>
       )}
-      {success && (
+      {!success && (
         <div className="mt-4 text-sm text-gray-900 text-center">
-          Click{" "}
+          {tUi("click")}{" "}
           <Link href={`/board/${boardId}`} className="text-blue-500 underline">
-            here
+            {tUi("here")}
           </Link>{" "}
-          to go to the trip immediately
+          {tUi("goToTrip")}
         </div>
       )}
     </div>

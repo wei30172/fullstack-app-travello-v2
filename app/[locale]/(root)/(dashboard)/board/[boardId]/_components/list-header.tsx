@@ -3,6 +3,7 @@
 
 import { useState, useTransition, useRef } from "react"
 import { useEventListener } from "usehooks-ts"
+import { useTranslations } from "next-intl"
 import { ListWithCards, BoardRole } from "@/lib/models/types"
 import { updateList } from "@/lib/actions/list/update-list"
 
@@ -27,6 +28,10 @@ export const ListHeader = ({
   const [isEditing, setIsEditing] = useState(false)
   const [isPending, startTransition] = useTransition()
 
+  const tUi = useTranslations("ListForm.ui")
+  const tToast = useTranslations("ListForm.toast")
+  const tError = useTranslations("Common.error")
+  
   const formRef = useRef<HTMLFormElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -46,7 +51,7 @@ export const ListHeader = ({
 
   const handleSubmit = (formData: FormData) => {
     if (role === BoardRole.VIEWER) {
-      toast({ status: "warning", description: "Editing is restricted to authorized users only." })
+      toast({ status: "warning", description: tError("unauthorized") })
       return
     }
     
@@ -62,14 +67,17 @@ export const ListHeader = ({
       updateList({ title, id, boardId })
         .then((res) => {
           if (res?.data) {
-            toast({ status: "success", title: `Itinerary "${res?.data.title}" updated` })
+            toast({
+              status: "success",
+              title: tToast("success.itineraryUpdated", { title: res?.data.title })
+            })
             setTitle(res.data.title)
             disableEditing()
           } else if (res?.error) {
             toast({ status: "error", description: res?.error })
           }
         })
-        .catch(() => toast({ status: "error", description: "Something went wrong" }))
+        .catch(() => toast({ status: "error", description: tError("generic") }))
     })
   }
 
@@ -110,7 +118,7 @@ export const ListHeader = ({
             ref={inputRef}
             onBlur={onBlur}
             id="title"
-            placeholder="Enter list title.."
+            placeholder={tUi("addItineraryPlaceholder")}
             defaultValue={title}
             className="text-sm text-teal-900 px-[7px] py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition truncate bg-transparent focus:bg-white"
           />

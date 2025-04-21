@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import { useCheckRole } from "@/hooks/use-session"
 
 import { Skeleton } from "@/components/ui/skeleton"
@@ -21,6 +22,7 @@ export const AvailableCount = ({
   label
 }: AvailableCountProps) => {
   const checkRole = useCheckRole()
+  const tUi = useTranslations("BoardForm.ui")
 
   const { data: count, isLoading, isError } = useQuery<number>({
     queryKey: [queryKey],
@@ -31,7 +33,7 @@ export const AvailableCount = ({
     return (
       <div className="p-2 pt-0">
         <span className="text-xs">
-          Error loading available count.
+          {tUi("aiCountLoadError")}
         </span>
       </div>
     )

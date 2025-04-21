@@ -283,7 +283,7 @@
       "shareRole": "Role",
       "shareButton": "Share",
       "copyLink": "Copy Link",
-      "copied": "Trip link copied to clipboard",
+      "copied": "Trip link copied",
       "copyFailed": "Failed to copy link",
       "leave": "Leave",
       "leaveTrip": "Leave Trip",
@@ -329,7 +329,8 @@
         "deleted": "Trip \"{title}\" deleted!",
         "selfUnshared": "You have successfully removed yourself from the trip.",
         "coverRemoved": "Cover removed and trip updated successfully!",
-        "coverUploaded": "Image uploaded successfully!"
+        "coverUploaded": "Image uploaded successfully!",
+        "itineraryCreated": "Itinerary \"{title}\" created"
       },
       "warning": {
         "aiLimit": "You have reached your limit of free AI uses.",
@@ -363,11 +364,11 @@
         "aiAbort": "The AI request was cancelled.",
         "aiFailed": "Failed to connect to AI service.",
         
-        "cannotShareWithSelf": "Cannot share the trip with yourself.",
+        "cannotShareWithSelf": "Cannot share trip with yourself.",
         "onlyOwnerCanShare": "Only the owner can share this trip.",
         "onlyOwnerCanUpdateRole": "Only the owner can update roles.",
         "onlyOwnerCanUnshare": "Only the owner can unshare this trip.",
-        "userNotInList": "User not found in viewers or editors.",
+        "userNotInList": "User not found in the list of viewers or editors.",
 
         "fileTypeNotAllowed": "File type not allowed.",
         "fileSizeTooLarge": "File size too large. Maximum allowed size is {maxSize}.",

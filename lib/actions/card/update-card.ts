@@ -1,32 +1,35 @@
 "use server"
 
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/db"
 import { currentUser } from "@/lib/session"
 import { Board } from "@/lib/models/board.model"
 import { Card } from "@/lib/models/card.model"
-import { UpdateCardValidation } from "@/lib/validations/card"
-
-type UpdateCardInput = z.infer<typeof UpdateCardValidation>
+import { 
+  UpdateCardFormValues,
+  getUpdateCardSchema
+} from "@/lib/validations/card"
 
 export const updateCard = async (
-  values: UpdateCardInput
+  values: UpdateCardFormValues
 ) => {
+  const tError = await getTranslations("Common.error")
+
   const user = await currentUser()
   // console.log({user})
 
   if (!user) {
-    return { error: "Unauthorized" }
+    return { error: tError("unauthorized") }
   }
 
-  const validatedFields = UpdateCardValidation.safeParse(values)
+  const validatedFields = getUpdateCardSchema().safeParse(values)
 
 
   if (!validatedFields.success) {
     return {
-      error: "Invalid fields!",
+      error: tError("invalidFields"),
       errors: validatedFields.error.flatten().fieldErrors
     }
   }
@@ -42,7 +45,7 @@ export const updateCard = async (
       board.userId.toString() !== user._id.toString() &&
       !board.editors.includes(user.email)
     ) {
-      return { error: "Editing is restricted to authorized users only." }
+      return { error: tError("unauthorized") }
     }
 
     const card = await Card.findByIdAndUpdate(
@@ -59,6 +62,6 @@ export const updateCard = async (
     }}
 
   } catch (error) {
-    return { error: "Failed to update" }
+    return { error: tError("actionFailed") }
   }
 }
