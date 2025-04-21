@@ -53,7 +53,7 @@ export const Share = ({ boardData }: ShareProps) => {
         side="bottom" 
         align="start"
       >
-        <div className="text-md font-medium text-center text-teal-600 pb-2">
+        <div className="text-md font-medium text-center text-teal-600 py-2">
           {tUi("shareTitle", { title: boardData.title || "Trip" })}
         </div>
         <div className="absolute top-2 left-2 bg-black/50 text-white border dark:border-white text-xs px-2 py-1 rounded">
