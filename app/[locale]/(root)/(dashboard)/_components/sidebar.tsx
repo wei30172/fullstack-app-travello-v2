@@ -1,7 +1,7 @@
 "use client"
 
 import { useMediaQuery } from "usehooks-ts"
-import {useTranslations} from "next-intl"
+import { useTranslations } from "next-intl"
 
 import {
   Popover,

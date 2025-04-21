@@ -1,5 +1,5 @@
 import Link from "next/link"
-import {useTranslations} from "next-intl"
+import { useTranslations } from "next-intl"
 
 import { Logo } from "@/components/shared/logo"
 import { Button } from "@/components/ui/button"

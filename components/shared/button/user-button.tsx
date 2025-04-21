@@ -4,7 +4,7 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
 import { useCurrentUser } from "@/hooks/use-session"
-import {useTranslations} from "next-intl"
+import { useTranslations } from "next-intl"
 
 import { FaRegUserCircle } from "react-icons/fa"
 import { IoMdLogIn, IoMdLogOut } from "react-icons/io"
@@ -55,13 +55,10 @@ const UserNavLinks = ({
   ))
 )
 
-interface AuthLinkProps {
-  isSignedIn?: boolean
-  tUi: ReturnType<typeof useTranslations>
-}
+export const AuthLink = ({ isSignedIn = false }: { isSignedIn?: boolean }) => {
+  const tUi = useTranslations("Navbar.ui")
 
-export const AuthLink = ({ isSignedIn = false, tUi }: AuthLinkProps) => (
-  isSignedIn ? (
+  return isSignedIn ? (
     <SignOutButton>
       <IoMdLogOut className="h-4 w-4 mr-2"/>
       {tUi("signout")}
@@ -72,7 +69,7 @@ export const AuthLink = ({ isSignedIn = false, tUi }: AuthLinkProps) => (
       {tUi("signin")}
     </SignInButton>
   )
-)
+}
 
 export const UserButton = () => {
   const pathName = usePathname()
@@ -117,7 +114,7 @@ export const UserButton = () => {
       </>
       )}
         <DropdownMenuItem>
-          <AuthLink isSignedIn={!!user} tUi={tUi} />
+          <AuthLink isSignedIn={!!user} />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import {useTranslations} from "next-intl"
+import { useTranslations } from "next-intl"
 
 import { cn } from "@/lib/utils"
 import { textFont } from "@/lib/fonts"
