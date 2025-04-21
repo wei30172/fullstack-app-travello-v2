@@ -102,7 +102,7 @@ const AIResponse = ({
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-bold mb-2">{tUi("aiSuggestions")}</h2>
             <Button
-              className="w-1/2 my-2"
+              className="w-1/2 m-2"
               variant="primary"
               type="button"
               onClick={applySuggestions}
@@ -112,6 +112,17 @@ const AIResponse = ({
             </Button>
           </div>
           {itineraryElements}
+          <div className="flex justify-end items-center">
+            <Button
+              className="w-1/2 m-2"
+              variant="primary"
+              type="button"
+              onClick={applySuggestions}
+              disabled={isUpdating}
+            >
+              {isUpdating ? tUi("updating") : tUi("addToCards")}
+            </Button>
+          </div>
           {/* <Markdown>{openAIResponse}</Markdown> */}
         </div>
       }
