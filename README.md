@@ -1,6 +1,8 @@
-## Travel Planning Platform with Next.js and OpenAI GPT-4
+## 🌍 Travel Planning Platform with Next.js and OpenAI GPT-4
 
 Facilitated an easy-to-use drag and drop itinerary planner, allowing users to visually organize their travel schedule.
+
+## ✨ Key Features
 
 1.Trello-Inspired Interface: Familiar drag-and-drop functionality for intuitive travel scheduling.
 
@@ -8,7 +10,10 @@ Facilitated an easy-to-use drag and drop itinerary planner, allowing users to vi
 
 3.Share Trips with Other Users: Easily share your trips with friends or family via generated links.
 
-## Project Screenshots
+4.Multi-language Support with Authentication Integration: Implemented internationalization with dynamic locale routing and integrated authentication middleware.
+
+## 🖥️ Project Screenshots
+
 ![Travel planning platform homepage](https://github.com/user-attachments/assets/6e253495-c980-4595-9b70-d01731d0dc89)
 *The homepage of the travel planning platform, providing users with an overview and navigation options.*
 
@@ -72,7 +77,28 @@ Facilitated an easy-to-use drag and drop itinerary planner, allowing users to vi
 ![Toggle dark mode](https://github.com/user-attachments/assets/8f315d98-91d1-43f9-9b53-c8b0d333c40a)
 *The platform supports toggling between light and dark modes for user preference.*
 
-## Environment Setup
+## 🛠 Tech Stack
+
+- Framework: Next.js – App Router, Server Actions, Dynamic Routing
+
+- Authentication: next-auth – Supports credentials and OAuth (Google login), with email verification and 2FA
+
+- Internationalization: next-intl – Dynamic locale routing and language switching
+
+- UI Components: shadcn/ui – Built on Radix UI and Tailwind CSS
+
+- Database: MongoDB – Managed with Mongoose models
+
+- AI Integration: OpenAI GPT-4 API – Used for smart travel planning recommendations
+
+- Cloud Storage: AWS S3 – For storing uploaded trip cover images
+
+- Email Services: Nodemailer – For sending verification, reset, and 2FA emails
+
+- Design System: Fully responsive and dark mode–ready UI using Tailwind CSS
+
+## ⚙️ Environment Setup
+
 Create a .env file in the root directory and add the following variables:
 
 ```env
@@ -116,7 +142,7 @@ GOOGLE_CLIENT_ID & GOOGLE_CLIENT_SECRET
   
 - Finish by going to APIs & Services => OAuth consent screen and publishing the app.
 
-## Getting Started
+## 🚀 Getting Started
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -138,7 +164,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## 📚 Learn More
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -147,7 +173,7 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## ☁️ Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
