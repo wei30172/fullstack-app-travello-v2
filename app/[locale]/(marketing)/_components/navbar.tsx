@@ -2,8 +2,8 @@ import Link from "next/link"
 import { useTranslations } from "next-intl"
 
 import { Logo } from "@/components/shared/logo"
-import { Button } from "@/components/ui/button"
 import { LocaleSwitcher } from "@/components/shared/button/locale-switcher"
+import { Button } from "@/components/ui/button"
 
 export const MarketingNavbar = () => {
   const tUi = useTranslations("Navbar.ui")

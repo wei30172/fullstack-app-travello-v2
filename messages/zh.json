@@ -27,6 +27,12 @@
       "trash": "垃圾桶"
     }
   },
+  "Footer": {
+    "ui": {
+      "privacy": "隱私權聲明",
+      "terms": "使用條款"   
+    }
+  },
   "ConfirmDialog": {
     "ui": {
       "title": "操作確認",

@@ -27,6 +27,12 @@
       "trash": "Trash"
     }
   },
+  "Footer": {
+    "ui": {
+      "privacy": "Privacy Notice",
+      "terms": "Conditions of Use"
+    }
+  },
   "ConfirmDialog": {
     "ui": {
       "title": "Confirm",

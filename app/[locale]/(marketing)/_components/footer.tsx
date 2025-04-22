@@ -1,20 +1,25 @@
+import { useTranslations } from "next-intl"
+import Link from "next/link"
+
 import { Logo } from "@/components/shared/logo"
-import { Button } from "@/components/ui/button"
 
 export const MarketingFooter = () => {
+  const tUi = useTranslations("Footer.ui")
+
   return (
-    <div className="fixed bottom-0 w-full py-2 px-4 border-t bg-gray-100 dark:bg-gray-900">
-      <div className="md:max-w-screen-2xl mx-auto flex items-center w-full justify-between">
-        <Logo />
-        <div className="w-full flex items-center justify-end space-x-4 md:block md:w-auto">
-          <Button size="sm" variant="ghost">
-            Privacy Policy
-          </Button>
-          <Button size="sm" variant="ghost">
-            Service Terms
-          </Button>
+    <footer className="fixed bottom-0 w-full flex flex-col text-gray-500 text-sm border-t bg-gray-100 dark:bg-gray-900 border-gray-500">
+      <div className="flex flex-wrap items-center justify-between border-t border-gray-100 gap-2 px-6 py-2 sm:px-20">
+        <div className="flex items-center gap-2">
+          <Logo />
+          <p className="text-gray-900 dark:text-gray-200">
+            &copy; 2024 Wei. All rights reserved.
+          </p>
+        </div>
+        <div className="flex gap-1 sm:gap-4 text-xs">
+          <Link href="/">{tUi("privacy")}</Link>
+          <Link href="/">{tUi("terms")}</Link>
         </div>
       </div>
-    </div>
+    </footer>
   )
 }
