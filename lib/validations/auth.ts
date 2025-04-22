@@ -43,7 +43,7 @@ export function getSignUpFormSchema(t?: (key: string) => string) {
 }
 export type SignUpFormValues = z.infer<ReturnType<typeof getSignUpFormSchema>>
 
-export function getResetFormSchema(t?: (key: string) => string) {
+export function getResetPasswordFormSchema(t?: (key: string) => string) {
   return z
     .object({
       email: z
@@ -52,7 +52,7 @@ export function getResetFormSchema(t?: (key: string) => string) {
         .email(t?.("email.invalid") || "Invalid email")
     })
 }
-export type ResetFormValues = z.infer<ReturnType<typeof getResetFormSchema>>
+export type ResetPasswordFormValues = z.infer<ReturnType<typeof getResetPasswordFormSchema>>
 
 export function getNewPasswordFormSchema(t?: (key: string) => string) {
   return z

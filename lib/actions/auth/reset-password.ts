@@ -6,19 +6,19 @@ import connectDB from "@/lib/db"
 import { User } from "@/lib/models/auth.model"
 import { UserProvider } from "@/lib/models/types"
 import {
-  ResetFormValues,
-  getResetFormSchema
+  ResetPasswordFormValues,
+  getResetPasswordFormSchema
 } from "@/lib/validations/auth"
 import { generateToken } from "@/lib/token"
 import { sendPasswordResetEmail } from "@/lib/mail"
 
 export const resetPassword = async (
-  values: ResetFormValues
+  values: ResetPasswordFormValues
 ) => {
   const t = await getTranslations("ResetForm.server")
   const tError = await getTranslations("Common.error")
 
-  const validatedFields = getResetFormSchema().safeParse(values)
+  const validatedFields = getResetPasswordFormSchema().safeParse(values)
 
   if (!validatedFields.success) {
     return { error: tError("invalidFields") }

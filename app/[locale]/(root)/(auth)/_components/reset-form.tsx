@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
-  ResetFormValues,
-  getResetFormSchema
+  ResetPasswordFormValues,
+  getResetPasswordFormSchema
 } from "@/lib/validations/auth"
 import { resetPassword } from "@/lib/actions/auth/reset-password"
 
@@ -33,14 +33,14 @@ export const ResetForm = () => {
   const tValidation = useTranslations("ResetForm.validation")
   const tError = useTranslations("Common.error")
 
-  const form = useForm<ResetFormValues>({
-    resolver: zodResolver(getResetFormSchema(tValidation)),
+  const form = useForm<ResetPasswordFormValues>({
+    resolver: zodResolver(getResetPasswordFormSchema(tValidation)),
     defaultValues: {
       email: ""
     }
   })
 
-  async function onSubmit(values: ResetFormValues) {
+  async function onSubmit(values: ResetPasswordFormValues) {
     // console.log(values)
     setError("")
     setSuccess("")
