@@ -9,7 +9,7 @@ export const LocaleSwitcher = () => {
 
   return (
     <div className="flex items-center gap-2">
-      <IoIosGlobe className="h-8 w-8 text-muted-foreground" />
+      <IoIosGlobe className="h-8 w-8 hidden md:block text-muted-foreground" />
       <LocaleSelect value={locale} label="Select a locale" />
     </div>
   )
