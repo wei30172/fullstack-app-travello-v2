@@ -12,6 +12,26 @@ Facilitated an easy-to-use drag and drop itinerary planner, allowing users to vi
 
 4.Multi-language Support with Authentication Integration: Implemented internationalization with dynamic locale routing and integrated authentication middleware.
 
+## 🛠 Tech Stack
+
+- Framework: Next.js – App Router, Server Actions, Dynamic Routing
+
+- Authentication: next-auth – Supports credentials and OAuth (Google login), with email verification and 2FA
+
+- Internationalization: next-intl – Dynamic locale routing and language switching
+
+- UI Components: shadcn/ui – Built on Radix UI and Tailwind CSS
+
+- Database: MongoDB – Managed with Mongoose models
+
+- AI Integration: OpenAI GPT-4 API – Used for smart travel planning recommendations
+
+- Cloud Storage: AWS S3 – For storing uploaded trip cover images
+
+- Email Services: Nodemailer – For sending verification, reset, and 2FA emails
+
+- Design System: Fully responsive and dark mode–ready UI using Tailwind CSS
+
 ## 🖥️ Project Screenshots
 
 ![Travel planning platform homepage](https://github.com/user-attachments/assets/6e253495-c980-4595-9b70-d01731d0dc89)
@@ -76,26 +96,6 @@ Facilitated an easy-to-use drag and drop itinerary planner, allowing users to vi
 
 ![Toggle dark mode](https://github.com/user-attachments/assets/8f315d98-91d1-43f9-9b53-c8b0d333c40a)
 *The platform supports toggling between light and dark modes for user preference.*
-
-## 🛠 Tech Stack
-
-- Framework: Next.js – App Router, Server Actions, Dynamic Routing
-
-- Authentication: next-auth – Supports credentials and OAuth (Google login), with email verification and 2FA
-
-- Internationalization: next-intl – Dynamic locale routing and language switching
-
-- UI Components: shadcn/ui – Built on Radix UI and Tailwind CSS
-
-- Database: MongoDB – Managed with Mongoose models
-
-- AI Integration: OpenAI GPT-4 API – Used for smart travel planning recommendations
-
-- Cloud Storage: AWS S3 – For storing uploaded trip cover images
-
-- Email Services: Nodemailer – For sending verification, reset, and 2FA emails
-
-- Design System: Fully responsive and dark mode–ready UI using Tailwind CSS
 
 ## ⚙️ Environment Setup
 
