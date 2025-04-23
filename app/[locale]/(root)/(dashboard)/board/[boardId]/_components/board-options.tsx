@@ -100,7 +100,7 @@ export const BoardOptions = ({ boardData }: BoardOptionsProps) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent 
-        className="w-80 pt-3 max-h-[32rem] overflow-y-auto" 
+        className="w-[350px] pt-3 max-h-[32rem] overflow-y-auto" 
         side="bottom" 
         align="start"
       >
