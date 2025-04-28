@@ -1,4 +1,4 @@
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { getTranslations } from "next-intl/server"
 import { getMyBoards } from "@/lib/actions/board/get-my-boards"
 

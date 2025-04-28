@@ -1,4 +1,4 @@
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { getTranslations } from "next-intl/server"
 import { BoardRole } from "@/lib/models/types"
 import { getSharedBoards } from "@/lib/actions/board/get-shared-boards"
