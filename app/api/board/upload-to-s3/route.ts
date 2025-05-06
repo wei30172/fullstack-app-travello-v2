@@ -25,12 +25,15 @@ export async function POST(
 
     // Check if the file type is allowed
     if (!ALLOWED_FILE_TYPES.includes(fileType)) {
-      return new NextResponse("File type not allowed", { status: 400 } )
+      return NextResponse.json({ error: "File type not allowed" }, { status: 400 })
     }
   
     // Check if the file size exceeds the maximum limit
     if (fileSize > MAX_FILE_SIZE) {
-      return new NextResponse(`File size too large. Maximum allowed size is ${formatFileSize(MAX_FILE_SIZE)}.`, { status: 400 } )
+      return NextResponse.json(
+        { error: `File size too large. Maximum allowed size is ${formatFileSize(MAX_FILE_SIZE)}.` },
+        { status: 400 }
+      )
     }
   
      // Generate a unique file name and create the S3 upload command
@@ -55,6 +58,6 @@ export async function POST(
     
   } catch (error) {
     console.error("[ERROR]", error)
-    return new NextResponse("Internal Error", { status: 500 })
+    return NextResponse.json({ error: "Internal Error" }, { status: 500 })
   }
 }

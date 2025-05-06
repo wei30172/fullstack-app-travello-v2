@@ -1,5 +1,3 @@
-import { Document } from "mongoose"
-
 export enum UserRole {
   ADMIN = "admin",
   USER = "user",
@@ -28,7 +26,8 @@ export enum CountType {
   BOARD_COVER_COUNT = "boardCoverCount"
 }
 
-export interface IUser extends Document {
+export interface IUser {
+  _id: string
   name: string
   email: string
   password?: string
@@ -38,11 +37,17 @@ export interface IUser extends Document {
   emailVerified: Date
   isTwoFactorEnabled: boolean
   emailPendingVerification?: string
-  createdAt?: Date
-  updatedAt?: Date
+  createdAt: Date
+  updatedAt: Date
 }
 
-export interface IBoard extends Document {
+export interface TwoFactorConfirmation {
+  _id: string
+  userId: string
+}
+
+export interface IBoard {
+  _id: string
   userId: string
   title: string
   location: string
@@ -58,7 +63,8 @@ export interface IBoard extends Document {
   role?: BoardRole
 }
 
-export interface IList extends Document {
+export interface IList {
+  _id: string
   title: string
   order: number
   boardId: string
@@ -67,7 +73,8 @@ export interface IList extends Document {
   updatedAt?: Date
 }
 
-export interface ICard extends Document {
+export interface ICard {
+  _id: string
   title: string
   order: number
   description?: string
@@ -78,7 +85,8 @@ export interface ICard extends Document {
   updatedAt?: Date
 }
 
-export interface ListWithCards extends Document {
+export interface ListWithCards {
+  _id: string
   title: string
   order: number
   boardId: string
@@ -87,7 +95,8 @@ export interface ListWithCards extends Document {
   updatedAt?: Date
 }
 
-export interface CardWithList extends Document {
+export interface CardWithList {
+  _id: string
   title: string
   order: number
   description?: string
@@ -99,7 +108,8 @@ export interface CardWithList extends Document {
   role?: BoardRole
 }
 
-export interface IUserLimit extends Document {
+export interface IUserLimit {
+  _id: string
   userId: string
   askAiCount: number
   boardCoverCount: number

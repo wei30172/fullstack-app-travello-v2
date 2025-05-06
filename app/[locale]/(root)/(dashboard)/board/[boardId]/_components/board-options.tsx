@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { IBoard, BoardRole } from "@/lib/models/types"
+import { IBoard, BoardRole } from "@/lib/database/models/types"
 import { updateBoard } from "@/lib/actions/board/update-board"
 import { copyBoard } from "@/lib/actions/board/copy-board"
 

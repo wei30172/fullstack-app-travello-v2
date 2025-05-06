@@ -3,10 +3,10 @@
 import bcrypt from "bcryptjs"
 import { getTranslations } from "next-intl/server"
 
-import connectDB from "@/lib/db"
+import connectDB from "@/lib/database/db"
 import { verifyToken, isTokenError } from "@/lib/token"
-import { User } from "@/lib/models/auth.model"
-import { UserProvider } from "@/lib/models/types"
+import { User } from "@/lib/database/models/auth.model"
+import { UserProvider } from "@/lib/database/models/types"
 import {
   NewPasswordFormValues,
   getNewPasswordFormSchema

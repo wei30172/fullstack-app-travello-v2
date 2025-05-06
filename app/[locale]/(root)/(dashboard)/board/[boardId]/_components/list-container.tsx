@@ -3,7 +3,7 @@
 import { useState, useEffect, useTransition  } from "react"
 import { useTranslations } from "next-intl"
 import { DragDropContext, Droppable } from "@hello-pangea/dnd"
-import { ListWithCards, BoardRole } from "@/lib/models/types"
+import { ListWithCards, BoardRole } from "@/lib/database/models/types"
 import { updateListOrder } from "@/lib/actions/list/update-list-order"
 import { updateCardOrder } from "@/lib/actions/card/update-card-order"
 

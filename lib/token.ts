@@ -1,9 +1,9 @@
 import jwt, { JwtPayload, TokenExpiredError } from "jsonwebtoken"
 import crypto from "crypto"
 
-import connectDB from "@/lib/db"
-import { TwoFactorToken } from "@/lib/models/auth.model"
-import { Invitation } from "@/lib/models/board.model"
+import connectDB from "@/lib/database/db"
+import { TwoFactorToken } from "@/lib/database/models/auth.model"
+import { Invitation } from "@/lib/database/models/board.model"
 
 export interface IPayload extends JwtPayload {
   email: string

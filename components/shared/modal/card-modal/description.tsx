@@ -5,7 +5,7 @@ import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEventListener, useOnClickOutside } from "usehooks-ts"
 import { useTranslations } from "next-intl"
-import { CardWithList, BoardRole } from "@/lib/models/types"
+import { CardWithList, BoardRole } from "@/lib/database/models/types"
 import { updateCard } from "@/lib/actions/card/update-card"
 import { FormErrors } from "@/lib/validations/types"
 

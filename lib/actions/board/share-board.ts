@@ -2,10 +2,10 @@
 
 import { getTranslations } from "next-intl/server"
 
-import connectDB from "@/lib/db"
+import connectDB from "@/lib/database/db"
 import { currentUser } from "@/lib/session"
-import { Board } from "@/lib/models/board.model"
-import { BoardRole } from "@/lib/models/types"
+import { Board } from "@/lib/database/models/board.model"
+import { BoardRole } from "@/lib/database/models/types"
 import { 
   ShareBoardFormValues,
   getShareBoardSchema

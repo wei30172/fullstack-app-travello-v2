@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl"
 import { MAX_FREE_ASKAI } from "@/constants/board"
 import { getAvailableAskAiCount } from "@/lib/actions/user-limit"
-import { CountType } from "@/lib/models/types"
+import { CountType } from "@/lib/database/models/types"
 
 import { FiPause } from "react-icons/fi"
 import { Button } from "@/components/ui/button"

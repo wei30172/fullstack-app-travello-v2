@@ -3,8 +3,7 @@
 import { useTheme } from "next-themes"
 
 import { Button } from "@/components/ui/button"
-import { IoMdMoon } from "react-icons/io"
-import { IoMdSunny } from "react-icons/io"
+import { IoMdMoon, IoMdSunny } from "react-icons/io"
 
 export const ModeToggle = () => {
   const { theme, setTheme } = useTheme()

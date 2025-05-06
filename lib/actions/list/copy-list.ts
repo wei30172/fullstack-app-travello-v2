@@ -3,12 +3,12 @@
 import { revalidatePath } from "next/cache"
 import { getTranslations } from "next-intl/server"
 
-import connectDB from "@/lib/db"
+import connectDB from "@/lib/database/db"
 import { currentUser } from "@/lib/session"
-import { Board } from "@/lib/models/board.model"
-import { List } from "@/lib/models/list.model"
-import { Card } from "@/lib/models/card.model"
-import { ICard } from "@/lib/models/types"
+import { Board } from "@/lib/database/models/board.model"
+import { List } from "@/lib/database/models/list.model"
+import { Card } from "@/lib/database/models/card.model"
+import { ICard } from "@/lib/database/models/types"
 import { 
   CopyListFormValues,
   getCopyListSchema

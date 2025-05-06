@@ -16,7 +16,7 @@ const WorkspaceLayout = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default WorkspaceLayout

@@ -1,6 +1,6 @@
 "use client"
 
-import { ICard } from "@/lib/models/types"
+import { ICard } from "@/lib/database/models/types"
 import { useCardModal } from "@/hooks/use-card-modal"
 
 interface ReadOnlyCardItemProps {

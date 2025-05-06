@@ -1,9 +1,9 @@
 "use server"
 
 import { currentUser } from "@/lib/session"
-import connectDB from "@/lib/db"
-import { Board } from "@/lib/models/board.model"
-import { IBoard } from "@/lib/models/types"
+import connectDB from "@/lib/database/db"
+import { Board } from "@/lib/database/models/board.model"
+import { IBoard } from "@/lib/database/models/types"
 
 export const getMyBoards = async (): Promise<IBoard[]> => {
   const user = await currentUser()

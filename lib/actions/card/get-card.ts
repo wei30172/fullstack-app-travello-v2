@@ -2,12 +2,12 @@
 
 import mongoose from "mongoose"
 
-import connectDB from "@/lib/db"
+import connectDB from "@/lib/database/db"
 import { currentUser } from "@/lib/session"
-import { Card } from "@/lib/models/card.model"
-import { List } from "@/lib/models/list.model"
-import { Board } from "@/lib/models/board.model"
-import { CardWithList, BoardRole } from "@/lib/models/types"
+import { Card } from "@/lib/database/models/card.model"
+import { List } from "@/lib/database/models/list.model"
+import { Board } from "@/lib/database/models/board.model"
+import { CardWithList, BoardRole } from "@/lib/database/models/types"
 
 export const getCard = async (cardId: string): Promise<CardWithList | null> => {
   await connectDB()

@@ -1,8 +1,8 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { Draggable, Droppable } from "@hello-pangea/dnd";
-import { ListWithCards, BoardRole } from "@/lib/models/types"
+import { Draggable, Droppable } from "@hello-pangea/dnd"
+import { ListWithCards, BoardRole } from "@/lib/database/models/types"
 import { cn } from "@/lib/utils"
 
 import { ListHeader } from "./list-header"

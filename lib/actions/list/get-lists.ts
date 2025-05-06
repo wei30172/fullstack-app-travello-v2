@@ -2,12 +2,12 @@
 
 import { getTranslations } from "next-intl/server"
 
-import connectDB from "@/lib/db"
+import connectDB from "@/lib/database/db"
 import { currentUser } from "@/lib/session"
-import { List } from "@/lib/models/list.model"
-import { Card } from "@/lib/models/card.model"
-import { Board } from "@/lib/models/board.model"
-import { ICard, ListWithCards, BoardRole } from "@/lib/models/types"
+import { List } from "@/lib/database/models/list.model"
+import { Card } from "@/lib/database/models/card.model"
+import { Board } from "@/lib/database/models/board.model"
+import { ICard, ListWithCards, BoardRole } from "@/lib/database/models/types"
 
 type Result<T> = { data: T; role: BoardRole } | { error: string }
 

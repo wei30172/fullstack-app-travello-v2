@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
+import { BoardRole } from "@/lib/database/models/types"
 import { getBoard } from "@/lib/actions/board/get-board"
-import { BoardRole } from "@/lib/models/types"
 
 import { cn } from "@/lib/utils"
 import { BoardNavbar } from "./_components/board-navbar"

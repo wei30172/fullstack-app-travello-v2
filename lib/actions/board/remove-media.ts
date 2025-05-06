@@ -4,8 +4,8 @@ import { DeleteObjectCommand } from "@aws-sdk/client-s3"
 import { getTranslations } from "next-intl/server"
 
 import s3Client from "@/lib/s3client"
-import connectDB from "@/lib/db"
-import { Media } from "@/lib/models/board.model"
+import connectDB from "@/lib/database/db"
+import { Media } from "@/lib/database/models/board.model"
 import { decreaseBoardCoverCount } from "@/lib/actions/user-limit"
 
 const deleteFileFromS3 = async (url: string) => {

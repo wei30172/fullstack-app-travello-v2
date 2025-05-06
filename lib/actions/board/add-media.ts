@@ -2,8 +2,8 @@
 
 import { getTranslations } from "next-intl/server"
 
-import connectDB from "@/lib/db"
-import { Media } from "@/lib/models/board.model"
+import connectDB from "@/lib/database/db"
+import { Media } from "@/lib/database/models/board.model"
 import { 
   AddMediaFormValues,
   getAddMediaSchema

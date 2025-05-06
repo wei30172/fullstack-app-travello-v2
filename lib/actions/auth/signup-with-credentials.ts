@@ -3,9 +3,9 @@
 import bcrypt from "bcryptjs"
 import { getTranslations } from "next-intl/server"
 
-import connectDB from "@/lib/db"
-import { User } from "@/lib/models/auth.model"
-import { UserProvider } from "@/lib/models/types"
+import connectDB from "@/lib/database/db"
+import { User } from "@/lib/database/models/auth.model"
+import { UserProvider } from "@/lib/database/models/types"
 import { 
   SignUpFormValues,
   getSignUpFormSchema
@@ -43,7 +43,7 @@ export const signUpWithCredentials = async (
   const user = new User({ name, email, password: hashedPassword })
   await user.save()
 
-  const verificationToken = await  generateToken({email})
+  const verificationToken = await generateToken({email})
   // console.log({verificationToken})
 
   await sendVerificationEmail(

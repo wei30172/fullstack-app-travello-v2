@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import { BoardRole } from "@/lib/models/types"
+import { BoardRole } from "@/lib/database/models/types"
 import { getLists } from "@/lib/actions/list/get-lists"
 
 import { ReadOnlyListContainer } from "./_components/read-only-list-container"
@@ -11,12 +11,10 @@ interface BoardIdPageProps {
   }
 }
 
-const BoardIdPage = async ({
-  params,
-}: BoardIdPageProps) => {
+const BoardIdPage = async ({ params }: BoardIdPageProps) => {
   return (
     <section className="p-4 h-full overflow-x-auto">
-       <Suspense fallback={<BoardContent.Skeleton />}>
+      <Suspense fallback={<BoardContent.Skeleton />}>
         <BoardContent params={params} />
       </Suspense>
     </section>
@@ -27,7 +25,7 @@ const BoardContent = async ({ params }: BoardIdPageProps) => {
   const res = await getLists(params.boardId)
 
   if (("error" in res)) {
-    return <div>Error loading lists: {res.error}</div>;
+    return <div>{res.error || "Error loading lists"}</div>
   }
 
   return res.role === BoardRole.VIEWER ? (

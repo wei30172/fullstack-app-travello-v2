@@ -1,7 +1,7 @@
-import { IBoard, BoardRole } from "@/lib/models/types"
+import { IBoard, BoardRole } from "@/lib/database/models/types"
 
-import { BoardCoverButton } from "./board-cover-button"
 import { BoardTitleForm } from "./board-title-form"
+import { BoardCoverButton } from "./board-cover-button"
 import { Share } from "./share"
 import { BoardOptions } from "./board-options"
 import { BoardBanner } from "./board-banner"

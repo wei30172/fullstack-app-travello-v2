@@ -5,8 +5,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { getCard } from "@/lib/actions/card/get-card"
 import { useCardModal } from "@/hooks/use-card-modal"
-import { BoardRole } from "@/lib/models/types"
-// import { fetcher } from "@/lib/fetcher"
+import { BoardRole } from "@/lib/database/models/types"
 
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Header } from "./header"
@@ -21,7 +20,7 @@ export const CardModal = () => {
 
   const { data: cardData, isLoading, isError } = useQuery({
     queryKey: ["card", id],
-    queryFn: () => (id ? getCard(id) // fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/card/${id}`)
+    queryFn: () => (id ? getCard(id)
                        : Promise.reject(new Error("No ID provided"))),
     enabled: !!id
   })

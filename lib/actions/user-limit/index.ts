@@ -1,16 +1,16 @@
 "use server"
 
-import connectDB from "@/lib/db"
+import connectDB from "@/lib/database/db"
 import { currentUser } from "@/lib/session"
-import { UserLimit } from "@/lib/models/user.model"
+import { UserLimit } from "@/lib/database/models/user.model"
 import { MAX_FREE_ASKAI, MAX_FREE_COVER } from "@/constants/board"
-import { IUserLimit, CountType } from "@/lib/models/types"
+import { CountType } from "@/lib/database/models/types"
 
-const getUserLimit = async (userId: string): Promise<IUserLimit> => {
+const getUserLimit = async (userId: string) => {
   await connectDB()
-  let userLimit = await UserLimit.findOne({ userId }) as IUserLimit
+  let userLimit = await UserLimit.findOne({ userId })
   if (!userLimit) {
-    userLimit = new UserLimit({ userId, askAiCount: 0, boardCoverCount: 0 }) as IUserLimit
+    userLimit = new UserLimit({ userId, askAiCount: 0, boardCoverCount: 0 })
     await userLimit.save()
   }
   return userLimit

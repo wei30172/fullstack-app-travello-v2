@@ -10,7 +10,7 @@ import {
 import { useParams } from "next/navigation"
 import { useOnClickOutside, useEventListener } from "usehooks-ts"
 import { useTranslations } from "next-intl"
-import { BoardRole } from "@/lib/models/types"
+import { BoardRole } from "@/lib/database/models/types"
 import { FormErrors } from "@/lib/validations/types"
 import { createCard } from "@/lib/actions/card/create-card"
 

@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { BoardRole } from "@/lib/models/types"
+import { BoardRole } from "@/lib/database/models/types"
 
 export function getCreateBoardSchema(t?: (key: string) => string) {
   return z

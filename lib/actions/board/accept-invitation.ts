@@ -3,9 +3,9 @@
 import { revalidatePath } from "next/cache"
 import { getTranslations } from "next-intl/server"
 
-import connectDB from "@/lib/db"
-import { Board, Invitation } from "@/lib/models/board.model"
-import { TokenStatus, BoardRole } from "@/lib/models/types"
+import connectDB from "@/lib/database/db"
+import { Board, Invitation } from "@/lib/database/models/board.model"
+import { TokenStatus, BoardRole } from "@/lib/database/models/types"
 
 export const acceptInvitation = async (
   token: string

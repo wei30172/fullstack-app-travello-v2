@@ -4,7 +4,7 @@ import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { IBoard, BoardRole } from "@/lib/models/types"
+import { IBoard, BoardRole } from "@/lib/database/models/types"
 import { 
   ShareBoardFormValues,
   getShareBoardSchema

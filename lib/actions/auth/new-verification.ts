@@ -2,9 +2,9 @@
 
 import { getTranslations } from "next-intl/server"
 
-import connectDB from "@/lib/db"
+import connectDB from "@/lib/database/db"
 import { verifyToken, isTokenError } from "@/lib/token"
-import { User } from "@/lib/models/auth.model"
+import { User } from "@/lib/database/models/auth.model"
 
 export const newVerification = async (token: string) => {
   const t = await getTranslations("NewVerificationForm.server")

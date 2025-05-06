@@ -3,9 +3,9 @@
 import { currentUser } from "@/lib/session"
 import mongoose from "mongoose"
 
-import connectDB from "@/lib/db"
-import { Board } from "@/lib/models/board.model"
-import { IBoard } from "@/lib/models/types"
+import connectDB from "@/lib/database/db"
+import { Board } from "@/lib/database/models/board.model"
+import { IBoard } from "@/lib/database/models/types"
 
 export const getArchivedBoards = async (): Promise<IBoard[]> => {
   const user = await currentUser()

@@ -1,7 +1,7 @@
 "use server"
 
-import connectDB from "@/lib/db"
-import { User } from "@/lib/models/auth.model"
+import connectDB from "@/lib/database/db"
+import { User } from "@/lib/database/models/auth.model"
 
 export const getUserEmailById = async (userId: string) => {
   await connectDB()

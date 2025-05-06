@@ -3,10 +3,10 @@
 import { revalidatePath } from "next/cache"
 import { getTranslations } from "next-intl/server"
 
-import connectDB from "@/lib/db"
+import connectDB from "@/lib/database/db"
 import { currentUser } from "@/lib/session"
-import { Card } from "@/lib/models/card.model"
-import { List } from "@/lib/models/list.model"
+import { Card } from "@/lib/database/models/card.model"
+import { List } from "@/lib/database/models/list.model"
 import { 
   UpdateCardOrderFormValues,
   getUpdateCardOrderSchema
@@ -47,13 +47,13 @@ export const updateCardOrder = async (
         await List.updateOne(
           { _id: sourceListId },
           { $pull: { cards: card._id } }
-        );
+        )
 
         // Add card ID to destination list
         await List.updateOne(
           { _id: destListId },
           { $push: { cards: card._id } }
-        );
+        )
       }
 
       // Update the card's order and listId

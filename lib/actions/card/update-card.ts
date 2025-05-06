@@ -3,10 +3,10 @@
 import { revalidatePath } from "next/cache"
 import { getTranslations } from "next-intl/server"
 
-import connectDB from "@/lib/db"
+import connectDB from "@/lib/database/db"
 import { currentUser } from "@/lib/session"
-import { Board } from "@/lib/models/board.model"
-import { Card } from "@/lib/models/card.model"
+import { Board } from "@/lib/database/models/board.model"
+import { Card } from "@/lib/database/models/card.model"
 import { 
   UpdateCardFormValues,
   getUpdateCardSchema

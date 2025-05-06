@@ -1,4 +1,4 @@
-import { fetcher } from "@/lib/fetcher"
+import { internalApiFetcher } from "@/lib/fetcher"
 
 interface AskAIParams {
   location: string
@@ -6,7 +6,14 @@ interface AskAIParams {
   language: string
 }
 
-export const getAIItinerary = async (params: AskAIParams, signal: AbortSignal) => {
+type AIItineraryResponse =
+  | { ok: true; body: ReadableStream<Uint8Array> | null }
+  | { ok: false; error: string; aborted?: boolean }
+
+export const getAIItinerary = async (
+  params: AskAIParams,
+  signal: AbortSignal
+): Promise<AIItineraryResponse> => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/board/get-ai-itinerary`, {
       method: "POST",
@@ -40,16 +47,32 @@ interface GetSignedURLParams {
   checksum: string
 }
 
-export const uploadFileToS3 = async (params: GetSignedURLParams) => {
+type UploadFileResponse =
+  | { ok: true; url: string }
+  | { ok: false; error: string }
+
+interface GetSignedURLApiResponse {
+  url: string
+}
+
+export const uploadFileToS3 = async (
+  params: GetSignedURLParams
+): Promise<UploadFileResponse> => {
   try {
-    const res = await fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/board/upload-to-s3`, {
-      method: "POST",
-      body: JSON.stringify(params)
+    const res = await internalApiFetcher<GetSignedURLApiResponse>({
+      endpoint: "api/board/upload-to-s3",
+      options: {
+        method: "POST",
+        body: JSON.stringify(params)
+      }
     })
 
     return { ok: true, url: res.url }
   } catch (error) {
     console.error("Error in getSignedURL:", (error as Error).message)
-    return { ok: false, error: (error as Error).message || "Failed to connect to AWS service" }
+    return {
+      ok: false,
+      error: (error as Error).message || "Failed to connect to AWS service"
+    }
   }
 }

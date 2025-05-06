@@ -5,7 +5,7 @@ import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { MAX_FREE_COVER } from "@/constants/board"
-import { CountType, BoardRole, IBoard } from "@/lib/models/types"
+import { CountType, BoardRole, IBoard } from "@/lib/database/models/types"
 import { useCurrentUser, useCheckRole } from "@/hooks/use-session"
 import { 
   getAvailableBoardCoverCount,
