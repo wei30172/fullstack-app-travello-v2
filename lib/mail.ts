@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server"
 import nodemailer from "nodemailer"
 
 const baseURL = process.env.NEXT_PUBLIC_APP_URL
@@ -13,26 +14,27 @@ export const sendVerificationEmail = async (
   email: string, 
   token: string
 ) => {
+  const tEmail = await getTranslations("Email.verification")
   const confirmLink = `${baseURL}/new-verification?token=${token}`
 
   const mailOptions = {
     from: emailUser,
     to: email,
-    subject: "Confirm your email",
+    subject: tEmail("subject"),
     // html: `<p>Click <a href="${confirmLink}">here</a> to confirm email.</p>`
     html: `
       <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0fdfa;">
         <div style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-          <h1 style="color: #0d9488; text-align: center;">Email Confirmation</h1>
-          <p style="color: #0f766e; font-size: 18px; text-align: center;">Please click the link below to confirm your email address:</p>
+          <h1 style="color: #0d9488; text-align: center;">${tEmail("title")}</h1>
+          <p style="color: #0f766e; font-size: 18px; text-align: center;">${tEmail("description")}</p>
           <table style="margin: 20px auto;">
             <tr>
               <td style="background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center;">
-                <a href="${confirmLink}" style="font-size: 18px; color: white; text-decoration: none; display: inline-block;">Click here to confirm email</a>
+                <a href="${confirmLink}" style="font-size: 18px; color: white; text-decoration: none; display: inline-block;">${tEmail("button")}</a>
               </td>
             </tr>
           </table>
-          <p style="color: #0f766e; text-align: center; margin-top: 20px;">If you did not request this email, please ignore it.</p>
+          <p style="color: #0f766e; text-align: center; margin-top: 20px;">${tEmail("ignoreNote")}</p>
         </div>
       </body>
     `
@@ -45,26 +47,27 @@ export const sendPasswordResetEmail = async (
   email: string, 
   token: string
 ) => {
+  const tEmail = await getTranslations("Email.reset")
   const resetLink = `${baseURL}/new-password?token=${token}`
 
   const mailOptions = {
     from: emailUser,
     to: email,
-    subject: "Reset your password",
+    subject: tEmail("subject"),
     // html: `<p>Click <a href="${resetLink}">here</a> to reset password.</p>`
     html: `
       <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0fdfa;">
         <div style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-          <h1 style="color: #0d9488; text-align: center;">Password Reset</h1>
-          <p style="color: #0f766e; font-size: 18px; text-align: center;">Please click the link below to reset your password:</p>
+          <h1 style="color: #0d9488; text-align: center;">${tEmail("title")}</h1>
+          <p style="color: #0f766e; font-size: 18px; text-align: center;">${tEmail("description")}</p>
           <table style="margin: 20px auto;">
             <tr>
               <td style="background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center;">
-                <a href="${resetLink}" style="font-size: 18px; color: white; text-decoration: none; display: inline-block;">Click here to reset password</a>
+                <a href="${resetLink}" style="font-size: 18px; color: white; text-decoration: none; display: inline-block;">${tEmail("button")}</a>
               </td>
             </tr>
           </table>
-          <p style="color: #0f766e; text-align: center; margin-top: 20px;">If you did not request this email, please ignore it.</p>
+          <p style="color: #0f766e; text-align: center; margin-top: 20px;">${tEmail("ignoreNote")}</p>
         </div>
       </body>
     `
@@ -77,16 +80,18 @@ export const sendTwoFactorTokenEmail = async (
   email: string,
   token: string
 ) => {
+  const tEmail = await getTranslations("Email.2fa")
+  
   const mailOptions = {
     from: emailUser,
     to: email,
-    subject: "2FA Code",
+    subject: tEmail("subject"),
     // html: `<p>Your 2FA code: ${token}</p>`
     html: `
       <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0fdfa;">
         <div style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-          <h1 style="color: #0d9488; text-align: center;">Your Two-Factor Authentication (2FA) Code</h1>
-          <p style="color: #0f766e; font-size: 18px; text-align: center;">Your 2FA code is:</p>
+          <h1 style="color: #0d9488; text-align: center;">${tEmail("title")}</h1>
+          <p style="color: #0f766e; font-size: 18px; text-align: center;">${tEmail("description")}</p>
           <table style="margin: 20px auto;">
             <tr>
               <td style="background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center;">
@@ -96,7 +101,10 @@ export const sendTwoFactorTokenEmail = async (
               </td>
             </tr>
           </table>
-          <p style="color: #0f766e; text-align: center; margin-top: 20px;">Please use this code to complete your login.</p>
+          <p style="color: #0f766e; text-align: center; margin-top: 20px;">${tEmail("loginNote")}</p>
+          <p style="color: #0d9488; text-align: center; font-size: 14px; margin-top: 10px;">
+            ${tEmail("securityNote")}
+          </p>
         </div>
       </body>
     `
@@ -110,12 +118,13 @@ export const sendInvitationEmail = async (
   user: string,
   token: string
 ) => {
+  const tEmail = await getTranslations("Email.invitation")
   const shareLink = `${baseURL}/accept-invitation?token=${token}`
 
   const mailOptions = {
     from: emailUser,
     to: email,
-    subject: "Trip Share Invitation",
+    subject: tEmail("subject"),
     // html: `
     //   <p>${user} has invited you to join their trip. Click 
     //   <a href="${shareLink}">here</a> to accept the invitation.</p>
@@ -123,16 +132,16 @@ export const sendInvitationEmail = async (
     html: `
       <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0fdfa;">
         <div style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-          <h1 style="color: #0d9488; text-align: center;">Trip Invitation</h1>
-          <p style="color: #0f766e; font-size: 18px; text-align: center;">${user} has invited you to join their trip.</p>
+          <h1 style="color: #0d9488; text-align: center;">${tEmail("title")}</h1>
+          <p style="color: #0f766e; font-size: 18px; text-align: center;">${tEmail("description", { user })}</p>
           <table style="margin: 20px auto;">
             <tr>
               <td style="background-color: #14b8a6; padding: 10px 20px; border-radius: 5px; text-align: center;">
-                <a href="${shareLink}" style="font-size: 18px; color: white; text-decoration: none; display: inline-block;">Click here to accept the invitation</a>
+                <a href="${shareLink}" style="font-size: 18px; color: white; text-decoration: none; display: inline-block;">${tEmail("button")}</a>
               </td>
             </tr>
           </table>
-          <p style="color: #0f766e; text-align: center; margin-top: 20px;">If you did not expect this invitation, please ignore it.</p>
+          <p style="color: #0f766e; text-align: center; margin-top: 20px;">${tEmail("ignoreNote")}</p>
         </div>
       </body>
     `
