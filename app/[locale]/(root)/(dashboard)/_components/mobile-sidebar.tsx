@@ -42,7 +42,7 @@ export const MobileSidebar = () => {
       <Sheet open={isOpen} onOpenChange={onClose}>
         <SheetContent
           side="left"
-          className="p-2 pt-10 text-teal-700 h-full"
+          className="p-2 pt-10 h-full"
         >
           <Sidebar />
         </SheetContent>

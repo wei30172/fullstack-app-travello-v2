@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter, usePathname } from "next/navigation"
+import { useLocale } from "next-intl"
 import { cn } from "@/lib/utils"
 
 import { Button } from "@/components/ui/button"
@@ -18,6 +19,8 @@ interface NavItemsProps {
 export const SidebarLinks = ({ routes }: NavItemsProps) => {
   const router = useRouter()
   const pathname = usePathname()
+  const locale = useLocale()
+  const cleanPathname = pathname.replace(`/${locale}`, "")
 
   const onClick = (url: string) => {
     router.push(url)
@@ -31,7 +34,7 @@ export const SidebarLinks = ({ routes }: NavItemsProps) => {
           onClick={() => onClick(route.url)}
           className={cn(
             "w-full font-normal justify-start pl-10 mb-1 text-sm",
-            pathname === route.url && "bg-teal-500/10 text-teal-700"
+            cleanPathname === route.url && "bg-teal-500/10 text-teal-700"
           )}
           variant="ghost"
         >
