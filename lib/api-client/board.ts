@@ -47,7 +47,7 @@ interface GetSignedURLParams {
   checksum: string
 }
 
-type UploadFileResponse =
+type GetSignedURLResponse =
   | { ok: true; url: string }
   | { ok: false; error: string }
 
@@ -55,9 +55,9 @@ interface GetSignedURLApiResponse {
   url: string
 }
 
-export const uploadFileToS3 = async (
+export const getSignedURL = async (
   params: GetSignedURLParams
-): Promise<UploadFileResponse> => {
+): Promise<GetSignedURLResponse> => {
   try {
     const res = await internalApiFetcher<GetSignedURLApiResponse>({
       endpoint: "api/board/upload-to-s3",

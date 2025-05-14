@@ -16,7 +16,7 @@ import { getBoard } from "@/lib/actions/board/get-board"
 import { addMedia } from "@/lib/actions/board/add-media"
 import { removeMedia } from "@/lib/actions/board/remove-media"
 import { updateBoard } from "@/lib/actions/board/update-board"
-import { uploadFileToS3 } from "@/lib/api-handler/board"
+import { getSignedURL } from "@/lib/api-client/board"
 import { useCoverModal } from "@/hooks/use-cover-modal"
 
 import {
@@ -63,7 +63,7 @@ export const CoverImageModal = () => {
   const handleUploadToS3 = async (file: File) => {
     const checksum = await computeSHA256(file)
     const params = { fileType: file.type, fileSize: file.size, checksum }
-    const res: any = await uploadFileToS3(params)
+    const res = await getSignedURL(params)
 
     if (!res.ok) {
       throw new Error(`Error: ${res.error}`)

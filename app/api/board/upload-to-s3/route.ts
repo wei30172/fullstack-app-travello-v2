@@ -36,7 +36,7 @@ export async function POST(
       )
     }
   
-     // Generate a unique file name and create the S3 upload command
+    // Generate a unique file name and create the S3 upload command
     const newFileName = generateFileName()
     const putObjectCommand = new PutObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME!,

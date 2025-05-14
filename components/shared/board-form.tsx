@@ -21,7 +21,7 @@ import {
 } from "@/lib/actions/user-limit"
 import { CountType } from "@/lib/database/models/types"
 import { useCheckRole } from "@/hooks/use-session"
-import { getAIItinerary } from "@/lib/api-handler/board"
+import { getAIItinerary } from "@/lib/api-client/board"
 import { calculateDays } from "@/lib/date"
 
 import "react-datepicker/dist/react-datepicker.css"
