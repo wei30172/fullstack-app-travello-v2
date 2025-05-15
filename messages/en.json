@@ -280,7 +280,7 @@
       "aiUsesRemaining": "{remaining} AI uses remaining",
       "aiUsesDescription": "You have {max} free AI uses available in Free Workspaces.",
       "aiCountLoadError": "Error loading available count.",
-
+      "unlimited": "Unlimited",
       "shareTitle": "Share {title}",
       "ownerLabel": "Owner: {email}",
       "ownerLoadingError": "Error loading trip owner.",

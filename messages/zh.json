@@ -280,7 +280,7 @@
       "aiUsesRemaining": "剩餘 {remaining} 次 AI 使用次數",
       "aiUsesDescription": "您在免費版本中可使用 {max} 次 AI 功能。",
       "aiCountLoadError": "載入剩餘次數時發生錯誤。",
-
+      "unlimited": "沒有使用次數限制",
       "shareTitle": "分享 {title}",
       "ownerLabel": "擁有者：{email}",
       "ownerLoadingError": "載入行程擁有者時發生錯誤。",

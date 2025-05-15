@@ -51,7 +51,7 @@ export const AvailableCount = ({
   return (
     <div className="flex justify-between items-center p-2 pt-0">
       <span className="text-xs">
-        {checkRole ? "Unlimited" : label.replace("{remaining}", `${maxCount - count}`)}
+        {checkRole ? tUi("unlimited") : label.replace("{remaining}", `${maxCount - count}`)}
       </span>
       <Hint
         sideOffset={10}
