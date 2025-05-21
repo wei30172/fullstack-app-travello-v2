@@ -89,7 +89,6 @@ export const ColorPicker = ({ data }: ColorPickerProps) => {
   )
 }
 
-
 ColorPicker.Skeleton = function ColorPickerSkeleton() {
   return (
     <div className="flex items-start gap-x-4 w-full">
