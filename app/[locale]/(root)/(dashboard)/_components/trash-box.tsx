@@ -33,7 +33,7 @@ export const TrashBox = () => {
   })
 
   const filteredBoards = archivedBoards?.filter((board) => {
-    return board.title.toLowerCase().includes(search.toLowerCase());
+    return board.title.toLowerCase().includes(search.toLowerCase())
   })
 
   const handleTitleClick = (boardId: string) => router.push(`/board/${boardId}`)
