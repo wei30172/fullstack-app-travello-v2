@@ -229,7 +229,7 @@ export const BoardForm = ({
     try {
       abortControllerRef.current = new AbortController()
       const params = { location: values.location, days, language }
-      const res: any = await getAIItinerary(params, abortControllerRef.current.signal)
+      const res = await getAIItinerary(params, abortControllerRef.current.signal)
 
       if (res.ok && res.body) {
         const reader = res.body.getReader()
@@ -254,7 +254,7 @@ export const BoardForm = ({
           })
         }
         
-      } else if (!res.aborted) {
+      } else if (!res.ok && !res.aborted) {
         toast({
           status: "error",
           description: `Error: ${res.error}`
