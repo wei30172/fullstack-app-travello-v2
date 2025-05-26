@@ -1,20 +1,22 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
+import { authorizeInternalRequest } from "@/middleware/internal-auth"
 import connectDB from "@/lib/database/db"
 import { User } from "@/lib/database/models/auth.model"
 import { IUser } from "@/lib/database/models/types"
 
-// api/user/signIn-with-oauth
-export async function POST(
-  req: Request
-) {
+// PUT /api/user/oauth
+export async function PUT(req: NextRequest) {
+  const authError = await authorizeInternalRequest(req)
+  if (authError) return authError
+
   await connectDB()
   
   try {
     const { account, profile } = await req.json()
     // console.log({ account, profile })
-    
-    const existingUser = await User.findOne({email: profile.email})
+  
+    const existingUser = await User.findOne({ email: profile.email })
     // console.log({existingUser})
 
     if (existingUser) {
@@ -23,14 +25,12 @@ export async function POST(
         image: profile.picture
       })
       
-      const userObject: IUser = {
+      return NextResponse.json({
         ...existingUser.toObject(),
         _id: existingUser._id.toString()
-      }
-  
-      return NextResponse.json(userObject)
+      } as IUser)
     }
-    
+  
     const newUser = new User({
       name: profile.name,
       email: profile.email,
@@ -42,12 +42,10 @@ export async function POST(
     await newUser.save()
     // console.log({newUser})
   
-    const userObject: IUser = {
+    return NextResponse.json({
       ...newUser.toObject(),
       _id: newUser._id.toString()
-    }
-  
-    return NextResponse.json(userObject)
+    } as IUser)
   } catch (error) {
     return NextResponse.json(null, { status: 500 })
   }

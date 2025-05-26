@@ -1,5 +1,6 @@
 import OpenAI from "openai"
-import { NextResponse } from "next/server"
+import { authorizeInternalRequest } from "@/middleware/internal-auth"
+import { NextRequest, NextResponse } from "next/server"
 // import { OpenAIStream, StreamingTextResponse } from "ai"
 
 export const runtime = "edge"
@@ -33,10 +34,11 @@ const generateInstructionMessage = (
     `
 }
 
-// api/board/get-ai-itinerary
-export async function POST(
-  req: Request
-) {
+// POST /api/board/itinerary
+export async function POST(req: NextRequest) {
+  const authError = await authorizeInternalRequest(req, ["itinerary-generator"])
+  if (authError) return authError
+
   try {
     const { location, days, language } = await req.json()
     // console.log({ location, days, language })

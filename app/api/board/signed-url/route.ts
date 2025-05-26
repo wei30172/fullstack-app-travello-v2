@@ -1,25 +1,16 @@
 import s3Client from "@/lib/s3client"
+import { authorizeInternalRequest } from "@/middleware/internal-auth"
 import { PutObjectCommand } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { formatFileSize, generateFileName } from "@/lib/file"
+import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE } from "@/constants/files"
 
-// Allowed file types for upload
-const ALLOWED_FILE_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  // "video/mp4",
-  // "video/quicktime"
-]
+// POST /api/board/signed-url
+export async function POST(req: NextRequest) {
+  const authError = await authorizeInternalRequest(req, ["file-uploader"])
+  if (authError) return authError
 
-// Maximum file size (1.2 MB)
-const MAX_FILE_SIZE = 1024 * 1024 * 1.2
-
-// api/board/upload-to-s3
-export async function POST(
-  req: Request
-) {
   try {
     const { fileType, fileSize, checksum } = await req.json()
 

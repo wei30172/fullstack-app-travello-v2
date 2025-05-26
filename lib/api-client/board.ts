@@ -1,4 +1,4 @@
-import { internalApiFetcher } from "@/lib/fetcher"
+import { internalApiFetcher, rawInternalApiFetcher } from "@/lib/fetcher"
 
 interface AskAIParams {
   location: string
@@ -15,18 +15,20 @@ export const getAIItinerary = async (
   signal: AbortSignal
 ): Promise<AIItineraryResponse> => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/board/get-ai-itinerary`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(params),
-      signal
+    const res = await rawInternalApiFetcher({
+      endpoint: "api/board/itinerary",
+      authStrategy: "bearer",
+      serviceName: "itinerary-generator",
+      options: {
+        method: "POST",
+        body: JSON.stringify(params),
+        signal
+      }
     })
     // console.log(res)
 
     if (!res.ok) {
-      throw new Error("The OpenAI API key is currently not available for use.")
+      throw new Error("AI service failed")
     }
 
     return { ok: true, body: res.body }
@@ -60,7 +62,9 @@ export const getSignedURL = async (
 ): Promise<GetSignedURLResponse> => {
   try {
     const res = await internalApiFetcher<GetSignedURLApiResponse>({
-      endpoint: "api/board/upload-to-s3",
+      endpoint: "api/board/signed-url",
+      authStrategy: "bearer",
+      serviceName: "file-uploader",
       options: {
         method: "POST",
         body: JSON.stringify(params)
