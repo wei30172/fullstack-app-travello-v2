@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/shared/spinner"
 import { ConfirmDialog } from "@/components/shared/confirm-dialog"
 import { useToast } from "@/components/ui/use-toast"
+import { Button } from "@/components/ui/button"
 import { FaSearch, FaTrash, FaUndo } from "react-icons/fa"
 
 export const TrashBox = () => {
@@ -131,17 +132,20 @@ export const TrashBox = () => {
               {board.title}
             </span>
             <div className="flex items-center">
-              <div
+              <Button
                 onClick={() => handleRestore(board._id)}
-                role="button"
-                className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"
+                variant="ghost"
+                size="icon"
               >
                 <FaUndo className="h-4 w-4 text-muted-foreground" />
-              </div>
+              </Button>
               <ConfirmDialog onConfirm={() => handleRemove(board._id)}>
-                <div className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600">
-                  <FaTrash className="h-4 w-4 text-muted-foreground cursor-pointer" />
-                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                >
+                  <FaTrash className="h-4 w-4 text-muted-foreground" />
+                </Button>
               </ConfirmDialog>
             </div>
           </div>

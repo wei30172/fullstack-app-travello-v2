@@ -15,7 +15,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { useToast } from "@/components/ui/use-toast"
-import { FormSubmit } from "@/components/shared/form/form-submit"
 import { ConfirmDialog } from "@/components/shared/confirm-dialog"
 import { FiMoreHorizontal, FiPlus } from "react-icons/fi"
 import { IoMdClose } from "react-icons/io"
@@ -127,21 +126,21 @@ export const ListOptions = ({
         <form action={onCopy}>
           <input hidden name="id" id="id" defaultValue={listData._id} />
           <input hidden name="boardId" id="boardId" defaultValue={listData.boardId.toString()} />
-          <FormSubmit
+          <Button
             variant="ghost"
             className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm"
             disabled={isPending}
           >
             <FaRegCopy className="h-4 w-4 mr-2" />
             {tUi("copyItinerary")}
-          </FormSubmit>
+          </Button>
         </form>
         <Separator className="mt-6"/>
         <form ref={deleteFormRef} action={onDelete}>
           <input hidden name="id" id="id" defaultValue={listData._id} />
           <input hidden name="boardId" id="boardId" defaultValue={listData.boardId.toString()} />
           <ConfirmDialog onConfirm={handleConfirmDelete}>
-            <FormSubmit
+            <Button
               type="button"
               variant="ghost"
               className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm"
@@ -149,7 +148,7 @@ export const ListOptions = ({
             >
               <MdDelete className="h-4 w-4 mr-2" />
               {tUi("deleteItinerary")}
-            </FormSubmit>
+            </Button>
           </ConfirmDialog>
         </form>
       </PopoverContent>

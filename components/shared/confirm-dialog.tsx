@@ -31,9 +31,7 @@ export const ConfirmDialog = ({
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
-        <div onClick={() => setIsOpen(true)}>
-          {children}
-        </div>
+        {children}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
