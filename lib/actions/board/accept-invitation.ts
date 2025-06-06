@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server"
 
 import connectDB from "@/lib/database/db"
 import { Board, Invitation } from "@/lib/database/models/board.model"
-import { TokenStatus, BoardRole } from "@/lib/database/models/types"
+import { TokenStatus, BoardRole } from "@/lib/database/types"
 
 export const acceptInvitation = async (
   token: string

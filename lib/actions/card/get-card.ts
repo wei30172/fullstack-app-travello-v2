@@ -7,7 +7,7 @@ import { currentUser } from "@/lib/session"
 import { Card } from "@/lib/database/models/card.model"
 import { List } from "@/lib/database/models/list.model"
 import { Board } from "@/lib/database/models/board.model"
-import { CardWithList, BoardRole } from "@/lib/database/models/types"
+import { CardWithList, BoardRole } from "@/lib/database/types"
 
 export const getCard = async (cardId: string): Promise<CardWithList | null> => {
   await connectDB()

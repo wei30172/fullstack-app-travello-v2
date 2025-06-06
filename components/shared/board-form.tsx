@@ -11,7 +11,7 @@ import {
   CreateBoardFormValues,
   getCreateBoardSchema
 } from "@/lib/validations/board"
-import { IBoard, BoardRole } from "@/lib/database/models/types"
+import { IBoard, BoardRole } from "@/lib/database/types"
 import { createBoard } from "@/lib/actions/board/create-board"
 import { updateBoard } from "@/lib/actions/board/update-board"
 import { createList } from "@/lib/actions/list/create-list"
@@ -19,7 +19,7 @@ import {
   hasAvailableAskAiCount,
   incrementAskAiCount
 } from "@/lib/actions/user-limit"
-import { CountType } from "@/lib/database/models/types"
+import { CountType } from "@/lib/database/types"
 import { useCheckRole } from "@/hooks/use-session"
 import { getAIItinerary } from "@/lib/api-client/board"
 import { calculateDays } from "@/lib/date"

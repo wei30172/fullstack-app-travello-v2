@@ -8,7 +8,7 @@ import { currentUser } from "@/lib/session"
 import { Board } from "@/lib/database/models/board.model"
 import { List } from "@/lib/database/models/list.model"
 import { Card } from "@/lib/database/models/card.model"
-import { ICard } from "@/lib/database/models/types"
+import { ICard } from "@/lib/database/types"
 import { 
   CopyBoardFormValues,
   getCopyBoardSchema

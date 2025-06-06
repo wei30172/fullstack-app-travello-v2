@@ -41,7 +41,7 @@ export interface IUser {
 }
 
 // Two-factor confirmation
-export interface TwoFactorConfirmation {
+export interface ITwoFactorConfirmation {
   _id: string
   userId: string
 }

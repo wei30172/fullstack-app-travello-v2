@@ -1,4 +1,4 @@
-import { IBoard, BoardRole } from "@/lib/database/models/types"
+import { IBoard, BoardRole } from "@/lib/database/types"
 
 import { BoardTitleForm } from "./board-title-form"
 import { BoardCoverButton } from "./board-cover-button"

@@ -3,7 +3,7 @@
 import { currentUser } from "@/lib/session"
 import connectDB from "@/lib/database/db"
 import { Board } from "@/lib/database/models/board.model"
-import { IBoard } from "@/lib/database/models/types"
+import { IBoard } from "@/lib/database/types"
 
 export const getMyBoards = async (): Promise<IBoard[]> => {
   const user = await currentUser()

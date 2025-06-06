@@ -6,7 +6,7 @@ import { getTranslations } from "next-intl/server"
 import connectDB from "@/lib/database/db"
 import { currentUser } from "@/lib/session"
 import { Board } from "@/lib/database/models/board.model"
-import { BoardRole } from "@/lib/database/models/types"
+import { BoardRole } from "@/lib/database/types"
 import { 
   ShareBoardFormValues,
   getShareBoardSchema

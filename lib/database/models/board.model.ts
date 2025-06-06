@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { BoardRole, TokenStatus } from "@/lib/database/models/types"
+import { BoardRole, TokenStatus } from "@/lib/database/types"
 
 const boardSchema = new mongoose.Schema({
   userId: {

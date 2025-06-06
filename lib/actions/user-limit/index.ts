@@ -4,7 +4,7 @@ import connectDB from "@/lib/database/db"
 import { currentUser } from "@/lib/session"
 import { UserLimit } from "@/lib/database/models/user.model"
 import { MAX_FREE_ASKAI, MAX_FREE_COVER } from "@/constants/board"
-import { CountType } from "@/lib/database/models/types"
+import { CountType } from "@/lib/database/types"
 
 const getUserLimit = async (userId: string) => {
   await connectDB()

@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import { ListWithCards, BoardRole } from "@/lib/database/models/types"
+import { ListWithCards, BoardRole } from "@/lib/database/types"
 import { cn } from "@/lib/utils"
 
 import { ListHeader } from "./list-header"

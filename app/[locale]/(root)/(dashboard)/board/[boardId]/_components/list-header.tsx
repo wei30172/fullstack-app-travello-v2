@@ -4,7 +4,7 @@
 import { useState, useTransition, useRef } from "react"
 import { useEventListener } from "usehooks-ts"
 import { useTranslations } from "next-intl"
-import { ListWithCards, BoardRole } from "@/lib/database/models/types"
+import { ListWithCards, BoardRole } from "@/lib/database/types"
 import { updateList } from "@/lib/actions/list/update-list"
 
 import { useToast } from "@/components/ui/use-toast"

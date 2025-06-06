@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react"
-import { UserRole } from "@/lib/database/models/types"
+import { UserRole } from "@/lib/database/types"
 
 export const useCurrentUser = () => {
   const { data: session } = useSession()

@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import { BoardRole } from "@/lib/database/models/types"
+import { BoardRole } from "@/lib/database/types"
 import { getLists } from "@/lib/actions/list/get-lists"
 
 import { ReadOnlyListContainer } from "./_components/read-only-list-container"

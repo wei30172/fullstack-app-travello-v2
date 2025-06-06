@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/routing"
 import { getTranslations } from "next-intl/server"
-import { BoardRole } from "@/lib/database/models/types"
+import { BoardRole } from "@/lib/database/types"
 import { getSharedBoards } from "@/lib/actions/board/get-shared-boards"
 
 import { Skeleton } from "@/components/ui/skeleton"

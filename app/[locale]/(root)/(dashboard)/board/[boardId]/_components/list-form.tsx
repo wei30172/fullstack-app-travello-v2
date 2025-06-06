@@ -4,7 +4,7 @@ import { useState, useTransition, useRef } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { useEventListener, useOnClickOutside } from "usehooks-ts"
 import { useTranslations } from "next-intl"
-import { BoardRole } from "@/lib/database/models/types"
+import { BoardRole } from "@/lib/database/types"
 import { FormErrors } from "@/lib/validations/types"
 import { createList } from "@/lib/actions/list/create-list"
 

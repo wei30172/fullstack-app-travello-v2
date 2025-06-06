@@ -5,7 +5,7 @@ import mongoose from "mongoose"
 
 import connectDB from "@/lib/database/db"
 import { Board } from "@/lib/database/models/board.model"
-import { IBoard } from "@/lib/database/models/types"
+import { IBoard } from "@/lib/database/types"
 
 export const getArchivedBoards = async (): Promise<IBoard[]> => {
   const user = await currentUser()

@@ -2,7 +2,7 @@
 
 import { useState, useTransition, useEffect, useRef  } from "react"
 import { useTranslations } from "next-intl"
-import { IBoard, BoardRole } from "@/lib/database/models/types"
+import { IBoard, BoardRole } from "@/lib/database/types"
 import { updateBoard } from "@/lib/actions/board/update-board"
 
 import { Button } from "@/components/ui/button"

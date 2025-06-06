@@ -5,7 +5,7 @@ import mongoose from "mongoose"
 import connectDB from "@/lib/database/db"
 import { currentUser } from "@/lib/session"
 import { Board } from "@/lib/database/models/board.model"
-import { IBoard, BoardRole } from "@/lib/database/models/types"
+import { IBoard, BoardRole } from "@/lib/database/types"
 
 export const getBoard = async (boardId: string): Promise<IBoard | null> => {
   const user = await currentUser()

@@ -2,7 +2,7 @@
 
 import { useTransition, useRef } from "react"
 import { useTranslations } from "next-intl"
-import { ListWithCards, BoardRole } from "@/lib/database/models/types"
+import { ListWithCards, BoardRole } from "@/lib/database/types"
 import { copyList } from "@/lib/actions/list/copy-list"
 import { deleteList } from "@/lib/actions/list/delete-list"
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect  } from "react"
-import { ListWithCards, BoardRole } from "@/lib/database/models/types"
+import { ListWithCards, BoardRole } from "@/lib/database/types"
 
 import { ReadOnlyListItem } from "./read-only-list-item"
 

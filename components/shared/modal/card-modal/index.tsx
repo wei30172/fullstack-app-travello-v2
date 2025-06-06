@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { getCard } from "@/lib/actions/card/get-card"
 import { useCardModal } from "@/hooks/use-card-modal"
-import { BoardRole } from "@/lib/database/models/types"
+import { BoardRole } from "@/lib/database/types"
 
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Header } from "./header"

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useTranslations } from "next-intl"
-import { IBoard, BoardRole } from "@/lib/database/models/types"
+import { IBoard, BoardRole } from "@/lib/database/types"
 
 import { Button } from "@/components/ui/button"
 import {
