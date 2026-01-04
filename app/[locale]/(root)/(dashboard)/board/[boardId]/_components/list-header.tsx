@@ -1,6 +1,5 @@
 "use client"
 
-
 import { useState, useTransition, useRef } from "react"
 import { useEventListener } from "usehooks-ts"
 import { useTranslations } from "next-intl"
